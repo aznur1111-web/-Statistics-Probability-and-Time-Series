@@ -1,0 +1,2681 @@
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><meta name="description" content="Az Statistics, Probability &amp; Time Series Lab"><title>Az Statistics, Probability &amp; Time Series Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#111722;--panel:#192230;--panel2:#202b3a;--panel3:#141c27;--line:#2c394b;--line2:#3b4b61;--text:#e8eef7;--muted:#a7b4c7;--subtle:#8190a5;--accent:#8ab4f8;--strong:#c9ddff;--good:#9ed7bd;--warn:#edc477;--bad:#ff929e;--shadow:none;--radius:13px}
+:root[data-theme=light]{color-scheme:light;--bg:#f4f6f8;--panel:#fff;--panel2:#f7f9fb;--panel3:#f0f4f8;--line:#dce2e9;--line2:#cbd4df;--text:#17212d;--muted:#596a7e;--subtle:#718197;--accent:#315fa2;--strong:#244a82;--good:#176b4c;--warn:#8c5c04;--bad:#b33143;--shadow:0 8px 24px rgba(20,35,50,.05)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button,a,select{touch-action:manipulation}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}a{color:var(--accent);text-decoration:none}.muted{color:var(--muted)}.mono,code,pre,textarea{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.topbar{height:64px;position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;padding:0 22px;background:var(--bg);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text)}.brand-mark{width:34px;height:34px;border:1px solid var(--line2);border-radius:10px;background:var(--panel2);display:grid;place-items:center;color:var(--strong);font-weight:850;font-size:15px}.brand strong{display:block;font-size:14px;line-height:1.2}.brand small{display:block;font-size:10px;letter-spacing:.14em;color:var(--muted);margin-top:2px}
+.top-meta{flex:1;color:var(--subtle);font-size:12px;letter-spacing:.02em}
+.top-actions{display:flex;align-items:center;gap:7px}.top-actions label{font-size:11px;color:var(--muted)}
+select,.btn{border:1px solid var(--line2);background:var(--panel3);color:var(--text);border-radius:8px;padding:8px 11px;font-size:12px}.btn{font-weight:600;white-space:nowrap}.btn:hover{border-color:var(--accent);color:var(--strong)}.btn.primary{background:var(--accent);color:#10203a;border-color:var(--accent)}:root[data-theme=light] .btn.primary{color:white}
+.layout{display:grid;grid-template-columns:264px minmax(420px,1fr);max-width:1500px;margin:auto;min-height:calc(100vh - 64px)}
+.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow:auto;border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column}
+.side-title{display:flex;justify-content:space-between;color:var(--subtle);font-size:10px;letter-spacing:.14em;font-weight:800;padding:0 4px 12px}
+.pill,.tag{border:1px solid var(--line2);border-radius:6px;padding:3px 7px;font-size:10px;color:var(--muted);white-space:nowrap}
+.search{display:flex;gap:7px;align-items:center;border:1px solid var(--line);border-radius:9px;background:var(--panel3);height:39px;padding:0 10px;margin-bottom:10px}
+.search input{min-width:0;width:100%;background:transparent;border:0;outline:0;color:var(--text);font-size:12px}
+.search kbd{border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--subtle);font-size:10px}
+.filter{display:block;color:var(--subtle);font-size:11px;margin-bottom:12px}.filter select{display:block;width:100%;max-width:none;margin-top:5px;padding:7px}
+.tree{display:flex;flex-direction:column;gap:12px}
+.group-label{display:flex;justify-content:space-between;color:var(--subtle);font-size:10px;font-weight:800;letter-spacing:.08em;padding:4px 5px}
+.link{width:100%;text-align:left;display:flex;gap:8px;align-items:center;background:transparent;border:1px solid transparent;color:var(--muted);padding:7px 8px;border-radius:8px;min-height:34px}
+.link .num{font:10px ui-monospace,monospace;color:var(--subtle);width:19px;flex:none}
+.link .name{font-size:12px;flex:1}.link .done{color:var(--good)}
+.link:hover{background:var(--panel2);color:var(--text)}
+.link.active{background:var(--panel2);border-color:var(--line2);color:var(--strong)}
+.side-foot{margin-top:auto;border-top:1px solid var(--line);padding-top:14px}
+.progress-row{display:flex;justify-content:space-between;color:var(--subtle);font-size:11px;margin-bottom:7px}
+.progress{height:5px;background:var(--panel2);border-radius:9px;overflow:hidden}.progress>div{height:100%;width:0;background:var(--accent);transition:width .25s}
+.side-actions{display:flex;gap:6px;margin-top:12px}.side-actions .btn{flex:1;padding:7px;font-size:11px}
+main{max-width:920px;width:100%;min-width:0;margin:auto;padding:28px 30px 40px}
+.breadcrumb{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--subtle);margin-bottom:16px}
+.header{padding:2px 2px 22px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:800;color:var(--accent);margin-bottom:9px}
+.header h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-.035em;margin:0 0 10px;font-weight:700}
+.header p{font-size:14.5px;color:var(--muted);margin:0 0 14px;max-width:740px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag.good{color:var(--good)}.tag.warn{color:var(--warn)}
+.header-actions{display:flex;gap:7px;margin-top:16px;flex-wrap:wrap}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow)}
+.panel-head{padding:18px 20px 0}.panel-head h2{font-size:15px;margin:0 0 4px;letter-spacing:-.01em;font-weight:650}.panel-head p{font-size:12.5px;color:var(--muted);margin:0}
+.body{padding:16px 20px 20px}
+.idea{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:20px}
+.idea p{font-size:13.5px;color:var(--muted);margin:0 0 13px}
+.mental{background:var(--panel3);border:1px solid var(--line);border-radius:10px;padding:13px}
+.mental small{color:var(--subtle);font-size:10px;letter-spacing:.11em;text-transform:uppercase}
+.mental strong{display:block;margin:6px 0;font-size:13px;color:var(--strong)}
+.mental p{font-size:12px;color:var(--muted);margin:0}
+.takeaway{padding:11px 13px;border:1px solid var(--line2);background:var(--panel3);border-radius:8px;color:var(--strong);font-size:12.5px;line-height:1.6}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mini{background:var(--panel3);border:1px solid var(--line);border-radius:10px;padding:13px}
+.mini h3{font-size:12px;margin:0 0 7px;font-weight:650}
+.mini p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.6}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+.steps li{counter-increment:s;display:flex;gap:10px;color:var(--muted);font-size:12.5px;line-height:1.55}
+.steps li:before{content:counter(s);width:23px;height:23px;flex:none;display:grid;place-items:center;border:1px solid var(--line2);background:var(--panel3);border-radius:6px;color:var(--accent);font:11px ui-monospace,monospace}
+.pseudo{white-space:pre-wrap;overflow:auto;background:var(--panel3);border:1px solid var(--line);border-radius:10px;padding:14px;font:12px/1.75 ui-monospace,monospace;color:var(--strong);margin:0}
+.table-wrap{overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{border-bottom:1px solid var(--line);text-align:left;padding:9px 10px;vertical-align:top}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);font-weight:700}
+td{color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{padding:12px;background:var(--panel3);border:1px solid var(--line);border-radius:9px}
+.tile span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle)}
+.tile strong{display:block;color:var(--strong);font:700 14px ui-monospace,monospace;margin-top:6px}
+.tile small{font-size:10.5px;color:var(--muted);display:block;margin-top:2px}
+.notice{padding:12px 13px;background:var(--panel3);border:1px solid color-mix(in srgb,var(--warn) 35%,var(--line));border-radius:9px;font-size:12.5px;color:var(--muted);line-height:1.65}
+.notice strong{color:var(--warn)}
+.notice.info{border-color:var(--line2)}.notice.info strong{color:var(--accent)}
+.lab-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lab-top label{font-size:11.5px;color:var(--muted)}
+.lab-input{width:100%;min-height:80px;resize:vertical;background:var(--panel3);border:1px solid var(--line2);border-radius:9px;padding:11px;color:var(--text);font:12px/1.65 ui-monospace,monospace;margin:11px 0}
+.lab-output{padding:13px;background:var(--panel3);border:1px solid var(--line);border-radius:9px;min-height:70px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--strong);font:12px/1.75 ui-monospace,monospace;overflow-x:auto}
+.lab-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.label{font-size:10px;color:var(--subtle);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+.code-head{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:11px 13px;background:var(--panel3);border-bottom:1px solid var(--line)}
+.code-editor{display:block;width:100%;min-height:220px;resize:vertical;border:0;border-radius:0;background:var(--panel3);color:var(--text);padding:15px;font:12px/1.7 ui-monospace,monospace;outline:0}
+.code-foot{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 13px;color:var(--subtle);font-size:10px;border-top:1px solid var(--line)}
+.practice{border:1px solid var(--line);background:var(--panel3);border-radius:9px;padding:13px}
+.practice summary{cursor:pointer;font-size:12.5px;font-weight:600}
+.practice p{font-size:12.5px;color:var(--muted);margin:10px 0 0;line-height:1.65}
+.references{display:flex;flex-direction:column;gap:8px}
+.references a{font-size:12.5px;overflow-wrap:anywhere}
+.home-hero{padding:30px;background:linear-gradient(150deg,var(--panel),var(--panel3));border:1px solid var(--line);border-radius:14px;margin-bottom:16px}
+.home-hero h1{font-size:clamp(30px,3.6vw,42px);line-height:1.1;letter-spacing:-.04em;margin:8px 0 14px;font-weight:700}
+.home-hero p{color:var(--muted);font-size:14px;max-width:720px;margin:0 0 18px;line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.stat strong{display:block;font:700 22px ui-monospace,monospace;color:var(--strong)}
+.stat span{display:block;font-size:10.5px;color:var(--muted);margin-top:3px}
+.chapter-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chapter-card{padding:14px;text-align:left;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text)}
+.chapter-card:hover{border-color:var(--accent)}
+.chapter-card .num{font-size:10px;color:var(--accent);letter-spacing:.09em;font-weight:800}
+.chapter-card strong{display:block;font-size:13px;margin:5px 0;font-weight:650}
+.chapter-card p{font-size:11.5px;color:var(--muted);margin:0;line-height:1.55}
+.toast{position:fixed;z-index:99;bottom:20px;left:50%;transform:translate(-50%,10px);opacity:0;pointer-events:none;background:var(--panel);border:1px solid var(--line2);border-radius:9px;padding:11px 15px;box-shadow:var(--shadow);font-size:12px;transition:opacity .14s,transform .14s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.footer{font-size:10.5px;color:var(--subtle);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 2px 14px;align-items:center}
+.plot{width:100%;height:auto;display:block;background:var(--bg);border:1px solid var(--line);border-radius:8px;margin:6px 0}
+@media(max-width:1080px){.layout{grid-template-columns:240px minmax(360px,1fr)}main{padding:24px 22px 36px}}
+@media(max-width:840px){.topbar{height:auto;min-height:60px;flex-wrap:wrap;gap:10px;padding:10px 14px}.top-meta{display:none}.top-actions{margin-left:auto}.top-actions label{display:none}.layout{display:block}.sidebar{position:static;height:auto;max-height:none;border:0;border-bottom:1px solid var(--line);padding:14px}.tree{max-height:260px;overflow:auto}.side-foot{display:none}main{padding:20px 15px 32px}.idea{grid-template-columns:1fr}.mental{order:-1}.stats{grid-template-columns:1fr 1fr}.chapter-cards,.two,.lab-cols{grid-template-columns:1fr}}
+@media(max-width:520px){.brand small{display:none}.brand-mark{width:30px;height:30px}.brand strong{font-size:12px}.top-actions select{max-width:92px;padding:6px;font-size:10px}.top-actions .btn{padding:6px 8px;font-size:10px}.chapter-cards{grid-template-columns:1fr}.tiles{grid-template-columns:1fr}.home-hero{padding:20px}.home-hero h1{font-size:30px}.header h1{font-size:27px}.body,.panel-head{padding-left:15px;padding-right:15px}.footer{display:block}.footer span{display:block;margin-bottom:6px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+@media print{.topbar,.sidebar,.header-actions,.lab-top,.btn,.toast{display:none!important}.layout{display:block}main{padding:0;max-width:none}.panel,.home-hero{break-inside:avoid;box-shadow:none}body{background:#fff;color:#111}}
+</style></head><body>
+
+<header class="topbar">
+  <a class="brand" href="#home" id="homeLink"><span class="brand-mark">Az</span><span><strong>Az Statistics, Probability &amp; Time Series Lab</strong><small>PROBABILITY · INFERENCE · TIME SERIES</small></span></a>
+  <div class="top-meta" id="catalogCount"></div>
+  <div class="top-actions">
+    <label for="themeSelect">Theme</label>
+    <select id="themeSelect" aria-label="Theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+    <button class="btn" id="printBtn">Print / PDF</button>
+    <button class="btn" id="exportBtn">Export</button>
+    <button class="btn" id="importBtn">Import</button>
+    <input type="file" id="importFile" accept="application/json,.json" hidden>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" aria-label="Course navigation">
+    <div class="side-title"><span>COURSE CATALOG</span><span class="pill" id="lessonCount">0</span></div>
+    <div class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Search statistics, probability, time series…" aria-label="Search lessons"><kbd>/</kbd></div>
+    <label class="filter">Chapter<select id="chapterFilter"><option value="all">All chapters</option></select></label>
+    <nav class="tree" id="courseTree" aria-label="Lessons"></nav>
+    <div class="side-foot">
+      <div class="progress-row"><span>COURSE PROGRESS</span><strong id="progressText">0 / 0</strong></div>
+      <div class="progress" id="progressBar"><div id="progressFill"></div></div>
+      <div class="side-actions"><button class="btn" data-page="home">Home</button><button class="btn" data-page="progress">Progress</button></div>
+    </div>
+  </aside>
+  <main id="mainView" tabindex="-1" aria-live="polite"></main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   Az Statistics, Probability & Time Series Lab
+   ============================================================ */
+const CHAPTERS=[
+ {id:"st-prob",title:"26.1 Probability foundations",desc:"Distributions, expectation, variance, covariance, Bayes' theorem, conditional probability.",ids:["distributions","expectation-variance","bayes"]},
+ {id:"st-desc",title:"26.2 Descriptive statistics and resampling",desc:"Robust statistics, quantiles, bootstrap, permutation tests, confidence intervals.",ids:["descriptive-robust","bootstrap-permutation"]},
+ {id:"st-test",title:"26.3 Statistical testing",desc:"z-test, t-test, chi-square, Mann-Whitney, ANOVA, multiple-testing correction.",ids:["z-t-test","chi-square-anova","multiple-testing"]},
+ {id:"st-bayes",title:"26.4 Bayesian methods",desc:"Priors, likelihoods, posterior inference, conjugate models, MCMC, variational inference.",ids:["bayes-inference","conjugate","mcmc-vi"]},
+ {id:"st-reg",title:"26.5 Regression and generalized models",desc:"Linear regression, logistic regression, GLMs, regularization, diagnostics.",ids:["linear-regression","logistic-glm","regularization"]},
+ {id:"st-surv",title:"26.6 Survival and event analysis",desc:"Kaplan-Meier, log-rank test, Cox proportional hazards, competing risks.",ids:["kaplan-meier","cox-model","competing-risks"]},
+ {id:"st-ts",title:"26.7 Time-series foundations",desc:"Trend/seasonality, autocorrelation, decomposition, moving averages, exponential smoothing, Holt-Winters.",ids:["ts-foundations","decomposition","exp-smoothing","holt-winters"]},
+ {id:"st-fore",title:"26.8 Forecasting models",desc:"AR, MA, ARMA, ARIMA, SARIMA, state-space models, Prophet-style additive components.",ids:["ar-ma-arma","arima-sarima","state-space-prophet"]},
+ {id:"st-change",title:"26.9 Change and anomaly detection",desc:"z-scores, EWMA, CUSUM, PELT, control charts, robust outlier detection.",ids:["zscore-ewma","cusum","control-charts","robust-outliers"]},
+ {id:"st-exp",title:"26.10 Experiments and density estimation",desc:"A/B testing, sequential tests, power analysis, multi-armed bandits, KDE, LOESS, Kalman smoothing.",ids:["ab-testing","power-bandits","kde-loess","kalman"]}
+];
+
+const D={
+ kind:"Concept",status:"Concept lesson",level:2,demo:"none",demoTitle:"Interactive teaching lab",refs:[],codeKey:"none",
+ input:"A data vector, a parametric model, or a table described in a simple text format.",
+ output:"An estimate, a distribution, a test statistic, a forecast, or a posterior.",
+ invariant:"Correctness relies on the statistical assumptions the method makes. Violating them gives misleading results without an error.",
+ complexity:["Depends on the sample size and the model","Depends on the representation","Measure on representative data"],
+ uses:"Use this as one layer inside a larger statistical or forecasting pipeline.",
+ strength:"Fits the data-generating process it was designed for when its assumptions hold.",
+ limits:"Depends on sample size, model misspecification and dependence structure.",
+ pitfall:"A method that works on clean textbook data can fail or mislead on real, dirty or dependent data. Always check assumptions.",
+ question:"What is the main idea of this lesson?",
+ trace:null
+};
+function mk(o){
+ const steps=o.steps||["Read the data.","Apply the method.","Produce the result.","Check assumptions."];
+ return Object.assign({},D,{
+  summary:o.summary||"",
+  mental:o.mental||o.title,
+  mentalText:o.mentalText||o.summary||"",
+  problem:o.problem||("How does "+o.title+" work and when is it the right choice?"),
+  steps:steps,
+  trace:o.trace||steps.map((s,i)=>["Step "+(i+1),s,i===steps.length-1?"Verified":"Step done"]),
+  answer:o.answer||o.summary||"",
+  pseudo:o.pseudo||"",
+  sample:o.sample||"",
+  level:o.level||2
+ },o);
+}
+
+const RAW=[
+/* ================= 26.1 Probability foundations ================= */
+{id:"distributions",title:"Probability distributions",level:2,kind:"Foundation",status:"Runnable teaching lab",
+ summary:"A probability distribution describes how likely each value of a random variable is. Discrete distributions use a PMF; continuous distributions use a PDF. The Normal, Binomial and Poisson are the workhorses.",
+ mental:"A shape that assigns probability mass or density to values",
+ mentalText:"The Normal is a symmetric bell for sums and averages. The Binomial counts successes in n independent trials. The Poisson counts events in a fixed interval when events are rare and independent.",
+ steps:["Identify whether the variable is discrete or continuous.","Pick a distribution family that matches the support and shape.","Estimate the parameters from data.","Use the PMF/PDF and CDF to answer questions."],
+ pseudo:"Normal(mu, sigma^2):\n  pdf(x) = exp(-(x-mu)^2 / (2 sigma^2)) / (sigma sqrt(2 pi))\n  mean = mu, variance = sigma^2\n  used for sums, averages, measurement errors\n\nBinomial(n, p):\n  pmf(k) = C(n, k) p^k (1-p)^(n-k)\n  mean = n p, variance = n p (1-p)\n  counts successes in n independent trials\n\nPoisson(lambda):\n  pmf(k) = exp(-lambda) lambda^k / k!\n  mean = lambda, variance = lambda\n  counts rare events in a fixed interval\n\nCentral Limit Theorem:\n  the sum of many independent variables is approximately Normal",
+ invariant:"The distribution family encodes assumptions about independence and the shape of the data. Wrong family, wrong answers.",
+ uses:"Statistical inference, simulation, risk modeling, queueing, reliability.",
+ strength:"Compact description of uncertainty. Well-understood math.",
+ limits:"Real data is often skewed, heavy-tailed or dependent. The Normal can be a poor fit.",
+ pitfall:"Assuming Normality for skewed data (e.g. incomes, counts) gives wrong confidence intervals and p-values.",
+ question:"What are the mean and variance of Poisson(3)?",
+ answer:"Both are 3. For a Poisson, mean = variance = lambda.",
+ demo:"distributions",sample:"normal 0 1",refs:[
+  ["Casella and Berger, Statistical Inference, 2nd ed., Duxbury 2002","https://www.cengage.com/c/statistical-inference-2e-casella/9780534243128/"],
+  ["Ross, Introduction to Probability Models, 12th ed., Academic Press 2019","https://www.elsevier.com/books/introduction-to-probability-models/ross/978-0-12-814346-9"],
+  ["Feller, An Introduction to Probability Theory and Its Applications, Wiley 1968","https://www.wiley.com/en-us/An+Introduction+to+Probability+Theory+and+Its+Applications%2C+Volume+1%2C+3rd+Edition-p-9780471257080"]]},
+{id:"expectation-variance",title:"Expectation, variance and covariance",level:2,kind:"Foundation",status:"Runnable teaching lab",
+ summary:"Expectation is the long-run average. Variance measures spread around it. Covariance measures how two variables move together. These are the first three moments you should check.",
+ mental:"The center, the spread, and the co-movement",
+ mentalText:"E[X] is the weighted average of the possible values. Var(X) = E[(X - E[X])^2]. Cov(X, Y) = E[(X - E[X])(Y - E[Y])].",
+ steps:["Compute the sample mean.","Compute the sample variance (with n-1 denominator).","Compute the sample covariance for pairs.","Check the correlation = cov / (sd_x * sd_y)."],
+ pseudo:"Sample mean:\n  x_bar = (1/n) sum x_i\n\nSample variance:\n  s^2 = (1/(n-1)) sum (x_i - x_bar)^2\n\nSample covariance:\n  cov_xy = (1/(n-1)) sum (x_i - x_bar)(y_i - y_bar)\n\nCorrelation:\n  r = cov_xy / (s_x s_y), in [-1, 1]\n\nProperties:\n  E[aX + b] = a E[X] + b\n  Var(aX + b) = a^2 Var(X)\n  Var(X + Y) = Var(X) + Var(Y) + 2 Cov(X, Y)\n  If X, Y independent: Var(X + Y) = Var(X) + Var(Y)",
+ invariant:"Variance is non-negative. The n-1 denominator makes the sample variance unbiased for the population variance.",
+ uses:"Descriptive statistics, risk, portfolio theory, experimental design.",
+ strength:"Simple, universal. Foundation of all statistical inference.",
+ limits:"Sensitive to outliers. Not robust. Requires finite second moments.",
+ pitfall:"Using n instead of n-1 gives a biased variance. Only use n for the population variance.",
+ question:"If X and Y are independent with Var(X)=4 and Var(Y)=9, what is Var(X - Y)?",
+ answer:"13. Var(X - Y) = Var(X) + Var(Y) - 2 Cov(X, Y) = 4 + 9 - 0 = 13.",
+ demo:"expectation-variance",sample:"2, 4, 4, 4, 5, 5, 7, 9",refs:[
+  ["Casella and Berger, Statistical Inference, Chapter 2-4","https://www.cengage.com/c/statistical-inference-2e-casella/9780534243128/"],
+  ["Wasserman, All of Statistics, Springer 2004","https://link.springer.com/book/10.1007/978-0-387-21736-9"],
+  ["Freedman, Pisani, Purves, Statistics, 4th ed., Norton 2007","https://wwnorton.com/books/9780393929720"]]},
+{id:"bayes",title:"Bayes' theorem and conditional probability",level:3,kind:"Foundation",status:"Runnable teaching lab",
+ summary:"Bayes' theorem updates a prior probability with evidence to give a posterior. It is the correct way to reason about uncertainty and the base-rate fallacy.",
+ mental:"Prior times likelihood, normalized by the evidence",
+ mentalText:"P(A|B) = P(B|A) P(A) / P(B). The posterior is proportional to the prior times the likelihood.",
+ steps:["Identify the prior P(A).","Identify the likelihood P(B|A).","Compute the evidence P(B) = sum P(B|A_i) P(A_i).","Compute the posterior P(A|B)."],
+ pseudo:"Bayes' theorem:\n  P(A | B) = P(B | A) P(A) / P(B)\n\nExpanded:\n  P(A | B) = P(B | A) P(A) / [P(B|A) P(A) + P(B|~A) P(~A)]\n\nMedical test example:\n  prior: P(disease) = 0.01\n  sensitivity: P(test+ | disease) = 0.90\n  specificity: P(test- | no disease) = 0.95\n  P(test+) = 0.90*0.01 + 0.05*0.99 = 0.0585\n  P(disease | test+) = 0.90*0.01 / 0.0585 = 0.1538\n\nSo even after a positive test, only ~15% chance of disease.\nThis is the base-rate fallacy.",
+ invariant:"The prior must be a genuine probability distribution. Garbage prior, garbage posterior.",
+ uses:"Diagnosis, spam filtering, spam classification, Bayesian inference, A/B testing.",
+ strength:"Correct reasoning about uncertainty. Combines prior knowledge and evidence.",
+ limits:"Requires a prior. Sensitive to prior choice when data is scarce.",
+ pitfall:"Ignoring the base rate. A positive test for a rare disease is often a false positive.",
+ question:"If 1 in 10,000 people have a disease, a test has 99% sensitivity and 99% specificity, what is P(disease | positive)?",
+ answer:"Approximately 1%. The base rate is so low that most positives are false positives.",
+ demo:"bayes",sample:"0.01 0.90 0.95",refs:[
+  ["Bayes, An Essay towards Solving a Problem in the Doctrine of Chances, 1763","https://doi.org/10.1098/rstl.1763.0053"],
+  ["Kahneman and Tversky, On the psychology of prediction, Psychological Review 1973","https://doi.org/10.1037/h0034747"],
+  ["Gelman et al., Bayesian Data Analysis, 3rd ed., CRC 2013","https://www.routledge.com/Bayesian-Data-Analysis/Gelman-Carlin-Stern-Dunson-Vehtari-Rubin/p/book/9781439840955"]]},
+/* ================= 26.2 Descriptive and resampling ================= */
+{id:"descriptive-robust",title:"Descriptive statistics and robust summaries",level:2,kind:"Descriptive",status:"Runnable teaching lab",
+ summary:"The mean and standard deviation are sensitive to outliers. The median, IQR, MAD and trimmed mean are robust alternatives with a high breakdown point.",
+ mental:"Summaries that survive a few extreme values",
+ mentalText:"The median is the middle value. The IQR is the middle 50%. The MAD is the median absolute deviation from the median. These do not blow up when a few points are extreme.",
+ steps:["Compute the median and quantiles.","Compute the IQR = Q3 - Q1.","Compute the MAD = median(|x - median|).","Optionally compute a trimmed mean (drop top/bottom 5%)."],
+ pseudo:"Quantile (linear interpolation):\n  sort x\n  h = (n - 1) * p\n  lo = floor(h), hi = ceil(h)\n  q = x[lo] + (h - lo) * (x[hi] - x[lo])\n\nIQR = Q3 - Q1\n\nMAD = median(|x_i - median(x)|)\n\nRobust z-score = (x - median) / (1.4826 * MAD)\n  1.4826 makes it consistent with the Normal sigma\n\nBreakdown point:\n  mean, sd: 0%\n  median, IQR, MAD: 50%",
+ invariant:"The median and IQR have a 50% breakdown point. They remain informative even if half the data is contaminated.",
+ uses:"Exploratory data analysis, quality control, robust statistics, outlier detection.",
+ strength:"Robust. Resistant to outliers and heavy tails.",
+ limits:"Less efficient than the mean under Normality. Harder to extend to multivariate settings.",
+ pitfall:"Reporting the mean and sd when the data is skewed gives a misleading summary. Always look at a histogram or boxplot.",
+ question:"What is the breakdown point of the median?",
+ answer:"50%. You can corrupt up to half the data without moving the median arbitrarily.",
+ demo:"descriptive",sample:"2, 4, 4, 4, 5, 5, 7, 9, 100",refs:[
+  ["Tukey, Exploratory Data Analysis, Addison-Wesley 1977","https://www.pearson.com/en-us/subject-catalog/p/exploratory-data-analysis/P200000003409"],
+  ["Huber and Ronchetti, Robust Statistics, 2nd ed., Wiley 2009","https://www.wiley.com/en-us/Robust+Statistics%2C+2nd+Edition-p-9780470129906"],
+  ["Rousseeuw and Leroy, Robust Regression and Outlier Detection, Wiley 1987","https://www.wiley.com/en-us/Robust+Regression+and+Outlier+Detection-p-9780471852339"]]},
+{id:"bootstrap-permutation",title:"Bootstrap, permutation tests and confidence intervals",level:4,kind:"Resampling",status:"Runnable teaching lab",
+ summary:"The bootstrap estimates the sampling distribution by resampling with replacement. Permutation tests estimate the null distribution by shuffling labels. Both avoid parametric assumptions.",
+ mental:"Resample the data to see how the estimate varies",
+ mentalText:"The bootstrap treats the sample as a stand-in for the population. Draw many resamples with replacement, recompute the statistic, and use the spread as the sampling distribution.",
+ steps:["Compute the statistic on the original sample.","Bootstrap: draw B resamples with replacement, recompute.","Permutation: shuffle labels between groups, recompute.","Use the percentiles for a confidence interval or p-value."],
+ pseudo:"Bootstrap percentile CI:\n  for b in 1..B:\n    sample_b = resample with replacement from data\n    theta_b = statistic(sample_b)\n  CI = [quantile(theta, alpha/2), quantile(theta, 1 - alpha/2)]\n\nPermutation test for two groups:\n  observed = |mean(A) - mean(B)|\n  for b in 1..B:\n    shuffle labels between A and B\n    diff_b = |mean(A_b) - mean(B_b)|\n  p = fraction of diff_b >= observed\n\nB typically 1000 to 10000.\nBootstrap works for means, medians, correlations, ratios.\nPermutation works for any exchangeable test statistic.",
+ invariant:"The bootstrap assumes the sample is representative. The permutation test assumes exchangeability under the null.",
+ uses:"Confidence intervals, hypothesis tests, small samples, non-Normal data.",
+ strength:"Few assumptions. Works for complex statistics.",
+ limits:"Fails for extreme order statistics and heavy tails. Slow for large B.",
+ pitfall:"The naive bootstrap fails for the maximum or for time series (use block bootstrap for dependent data).",
+ question:"How many bootstrap resamples are typical?",
+ answer:"1000 for a rough CI, 10000 for stable p-values and confidence interval endpoints.",
+ demo:"bootstrap",sample:"group A: 5.2 6.1 5.8 6.4 5.9 6.3 5.5 6.0\ngroup B: 6.8 7.1 6.5 7.3 6.9 7.0 7.2 6.7",refs:[
+  ["Efron, Bootstrap methods: another look at the jackknife, Annals of Statistics 1979","https://doi.org/10.1214/aos/1176344552"],
+  ["Efron and Tibshirani, An Introduction to the Bootstrap, Chapman & Hall 1993","https://www.routledge.com/An-Introduction-to-the-Bootstrap/Efron-Tibshirani/p/book/9780412042317"],
+  ["Davison and Hinkley, Bootstrap Methods and Their Application, Cambridge 1997","https://www.cambridge.org/core/books/bootstrap-methods-and-their-application/"]]},
+/* ================= 26.3 Statistical testing ================= */
+{id:"z-t-test",title:"z-test, t-test and confidence intervals",level:3,kind:"Testing",status:"Runnable teaching lab",
+ summary:"The t-test compares means when the variance is unknown. The z-test assumes a known variance. Both produce a p-value and a confidence interval for the effect size.",
+ mental:"How many standard errors is the mean from the null?",
+ mentalText:"The test statistic is (estimate - null) / standard error. For large samples the t distribution is close to Normal. For small samples the t distribution has heavier tails.",
+ steps:["State the null and alternative hypotheses.","Compute the sample mean and standard error.","Compute t = (x_bar - mu_0) / (s / sqrt(n)).","Compare to the t distribution with n-1 degrees of freedom.","Report the p-value and the confidence interval."],
+ pseudo:"One-sample t-test:\n  t = (x_bar - mu_0) / (s / sqrt(n))\n  df = n - 1\n  p = 2 * (1 - T_cdf(|t|, df))\n  CI = x_bar +/- t_{alpha/2, df} * s / sqrt(n)\n\nTwo-sample t-test (Welch):\n  t = (x1_bar - x2_bar) / sqrt(s1^2/n1 + s2^2/n2)\n  df = (s1^2/n1 + s2^2/n2)^2 /\n       [ (s1^2/n1)^2/(n1-1) + (s2^2/n2)^2/(n2-1) ]\n  p = 2 * (1 - T_cdf(|t|, df))\n\nPaired t-test:\n  compute differences d_i = x_i - y_i\n  run one-sample t-test on d\n\nAssumptions:\n  independence, approximate Normality or large n\n  Welch does not assume equal variances",
+ invariant:"The p-value is the probability of a result at least as extreme as observed, assuming the null is true. It is not the probability the null is true.",
+ uses:"A/B testing, clinical trials, quality control, comparing groups.",
+ strength:"Simple, fast, well-understood. Confidence intervals give the effect size.",
+ limits:"Sensitive to outliers and skewed data for small n. Multiple comparisons inflate Type I error.",
+ pitfall:"A non-significant result does not prove the null. It may just be underpowered.",
+ question:"What does a p-value of 0.03 mean?",
+ answer:"If the null hypothesis were true, there is a 3% chance of observing a result at least as extreme. It does not mean the null is 3% likely.",
+ demo:"ttest",sample:"5.2, 6.1, 5.8, 6.4, 5.9, 6.3, 5.5, 6.0\n6.8, 7.1, 6.5, 7.3, 6.9, 7.0, 7.2, 6.7",refs:[
+  ["Student, The probable error of a mean, Biometrika 1908","https://doi.org/10.1093/biomet/6.1.1"],
+  ["Welch, The generalization of Student's problem, Biometrika 1947","https://doi.org/10.1093/biomet/34.1-2.28"],
+  ["Casella and Berger, Statistical Inference, Chapter 8","https://www.cengage.com/c/statistical-inference-2e-casella/9780534243128/"]]},
+{id:"chi-square-anova",title:"Chi-square, Mann-Whitney and ANOVA",level:4,kind:"Testing",status:"Runnable teaching lab",
+ summary:"Chi-square tests independence in contingency tables. Mann-Whitney is a nonparametric two-sample test. ANOVA compares means across three or more groups.",
+ mental:"Compare observed counts or ranks to what the null predicts",
+ mentalText:"Chi-square sums (observed - expected)^2 / expected. Mann-Whitney ranks the pooled data. ANOVA partitions variance into between-group and within-group.",
+ steps:["Choose the test that matches the data and question.","Compute the test statistic.","Compare to the reference distribution.","Report the p-value and effect size."],
+ pseudo:"Chi-square test of independence:\n  observed counts O_ij in an r x c table\n  expected E_ij = row_i * col_j / n\n  chi2 = sum (O_ij - E_ij)^2 / E_ij\n  df = (r - 1)(c - 1)\n\nMann-Whitney U (two samples):\n  rank the pooled data\n  R1 = sum of ranks in group 1\n  U1 = R1 - n1(n1+1)/2\n  U = min(U1, U2)\n  z = (U - n1 n2 / 2) / sqrt(n1 n2 (n1+n2+1)/12)\n\nOne-way ANOVA:\n  SSB = sum n_k (mean_k - grand_mean)^2\n  SSW = sum sum (x_ik - mean_k)^2\n  F = (SSB / (k-1)) / (SSW / (n - k))\n  df = (k - 1, n - k)\n\nANOVA with Welch correction for unequal variances.",
+ invariant:"The F statistic is a ratio of variances. Under the null, the between-group variance and within-group variance estimate the same quantity.",
+ uses:"A/B/C testing, clinical trials, survey analysis, quality control.",
+ strength:"Handles multiple groups and non-Normal data (Mann-Whitney, Kruskal-Wallis).",
+ limits:"ANOVA assumes Normality and equal variances. Chi-square needs adequate expected counts.",
+ pitfall:"Running multiple pairwise t-tests instead of ANOVA inflates the Type I error. Use ANOVA followed by post-hoc corrections.",
+ question:"When should you use Mann-Whitney instead of a t-test?",
+ answer:"When the data is ordinal, heavily skewed, or has outliers, and you do not want to assume Normality. It tests whether one distribution tends to be larger than the other.",
+ demo:"chi-square",sample:"30 20\n15 35",refs:[
+  ["Pearson, On the criterion that a given system of deviations... is such that it can be reasonably supposed to have arisen from random sampling, 1900","https://doi.org/10.1080/14786440009463897"],
+  ["Mann and Whitney, On a test of whether one of two random variables is stochastically larger than the other, Annals of Math Stat 1947","https://doi.org/10.1214/aoms/1177730491"],
+  ["Fisher, Statistical Methods for Research Workers, Oliver and Boyd 1925","https://archive.org/details/statisticalmeth00fish"]]},
+{id:"multiple-testing",title:"Multiple-testing correction",level:4,kind:"Testing",status:"Runnable teaching lab",
+ summary:"Testing many hypotheses inflates the family-wise error rate. Bonferroni controls the FWER; Benjamini-Hochberg controls the false discovery rate (FDR).",
+ mental:"Many tests, many false positives unless you correct",
+ mentalText:"With 100 independent tests at alpha=0.05 and no true effects, you expect 5 false positives. Correction makes the threshold stricter.",
+ steps:["Collect all p-values.","Bonferroni: compare each p to alpha/m.","Holm: sort p-values, compare to alpha/(m - rank + 1).","BH: sort p-values, compare to (rank/m) * alpha."],
+ pseudo:"Bonferroni:\n  reject H_i if p_i < alpha / m\n  controls FWER <= alpha\n\nHolm (step-down):\n  sort p_(1) <= p_(2) <= ... <= p_(m)\n  find the smallest k with p_(k) > alpha / (m - k + 1)\n  reject H_(1) ... H_(k-1)\n\nBenjamini-Hochberg (FDR):\n  sort p_(1) <= ... <= p_(m)\n  find the largest k with p_(k) <= (k/m) * alpha\n  reject H_(1) ... H_(k)\n\nFWER = probability of at least one false positive\nFDR = expected proportion of false positives among rejections\n\nBH is less conservative than Bonferroni when many tests are truly null.",
+ invariant:"Correction methods are valid under independence or positive dependence (BH).",
+ uses:"Genomics, neuroimaging, A/B testing with many metrics, feature selection.",
+ strength:"Controls error rates. BH has more power than Bonferroni.",
+ limits:"Bonferroni is conservative. BH assumes independence or PRDS.",
+ pitfall:"Correcting for all tests when only a subset is relevant wastes power. Pre-register the family of tests.",
+ question:"What is the difference between FWER and FDR?",
+ answer:"FWER is the probability of at least one false positive. FDR is the expected proportion of false positives among the rejections. FDR is more permissive.",
+ demo:"multiple-testing",sample:"0.001 0.008 0.039 0.041 0.042 0.06 0.074 0.205 0.212 0.216 0.222 0.251 0.269 0.275 0.34",refs:[
+  ["Bonferroni, Teoria statistica delle classi e calcolo delle probabilità, 1936","https://www.jstor.org/stable/2341718"],
+  ["Holm, A simple sequentially rejective multiple test procedure, Scandinavian J. Statistics 1979","https://www.jstor.org/stable/4615733"],
+  ["Benjamini and Hochberg, Controlling the false discovery rate, JRSS B 1995","https://doi.org/10.1111/j.2517-6161.1995.tb02031.x"]]},
+/* ================= 26.4 Bayesian methods ================= */
+{id:"bayes-inference",title:"Bayesian inference and conjugate models",level:4,kind:"Bayesian",status:"Runnable teaching lab",
+ summary:"Bayesian inference combines a prior with a likelihood to produce a posterior. Conjugate priors give closed-form posteriors. Beta-Binomial is the classic example.",
+ mental:"Start with a prior, update with data, get a posterior",
+ mentalText:"The posterior is proportional to prior times likelihood. With a conjugate prior, the posterior has the same family as the prior and can be written down in closed form.",
+ steps:["Choose a prior for the parameter.","Write the likelihood of the data given the parameter.","Multiply and normalize.","Report the posterior mean, mode and credible interval."],
+ pseudo:"Bayes:\n  p(theta | data) ∝ p(data | theta) * p(theta)\n\nBeta-Binomial:\n  prior: theta ~ Beta(alpha, beta)\n  likelihood: k successes in n trials\n  posterior: theta ~ Beta(alpha + k, beta + n - k)\n  posterior mean: (alpha + k) / (alpha + beta + n)\n  credible interval: quantiles of the Beta posterior\n\nNormal-Normal with known variance:\n  prior: mu ~ N(mu_0, tau^2)\n  likelihood: x_bar ~ N(mu, sigma^2/n)\n  posterior: mu ~ N(mu_n, tau_n^2)\n  mu_n = (mu_0/tau^2 + n x_bar/sigma^2) / (1/tau^2 + n/sigma^2)\n  tau_n^2 = 1 / (1/tau^2 + n/sigma^2)\n\nJeffreys prior: non-informative, parameterization invariant",
+ invariant:"The posterior is a probability distribution. Credible intervals have a direct probability interpretation.",
+ uses:"A/B testing, clinical trials, recommender systems, uncertainty quantification.",
+ strength:"Direct probability statements. Easy to update with new data.",
+ limits:"Prior sensitivity with small samples. Computation for non-conjugate models.",
+ pitfall:"A very informative prior can dominate the data. Report prior sensitivity analyses.",
+ question:"What is a conjugate prior?",
+ answer:"A prior that, when combined with the likelihood, gives a posterior in the same family. It makes Bayesian updating closed-form.",
+ demo:"beta-binomial",sample:"30 100 1 1",refs:[
+  ["Gelman et al., Bayesian Data Analysis, 3rd ed., CRC 2013","https://www.routledge.com/Bayesian-Data-Analysis/Gelman-Carlin-Stern-Dunson-Vehtari-Rubin/p/book/9781439840955"],
+  ["Robert, The Bayesian Choice, 2nd ed., Springer 2007","https://link.springer.com/book/10.1007/978-0-387-71599-5"],
+  ["McElreath, Statistical Rethinking, 2nd ed., CRC 2020","https://xcelab.net/rm/statistical-rethinking/"]]},
+{id:"conjugate",title:"Conjugate models and posterior summaries",level:4,kind:"Bayesian",status:"Runnable teaching lab",
+ summary:"Conjugate models are Bayesian models where the posterior is in the same family as the prior. They give closed-form updates and are the building blocks of hierarchical models.",
+ mental:"Priors and posteriors live in the same family",
+ mentalText:"Beta-Binomial for proportions. Normal-Normal for means. Gamma-Poisson for rates. Dirichlet-Multinomial for categorical data.",
+ steps:["Identify the data type and likelihood.","Choose the conjugate prior family.","Update the hyperparameters with the data.","Compute posterior summaries."],
+ pseudo:"Conjugate pairs:\n  Beta-Binomial:      proportions\n  Normal-Normal:      means (known variance)\n  Gamma-Poisson:      rates and counts\n  Dirichlet-Multinomial: categorical\n  Inverse-Gamma-Normal: variance\n\nPosterior summaries:\n  mean: E[theta | data]\n  mode: argmax p(theta | data)\n  credible interval: [q(alpha/2), q(1 - alpha/2)]\n\nPosterior predictive:\n  p(x_new | data) = integral p(x_new | theta) p(theta | data) d theta\n  For Beta-Binomial:\n    p(x_new = 1 | data) = posterior mean of theta\n  = (alpha + k) / (alpha + beta + n)",
+ invariant:"The conjugate update is exact. No MCMC or approximation is needed.",
+ uses:"Bayesian A/B testing, hierarchical models, sequential updating, Thompson sampling.",
+ strength:"Closed form. Fast. Easy to extend to hierarchies.",
+ limits:"Limited to specific likelihood-prior pairs. Real models often need MCMC or VI.",
+ pitfall:"The posterior mean is not the same as the posterior mode unless the posterior is symmetric.",
+ question:"What is the posterior predictive probability for Beta-Binomial?",
+ answer:"The posterior mean of theta, (alpha + k) / (alpha + beta + n). It is the probability of a success in the next trial.",
+ demo:"normal-normal",sample:"10 5 0 10\n12 5 0 10\n11 5 0 10",refs:[
+  ["Gelman et al., Bayesian Data Analysis, Chapter 2-3","https://www.routledge.com/Bayesian-Data-Analysis/Gelman-Carlin-Stern-Dunson-Vehtari-Rubin/p/book/9781439840955"],
+  ["Murphy, Machine Learning: A Probabilistic Perspective, MIT Press 2012","https://mitpress.mit.edu/9780262018029/machine-learning/"],
+  ["Bishop, Pattern Recognition and Machine Learning, Springer 2006","https://link.springer.com/book/10.1007/978-0-387-45528-0"]]},
+{id:"mcmc-vi",title:"MCMC and variational inference",level:5,kind:"Bayesian computation",status:"Runnable teaching lab",
+ summary:"MCMC samples from the posterior by constructing a Markov chain with the posterior as its stationary distribution. Variational inference approximates the posterior with a simpler distribution by maximizing the ELBO.",
+ mental:"MCMC samples; VI optimizes",
+ mentalText:"MCMC: propose a move, accept or reject based on the posterior ratio. VI: pick a family of approximate posteriors, optimize the parameters to be close to the true posterior.",
+ steps:["MCMC: initialize, propose a new state, accept with the Metropolis ratio.","VI: choose a family q(theta; phi), maximize the ELBO.","MCMC: run many iterations and discard a burn-in.","VI: check the ELBO convergence and posterior predictive."],
+ pseudo:"Metropolis-Hastings:\n  initialize theta\n  for t in 1..T:\n    theta' ~ q(theta' | theta)\n    alpha = min(1, p(theta') q(theta | theta') / (p(theta) q(theta' | theta)))\n    u ~ Uniform(0, 1)\n    if u < alpha: theta = theta'\n    record theta\n  discard burn-in, use the rest for inference\n\nVariational inference:\n  choose q(theta; phi), e.g. mean-field Gaussian\n  ELBO(phi) = E_q[log p(data, theta)] - E_q[log q(theta)]\n  maximize ELBO over phi by gradient ascent\n  posterior approx: q(theta; phi*)\n\nMCMC: asymptotically exact, slow, hard to diagnose\nVI: approximate, fast, scales to large data",
+ invariant:"MCMC requires the chain to be irreducible and aperiodic. VI requires the ELBO to be a lower bound on the log evidence.",
+ uses:"Bayesian models with no conjugate prior, hierarchical models, topic models, deep generative models.",
+ strength:"MCMC is asymptotically exact. VI scales to large data and models.",
+ limits:"MCMC is slow and needs diagnostics (R-hat, ESS). VI underestimates posterior variance.",
+ pitfall:"MCMC chains can get stuck. Always run multiple chains and check R-hat and trace plots.",
+ question:"What does the ELBO lower-bound?",
+ answer:"The log marginal likelihood (log evidence) log p(data). Maximizing the ELBO is equivalent to minimizing the KL divergence from q to the posterior.",
+ demo:"metropolis",sample:"0 1 5000",refs:[
+  ["Metropolis et al., Equation of state calculations by fast computing machines, J. Chem. Phys. 1953","https://doi.org/10.1063/1.1699114"],
+  ["Hastings, Monte Carlo sampling methods using Markov chains and their applications, Biometrika 1970","https://doi.org/10.1093/biomet/57.1.97"],
+  ["Blei, Kucukelbir, McAuliffe, Variational inference: A review for statisticians, JASA 2017","https://doi.org/10.1080/01621459.2017.1285773"]]},
+/* ================= 26.5 Regression ================= */
+{id:"linear-regression",title:"Linear regression and OLS",level:3,kind:"Regression",status:"Runnable teaching lab",
+ summary:"Ordinary least squares fits a linear model by minimizing the sum of squared residuals. It has a closed-form solution and is the base for many statistical methods.",
+ mental:"Find the line that minimizes squared vertical distance",
+ mentalText:"The OLS estimates are beta = (X'X)^-1 X'y. The fitted values are X beta. The residuals are y - X beta.",
+ steps:["Set up the design matrix X and response y.","Compute beta = (X'X)^-1 X'y.","Compute fitted values and residuals.","Compute R^2 = 1 - SSR/SST.","Run diagnostics on the residuals."],
+ pseudo:"OLS:\n  X: n x p design matrix (column of 1s for intercept)\n  y: n x 1 response\n  beta_hat = (X'X)^-1 X'y\n  y_hat = X beta_hat\n  residuals = y - y_hat\n\nR^2:\n  SSR = sum residuals^2\n  SST = sum (y - y_bar)^2\n  R^2 = 1 - SSR/SST\n\nStandard errors:\n  sigma^2_hat = SSR / (n - p)\n  Var(beta_hat) = sigma^2_hat (X'X)^-1\n  se(beta_j) = sqrt(Var_jj)\n  t_j = beta_j / se(beta_j), df = n - p\n\nAssumptions:\n  linearity, independence, homoscedasticity, Normality of errors\n  no perfect multicollinearity",
+ invariant:"OLS is the best linear unbiased estimator (BLUE) under the Gauss-Markov assumptions.",
+ uses:"Economics, science, forecasting, causal inference, ML baselines.",
+ strength:"Closed form. Interpretable coefficients. Well-understood inference.",
+ limits:"Sensitive to outliers. Assumes linearity. Multicollinearity inflates standard errors.",
+ pitfall:"Correlation does not imply causation. Omitted variables bias the coefficients.",
+ question:"What does R^2 measure?",
+ answer:"The proportion of variance in y explained by the model. R^2 = 1 means perfect fit; R^2 = 0 means no better than the mean.",
+ demo:"ols",sample:"1 2.1\n2 3.9\n3 6.2\n4 7.8\n5 10.1\n6 12.2\n7 13.8\n8 16.1",refs:[
+  ["Legendre, Nouvelles méthodes pour la détermination des orbites des comètes, 1805","https://gallica.bnf.fr/ark:/12148/bpt6k110193z"],
+  ["Gauss, Theoria combinationis observationum erroribus minimis obnoxiae, 1823","https://archive.org/details/theoriacombinati00gaus"],
+  ["Draper and Smith, Applied Regression Analysis, 3rd ed., Wiley 1998","https://www.wiley.com/en-us/Applied+Regression+Analysis%2C+3rd+Edition-p-9780471170822"]]},
+{id:"logistic-glm",title:"Logistic regression and GLMs",level:4,kind:"Regression",status:"Runnable teaching lab",
+ summary:"Logistic regression models a binary outcome with a sigmoid link. Generalized linear models (GLMs) extend linear regression to non-Normal responses via a link function.",
+ mental:"Model the log-odds as a linear function",
+ mentalText:"log(p/(1-p)) = X beta. The inverse is p = 1/(1+exp(-X beta)). Fit by maximum likelihood with gradient descent or IRLS.",
+ steps:["Write the linear predictor eta = X beta.","Apply the link function to get the mean.","Write the log-likelihood.","Maximize by gradient ascent or IRLS.","Report coefficients as odds ratios."],
+ pseudo:"Logistic regression:\n  p_i = 1 / (1 + exp(-x_i' beta))\n  log-likelihood: sum [y_i log p_i + (1 - y_i) log(1 - p_i)]\n  gradient: X'(y - p)\n  Hessian: -X' W X, W = diag(p(1-p))\n  Newton step: beta_new = beta + (X'WX)^-1 X'(y-p)\n\nCoefficient interpretation:\n  exp(beta_j) = odds ratio for a one-unit change in x_j\n\nGLM components:\n  random component: distribution of y (Normal, Binomial, Poisson)\n  systematic component: eta = X beta\n  link function: g(mu) = eta\n\nCommon links:\n  Normal: identity\n  Binomial: logit\n  Poisson: log\n  Gamma: inverse",
+ invariant:"The log-likelihood is concave for logistic regression, so any local maximum is global.",
+ uses:"Credit scoring, medical diagnosis, marketing response, churn prediction.",
+ strength:"Probabilistic outputs. Interpretable odds ratios. Well-calibrated with enough data.",
+ limits:"Assumes linearity in the log-odds. Sensitive to separation. Needs large samples for rare events.",
+ pitfall:"Perfect separation gives infinite coefficients. Use regularization (ridge or Firth) to fix it.",
+ question:"How do you interpret a logistic regression coefficient?",
+ answer:"exp(beta_j) is the multiplicative change in odds for a one-unit increase in x_j, holding other variables constant.",
+ demo:"logistic",sample:"1 0\n2 0\n3 0\n4 1\n5 0\n6 1\n7 1\n8 1\n9 1\n10 1",refs:[
+  ["McCullagh and Nelder, Generalized Linear Models, 2nd ed., Chapman & Hall 1989","https://www.routledge.com/Generalized-Linear-Models/McCullagh-Nelder/p/book/9780412317606"],
+  ["Hosmer, Lemeshow, Sturdivant, Applied Logistic Regression, 3rd ed., Wiley 2013","https://www.wiley.com/en-us/Applied+Logistic+Regression%2C+3rd+Edition-p-9780470582473"],
+  ["Agresti, Categorical Data Analysis, 3rd ed., Wiley 2012","https://www.wiley.com/en-us/Categorical+Data+Analysis%2C+3rd+Edition-p-9780470463635"]]},
+{id:"regularization",title:"Regularization, ridge and lasso",level:4,kind:"Regression",status:"Runnable teaching lab",
+ summary:"Regularization adds a penalty to the loss to control model complexity. Ridge (L2) shrinks coefficients; lasso (L1) sets some to zero for variable selection.",
+ mental:"Add a penalty for large coefficients",
+ mentalText:"Ridge: minimize RSS + lambda * sum beta^2. Lasso: minimize RSS + lambda * sum |beta|. Elastic net combines both.",
+ steps:["Standardize the predictors.","Choose the penalty and lambda.","Fit the regularized model.","Use cross-validation to tune lambda.","Interpret the coefficients."],
+ pseudo:"Ridge (L2):\n  minimize ||y - X beta||^2 + lambda ||beta||_2^2\n  closed form: beta = (X'X + lambda I)^-1 X'y\n  shrinks coefficients toward zero, none exactly zero\n\nLasso (L1):\n  minimize ||y - X beta||^2 + lambda ||beta||_1\n  no closed form; coordinate descent or LARS\n  sets some coefficients exactly to zero (sparse)\n\nElastic net:\n  minimize ||y - X beta||^2 + lambda [alpha ||beta||_1 + (1-alpha) ||beta||_2^2]\n\nCross-validation:\n  split data into k folds\n  for each lambda, compute CV error\n  pick lambda minimizing CV error\n  refit on the full data",
+ invariant:"The penalty is not applied to the intercept. Standardize predictors so the penalty is fair.",
+ uses:"High-dimensional regression, genomics, text classification, feature selection.",
+ strength:"Reduces overfitting. Lasso selects variables. Ridge handles multicollinearity.",
+ limits:"Biased estimates. Lambda must be tuned. Lasso is unstable with correlated predictors.",
+ pitfall:"Do not penalize the intercept. Standardize predictors before regularizing.",
+ question:"What is the difference between ridge and lasso?",
+ answer:"Ridge shrinks coefficients toward zero but keeps them all. Lasso can set coefficients exactly to zero, giving sparse solutions.",
+ demo:"ridge",sample:"0.5\n1 2.1\n2 3.9\n3 6.2\n4 7.8\n5 10.1\n6 12.2\n7 13.8\n8 16.1",refs:[
+  ["Hoerl and Kennard, Ridge regression: biased estimation for nonorthogonal problems, Technometrics 1970","https://doi.org/10.1080/00401706.1970.10488634"],
+  ["Tibshirani, Regression shrinkage and selection via the lasso, JRSS B 1996","https://doi.org/10.1111/j.2517-6161.1996.tb02080.x"],
+  ["Hastie, Tibshirani, Friedman, The Elements of Statistical Learning, 2nd ed., Springer 2009","https://link.springer.com/book/10.1007/978-0-387-84858-7"]]},
+/* ================= 26.6 Survival ================= */
+{id:"kaplan-meier",title:"Kaplan-Meier and log-rank test",level:4,kind:"Survival",status:"Runnable teaching lab",
+ summary:"Kaplan-Meier estimates the survival function from censored data. The log-rank test compares survival curves between groups.",
+ mental:"Estimate survival step by step, adjusting for censoring",
+ mentalText:"At each event time, multiply the survival by (1 - events / at risk). Censored observations leave the risk set without an event.",
+ steps:["Sort event and censoring times.","At each event time, compute the risk set.","Multiply the survival estimate by (1 - d/n).","Plot the step function.","Log-rank: compare observed and expected events in each group."],
+ pseudo:"Kaplan-Meier:\n  sort unique event times t_1 < t_2 < ...\n  n_i = number at risk just before t_i\n  d_i = number of events at t_i\n  S(t) = prod_{t_i <= t} (1 - d_i / n_i)\n  Greenwood variance:\n    Var(S(t)) = S(t)^2 sum d_i / (n_i (n_i - d_i))\n\nLog-rank test:\n  O_g = observed events in group g\n  E_g = expected events under the null\n  chi2 = sum (O_g - E_g)^2 / E_g\n  df = number of groups - 1",
+ invariant:"Censoring must be non-informative: the censoring time is independent of the survival time given the covariates.",
+ uses:"Clinical trials, reliability engineering, customer churn, time-to-event analysis.",
+ strength:"Handles censoring. No parametric assumption on the survival distribution.",
+ limits:"Assumes non-informative censoring. Does not adjust for covariates (use Cox for that).",
+ pitfall:"Treating censored observations as events biases the survival curve downward.",
+ question:"What does censoring mean in survival analysis?",
+ answer:"The event has not been observed by the end of follow-up. The subject is known to have survived at least until the censoring time.",
+ demo:"kaplan-meier",sample:"5 1\n6 0\n6 1\n7 1\n8 0\n9 1\n10 1\n12 0",refs:[
+  ["Kaplan and Meier, Nonparametric estimation from incomplete observations, JASA 1958","https://doi.org/10.1080/01621459.1958.10501452"],
+  ["Mantel, Evaluation of survival data and two new rank order statistics arising in its consideration, Cancer Chemotherapy Reports 1966","https://pubmed.ncbi.nlm.nih.gov/5910392/"],
+  ["Klein and Moeschberger, Survival Analysis, 2nd ed., Springer 2003","https://link.springer.com/book/10.1007/b97377"]]},
+{id:"cox-model",title:"Cox proportional hazards",level:5,kind:"Survival",status:"Concept lesson",
+ summary:"The Cox model estimates the effect of covariates on the hazard without specifying the baseline hazard. It assumes proportional hazards: hazard ratios are constant over time.",
+ mental:"Model the hazard ratio, not the baseline hazard",
+ mentalText:"h(t | x) = h_0(t) exp(beta'x). The baseline hazard h_0(t) is left unspecified. The coefficients are estimated by partial likelihood.",
+ steps:["Write the hazard as baseline times exp(beta'x).","Write the partial likelihood over the event times.","Maximize the partial likelihood.","Check the proportional hazards assumption."],
+ pseudo:"Cox model:\n  h(t | x) = h_0(t) exp(beta' x)\n\nPartial likelihood:\n  L(beta) = prod_{i: event} exp(beta' x_i) /\n            sum_{j in risk set at t_i} exp(beta' x_j)\n\nLog partial likelihood:\n  l(beta) = sum_{i: event} [beta' x_i - log sum_{j in R_i} exp(beta' x_j)]\n\nEstimation: Newton-Raphson on l(beta)\n\nInterpretation:\n  exp(beta_j) = hazard ratio for a one-unit increase in x_j\n\nProportional hazards check:\n  Schoenfeld residuals\n  log(-log(S(t))) plots should be parallel\n  time-varying coefficients",
+ invariant:"The proportional hazards assumption must hold. If not, the hazard ratio is not a single number.",
+ uses:"Clinical trials, epidemiology, reliability, customer churn.",
+ strength:"Semiparametric. No baseline hazard needed. Handles censoring.",
+ limits:"Proportional hazards assumption. Ties in event times need Breslow or Efron correction.",
+ pitfall:"Testing the proportional hazards assumption is mandatory. Violations need stratified or time-varying models.",
+ question:"What does exp(beta) mean in a Cox model?",
+ answer:"The hazard ratio: the multiplicative change in the hazard for a one-unit increase in the covariate, holding others constant.",
+ demo:"none",sample:"",refs:[
+  ["Cox, Regression models and life-tables, JRSS B 1972","https://doi.org/10.1111/j.2517-6161.1972.tb00899.x"],
+  ["Therneau and Grambsch, Modeling Survival Data, Springer 2000","https://link.springer.com/book/10.1007/978-1-4757-3294-8"],
+  ["Klein and Moeschberger, Survival Analysis, 2nd ed., Springer 2003","https://link.springer.com/book/10.1007/b97377"]]},
+{id:"competing-risks",title:"Competing risks",level:5,kind:"Survival",status:"Concept lesson",
+ summary:"Competing risks occur when a subject can experience one of several mutually exclusive events. The cumulative incidence function (CIF) is the right summary, not 1 - KM.",
+ mental:"Multiple event types, only one can happen",
+ mentalText:"Cause-specific hazards model the rate of each event. The CIF gives the probability of each event type over time, accounting for the other events.",
+ steps:["Define the event types.","Estimate cause-specific hazards.","Compute the cumulative incidence function for each cause.","Compare CIFs between groups."],
+ pseudo:"Cause-specific hazard:\n  h_k(t) = lim_{dt->0} P(t <= T < t+dt, cause = k | T >= t) / dt\n\nCumulative incidence function:\n  CIF_k(t) = integral_0^t h_k(u) S(u) du\n  S(u) = exp(- sum_k integral_0^u h_k(s) ds)\n\nNot the same as 1 - KM:\n  1 - KM_k treats the other events as censoring,\n  which overestimates the cumulative incidence.\n\nFine-Gray subdistribution hazard:\n  models the CIF directly\n  useful for prediction and risk scores\n\nCause-specific Cox:\n  fit a Cox model for each cause\n  interpret as the effect on the cause-specific hazard",
+ invariant:"The sum of all CIFs approaches 1 as t -> infinity. Each CIF is a probability, not a hazard.",
+ uses:"Medical trials with death from different causes, credit risk with multiple default types.",
+ strength:"Correct summary when events compete. CIF has a direct probability interpretation.",
+ limits:"Cause-specific hazards and subdistribution hazards answer different questions.",
+ pitfall:"Using 1 - Kaplan-Meier for each cause overestimates the cumulative incidence. Use the CIF.",
+ question:"Why is 1 - KM wrong for competing risks?",
+ answer:"It treats the competing events as censoring, which assumes they could still happen later. The CIF correctly accounts for the fact that once a competing event occurs, the other event cannot.",
+ demo:"competing-risks",sample:"5 1\n6 2\n6 1\n7 1\n8 2\n9 1\n10 1\n12 2",refs:[
+  ["Fine and Gray, A proportional hazards model for the subdistribution of a competing risk, JASA 1999","https://doi.org/10.1080/01621459.1999.10474144"],
+  ["Putter, Fiocco, Geskus, Tutorial in biostatistics: competing risks and multi-state models, Statistics in Medicine 2007","https://doi.org/10.1002/sim.2712"],
+  ["Austin, Lee, Fine, Introduction to the analysis of survival data in the presence of competing risks, Circulation 2016","https://doi.org/10.1161/CIRCULATIONAHA.115.017719"]]},
+/* ================= 26.7 Time-series foundations ================= */
+{id:"ts-foundations",title:"Time series foundations",level:3,kind:"Time series",status:"Runnable teaching lab",
+ summary:"Time series have trend, seasonality, cycles and noise. Autocorrelation measures how a series correlates with its own lagged values. Stationarity is the key assumption for ARMA models.",
+ mental:"A series correlated with its own past",
+ mentalText:"The autocorrelation function (ACF) plots correlation against lag. The partial autocorrelation function (PACF) plots the direct correlation at each lag, removing intermediate lags.",
+ steps:["Plot the series and look for trend and seasonality.","Compute the ACF and PACF.","Test for stationarity (ADF, KPSS).","Difference or detrend if needed."],
+ pseudo:"Autocovariance at lag k:\n  gamma_k = (1/n) sum_{t=1}^{n-k} (x_t - x_bar)(x_{t+k} - x_bar)\n\nAutocorrelation:\n  rho_k = gamma_k / gamma_0\n\nPartial autocorrelation:\n  PACF(k) = correlation between x_t and x_{t-k}\n            after removing the effect of lags 1..k-1\n\nStationarity:\n  mean and variance constant over time\n  autocovariance depends only on lag, not on t\n\nAugmented Dickey-Fuller:\n  H0: unit root (non-stationary)\n  H1: stationary\n  reject H0 for small p-value\n\nKPSS:\n  H0: stationary\n  H1: unit root",
+ invariant:"Stationarity is required for most classical time-series models. Non-stationary series need differencing or detrending.",
+ uses:"Forecasting, signal processing, econometrics, anomaly detection.",
+ strength:"Simple diagnostics. Guides model selection.",
+ limits:"ACF and PACF are hard to read for mixed or seasonal series. Tests have low power in small samples.",
+ pitfall:"Spurious regression: regressing two independent non-stationary series often gives a high R^2 by chance.",
+ question:"How do ACF and PACF identify ARMA models?",
+ answer:"AR(p): ACF decays gradually, PACF cuts off after lag p. MA(q): ACF cuts off after lag q, PACF decays gradually. ARMA: both decay gradually.",
+ demo:"acf",sample:"1.2 1.5 1.8 2.1 2.4 2.7 3.0 3.3 3.6 3.9 4.2 4.5 4.8 5.1 5.4",refs:[
+  ["Box, Jenkins, Reinsel, Ljung, Time Series Analysis: Forecasting and Control, 5th ed., Wiley 2015","https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021"],
+  ["Hamilton, Time Series Analysis, Princeton 1994","https://press.princeton.edu/books/hardcover/9780691042893/time-series-analysis"],
+  ["Hyndman and Athanasopoulos, Forecasting: Principles and Practice, 3rd ed., OTexts 2021","https://otexts.com/fpp3/"]]},
+{id:"decomposition",title:"Decomposition and moving averages",level:3,kind:"Time series",status:"Runnable teaching lab",
+ summary:"Classical decomposition splits a series into trend, seasonal and residual components. Moving averages smooth the series and estimate the trend.",
+ mental:"Trend plus season plus noise",
+ mentalText:"Additive: x_t = T_t + S_t + R_t. Multiplicative: x_t = T_t * S_t * R_t. Estimate the trend with a centered moving average, then compute seasonal indices.",
+ steps:["Choose additive or multiplicative.","Estimate the trend with a moving average.","Detrend: x - T or x / T.","Average by season to get seasonal indices.","Compute residuals."],
+ pseudo:"Centered moving average (period m):\n  for even m: T_t = (0.5 x_{t-m/2} + x_{t-m/2+1} + ... + 0.5 x_{t+m/2}) / m\n  for odd m:  T_t = mean(x_{t-(m-1)/2}, ..., x_{t+(m-1)/2})\n\nAdditive:\n  S_t = average of (x_t - T_t) for each season\n  normalize S so sum = 0\n  R_t = x_t - T_t - S_t\n\nMultiplicative:\n  S_t = average of (x_t / T_t) for each season\n  normalize S so mean = 1\n  R_t = x_t / (T_t * S_t)\n\nSTL: Seasonal-Trend decomposition using LOESS\n  robust to outliers\n  trend and season can vary over time",
+ invariant:"The decomposition is not unique unless you fix the trend and seasonal forms. Different methods give different components.",
+ uses:"Exploratory analysis, forecasting, seasonal adjustment, anomaly detection.",
+ strength:"Simple and interpretable. Baseline for seasonal models.",
+ limits:"Assumes a fixed seasonal pattern. Fails when seasonality evolves.",
+ pitfall:"Using an additive model on multiplicative data (or vice versa) gives misleading components.",
+ question:"When should you use a multiplicative decomposition?",
+ answer:"When the seasonal amplitude grows with the level of the series, e.g. retail sales, energy demand.",
+ demo:"decomposition",sample:"10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17",refs:[
+  ["Makridakis, Wheelwright, Hyndman, Forecasting: Methods and Applications, 3rd ed., Wiley 1998","https://www.wiley.com/en-us/Forecasting%3A+Methods+and+Applications%2C+3rd+Edition-p-9780471532330"],
+  ["Cleveland et al., STL: A seasonal-trend decomposition procedure based on loess, J. Official Statistics 1990","https://www.jstor.org/stable/41854629"],
+  ["Hyndman and Athanasopoulos, Forecasting: Principles and Practice, 3rd ed., OTexts 2021","https://otexts.com/fpp3/"]]},
+{id:"exp-smoothing",title:"Exponential smoothing",level:3,kind:"Time series",status:"Runnable teaching lab",
+ summary:"Simple exponential smoothing weights recent observations more. Holt's method adds a trend component. Both are cheap, robust and surprisingly hard to beat.",
+ mental:"A weighted average with exponentially decaying weights",
+ mentalText:"SES: level l_t = alpha x_t + (1 - alpha) l_{t-1}. Forecast is flat at the level. Holt adds a trend b_t.",
+ steps:["Choose alpha (level smoothing).","Update the level each period.","Forecast: for SES, flat; for Holt, level + h * trend.","Tune alpha (and beta) by minimizing the sum of squared forecast errors."],
+ pseudo:"Simple exponential smoothing (SES):\n  l_t = alpha x_t + (1 - alpha) l_{t-1}\n  forecast: x_{t+h} = l_t\n\nHolt's linear trend:\n  l_t = alpha x_t + (1 - alpha)(l_{t-1} + b_{t-1})\n  b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}\n  forecast: x_{t+h} = l_t + h b_t\n\nDamped trend:\n  forecast: l_t + (phi + phi^2 + ... + phi^h) b_t\n  phi in (0, 1) damps the trend\n\nAlpha, beta in [0, 1].\n  alpha near 1: react fast, noisy\n  alpha near 0: smooth, slow to adapt\n\nOptimal alpha minimizes SSE on a training set.",
+ invariant:"The level update is a convex combination of the new observation and the previous level.",
+ uses:"Demand forecasting, inventory, short-term operational forecasting.",
+ strength:"Simple. Fast. Robust. Often beats complex models on short horizons.",
+ limits:"No seasonality (use Holt-Winters). No uncertainty quantification (unless you add it).",
+ pitfall:"Initializing the level and trend poorly biases early forecasts. Use a backcast or optimize the initial values.",
+ question:"What does alpha control in SES?",
+ answer:"The weight on the most recent observation. alpha near 1 means the forecast reacts quickly; alpha near 0 means it is smooth and slow to adapt.",
+ demo:"ses-holt",sample:"0.5 0.3\n10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17",refs:[
+  ["Brown, Exponential Smoothing for Predicting Demand, Arthur D. Little 1956","https://www.jstor.org/stable/10.2307/2343181"],
+  ["Holt, Forecasting seasonals and trends by exponentially weighted moving averages, ONR Research Memorandum 1957","https://doi.org/10.1016/j.ijforecast.2003.09.015"],
+  ["Hyndman et al., Forecasting with Exponential Smoothing: The State Space Approach, Springer 2008","https://link.springer.com/book/10.1007/978-3-540-71918-2"]]},
+{id:"holt-winters",title:"Holt-Winters seasonal smoothing",level:4,kind:"Time series",status:"Runnable teaching lab",
+ summary:"Holt-Winters extends exponential smoothing with a seasonal component. The additive version adds the season; the multiplicative version multiplies by it.",
+ mental:"Level plus trend plus season, updated each period",
+ mentalText:"Keep three running estimates: level, trend, seasonal. Update each with its own smoothing parameter. Forecast by combining all three.",
+ steps:["Choose additive or multiplicative seasonality.","Initialize level, trend and seasonal indices.","Update the three components each period.","Forecast: level + h * trend + season (additive) or (level + h * trend) * season (multiplicative)."],
+ pseudo:"Additive Holt-Winters:\n  l_t = alpha (x_t - s_{t-m}) + (1 - alpha)(l_{t-1} + b_{t-1})\n  b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}\n  s_t = gamma (x_t - l_t) + (1 - gamma) s_{t-m}\n  forecast: x_{t+h} = l_t + h b_t + s_{t+h-m(k+1)}\n\nMultiplicative:\n  l_t = alpha (x_t / s_{t-m}) + (1 - alpha)(l_{t-1} + b_{t-1})\n  b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}\n  s_t = gamma (x_t / l_t) + (1 - gamma) s_{t-m}\n  forecast: x_{t+h} = (l_t + h b_t) * s_{t+h-m(k+1)}\n\nm = seasonal period (4 for quarterly, 12 for monthly)\nalpha, beta, gamma in [0, 1]",
+ invariant:"Seasonal indices must sum to zero (additive) or average to one (multiplicative).",
+ uses:"Retail demand, energy load, call volume, web traffic.",
+ strength:"Handles level, trend and seasonality. Widely used in industry.",
+ limits:"Fixed seasonal pattern. Sensitive to initialization. Not great for long horizons.",
+ pitfall:"Using additive HW on multiplicative data (or vice versa) gives biased forecasts. Plot the seasonal amplitude first.",
+ question:"What is the difference between additive and multiplicative Holt-Winters?",
+ answer:"Additive adds the seasonal component; multiplicative multiplies. Multiplicative is appropriate when the seasonal amplitude grows with the level.",
+ demo:"holt-winters",sample:"4 0.3 0.1 0.2\n10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17",refs:[
+  ["Winters, Forecasting sales by exponentially weighted moving averages, Management Science 1960","https://doi.org/10.1287/mnsc.6.3.324"],
+  ["Hyndman et al., Forecasting with Exponential Smoothing: The State Space Approach, Springer 2008","https://link.springer.com/book/10.1007/978-3-540-71918-2"],
+  ["Hyndman and Athanasopoulos, Forecasting: Principles and Practice, 3rd ed., OTexts 2021","https://otexts.com/fpp3/"]]},
+/* ================= 26.8 Forecasting ================= */
+{id:"ar-ma-arma",title:"AR, MA and ARMA models",level:4,kind:"Forecasting",status:"Runnable teaching lab",
+ summary:"AR models the series as a function of its own lags. MA models it as a function of past errors. ARMA combines both for stationary series.",
+ mental:"Today depends on yesterday and on yesterday's surprise",
+ mentalText:"AR(p): x_t = c + phi_1 x_{t-1} + ... + phi_p x_{t-p} + e_t. MA(q): x_t = c + e_t + theta_1 e_{t-1} + ... + theta_q e_{t-q}.",
+ steps:["Check stationarity.","Use ACF and PACF to identify orders.","Estimate parameters by MLE or Yule-Walker.","Check residual autocorrelation.","Forecast."],
+ pseudo:"AR(p):\n  x_t = c + sum phi_i x_{t-i} + e_t\n  ACF: decays gradually\n  PACF: cuts off after lag p\n\nMA(q):\n  x_t = c + e_t + sum theta_j e_{t-j}\n  ACF: cuts off after lag q\n  PACF: decays gradually\n\nARMA(p, q):\n  x_t = c + sum phi_i x_{t-i} + e_t + sum theta_j e_{t-j}\n  both ACF and PACF decay gradually\n\nEstimation:\n  Yule-Walker (AR only, closed form)\n  conditional sum of squares\n  maximum likelihood (Gaussian innovations)\n\nModel selection:\n  AIC = -2 log L + 2 k\n  BIC = -2 log L + k log n\n  choose the model with the smallest AIC or BIC",
+ invariant:"Stationarity of the AR polynomial (roots outside the unit circle) and invertibility of the MA polynomial are required for a well-defined model.",
+ uses:"Economic forecasting, demand, finance, signal processing.",
+ strength:"Well-understood. Fast to fit. Good short-term forecasts.",
+ limits:"Linear and stationary. Cannot capture regime changes or volatility clustering.",
+ pitfall:"Fitting ARMA to non-stationary data gives spurious results. Difference first if needed.",
+ question:"How do ACF and PACF distinguish AR from MA?",
+ answer:"AR(p): ACF decays, PACF cuts off after lag p. MA(q): ACF cuts off after lag q, PACF decays.",
+ demo:"ar1",sample:"0.5 0.3\n1.2 1.5 1.8 2.1 2.4 2.7 3.0 3.3 3.6 3.9 4.2 4.5 4.8 5.1 5.4 4.5 3.6 2.7 1.8 0.9 0.0 -0.9 -1.8 -2.7",refs:[
+  ["Box, Jenkins, Reinsel, Ljung, Time Series Analysis: Forecasting and Control, 5th ed., Wiley 2015","https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021"],
+  ["Hamilton, Time Series Analysis, Princeton 1994","https://press.princeton.edu/books/hardcover/9780691042893/time-series-analysis"],
+  ["Shumway and Stoffer, Time Series Analysis and Its Applications, 4th ed., Springer 2017","https://link.springer.com/book/10.1007/978-3-319-52452-8"]]},
+{id:"arima-sarima",title:"ARIMA and SARIMA",level:5,kind:"Forecasting",status:"Runnable teaching lab",
+ summary:"ARIMA adds differencing to ARMA for non-stationary series. SARIMA adds seasonal AR, MA and differencing terms for seasonal data.",
+ mental:"Difference away the trend, then fit ARMA",
+ mentalText:"ARIMA(p, d, q): difference d times, then fit ARMA(p, q). SARIMA(p, d, q)(P, D, Q)_m adds seasonal terms with period m.",
+ steps:["Determine d by differencing until stationary.","Determine D by seasonal differencing.","Use ACF/PACF to pick p, q, P, Q.","Fit by MLE.","Check residuals."],
+ pseudo:"ARIMA(p, d, q):\n  y_t = (1 - B)^d x_t   (d-th difference)\n  y_t = c + sum phi_i y_{t-i} + e_t + sum theta_j e_{t-j}\n\nSARIMA(p, d, q)(P, D, Q)_m:\n  seasonal differencing: (1 - B^m)^D\n  seasonal AR: Phi(B^m) = 1 - Phi_1 B^m - ... - Phi_P B^{Pm}\n  seasonal MA: Theta(B^m) = 1 + Theta_1 B^m + ... + Theta_Q B^{Qm}\n  full model: Phi(B^m) phi(B) (1 - B)^d (1 - B^m)^D x_t\n            = Theta(B^m) theta(B) e_t\n\nAuto-ARIMA (Hyndman-Khandakar):\n  stepwise search over (p, d, q)(P, D, Q)\n  minimize AICc\n\nForecast:\n  point forecast + prediction interval from the innovation variance",
+ invariant:"After differencing, the series must be stationary. Over-differencing introduces artificial MA structure.",
+ uses:"Economic forecasting, demand, energy, web analytics.",
+ strength:"Handles trend and seasonality. Well-established. Good baselines.",
+ limits:"Linear. Fixed seasonality. Struggles with structural breaks.",
+ pitfall:"Auto-ARIMA can pick a different model on slightly different data. Always check the residuals and forecast plausibility.",
+ question:"What does the I in ARIMA stand for?",
+ answer:"Integrated. It means the series is differenced d times to make it stationary before fitting an ARMA model.",
+ demo:"arima",sample:"1 1 1\n10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17 14 17 20 18",refs:[
+  ["Box and Jenkins, Time Series Analysis: Forecasting and Control, Holden-Day 1970","https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021"],
+  ["Hyndman and Khandakar, Automatic time series forecasting: the forecast package for R, JSS 2008","https://doi.org/10.18637/jss.v027.i03"],
+  ["Hyndman and Athanasopoulos, Forecasting: Principles and Practice, 3rd ed., OTexts 2021","https://otexts.com/fpp3/"]]},
+{id:"state-space-prophet",title:"State-space models and Prophet-style additive components",level:5,kind:"Forecasting",status:"Runnable teaching lab",
+ summary:"State-space models describe a series with latent states that evolve over time. Prophet-style models fit trend, seasonality and holiday effects as additive components.",
+ mental:"Latent states evolve; observations are noisy measurements",
+ mentalText:"The Kalman filter gives the optimal linear forecast for linear Gaussian state-space models. Prophet is a generalized additive model with trend, seasonality and holidays.",
+ steps:["Write the state transition and observation equations.","Run the Kalman filter for the likelihood.","Estimate parameters by MLE.","Forecast by simulating the state forward."],
+ pseudo:"Linear Gaussian state-space model:\n  state:     x_t = F x_{t-1} + B u_t + w_t,  w_t ~ N(0, Q)\n  observation: y_t = H x_t + v_t,          v_t ~ N(0, R)\n\nKalman filter:\n  predict:\n    x_pred = F x_prev\n    P_pred = F P_prev F' + Q\n  update:\n    y_pred = H x_pred\n    S = H P_pred H' + R\n    K = P_pred H' S^-1\n    x_new = x_pred + K (y - y_pred)\n    P_new = (I - K H) P_pred\n\nProphet-style additive model:\n  y(t) = trend(t) + seasonality(t) + holidays(t) + error\n  trend: piecewise linear with changepoints\n  seasonality: Fourier series\n  holidays: indicator variables\n\nFitted by MAP or MCMC.",
+ invariant:"The Kalman filter is optimal for linear Gaussian models. For nonlinear or non-Gaussian, use EKF, UKF or particle filters.",
+ uses:"Macroeconomic forecasting, demand, navigation, robotics, web analytics.",
+ strength:"Principled uncertainty. Handles missing data. Online updates.",
+ limits:"Linear Gaussian assumptions. Prophet is a specific additive structure, not a general model.",
+ pitfall:"Mis-specifying the state or observation noise gives overconfident or underconfident intervals. Check with residuals.",
+ question:"What makes the Kalman filter optimal?",
+ answer:"For linear Gaussian state-space models, it gives the minimum mean squared error estimate of the latent state given the observations.",
+ demo:"state-space",sample:"10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17 14 17 20 18 15 18 21 19",refs:[
+  ["Kalman, A new approach to linear filtering and prediction problems, J. Basic Engineering 1960","https://doi.org/10.1115/1.3662552"],
+  ["Durbin and Koopman, Time Series Analysis by State Space Methods, 2nd ed., Oxford 2012","https://global.oup.com/academic/product/time-series-analysis-by-state-space-methods-9780199641178"],
+  ["Taylor and Letham, Forecasting at scale, The American Statistician 2018","https://doi.org/10.1080/00031305.2017.1380080"]]},
+/* ================= 26.9 Change and anomaly detection ================= */
+{id:"zscore-ewma",title:"z-scores and EWMA",level:3,kind:"Anomaly detection",status:"Runnable teaching lab",
+ summary:"A z-score measures how many standard deviations a point is from the mean. EWMA smooths a series with exponentially decaying weights, useful for tracking a slowly varying mean.",
+ mental:"How surprising is this point given the recent history?",
+ mentalText:"z = (x - mean) / sd. EWMA: y_t = lambda x_t + (1 - lambda) y_{t-1}. Lambda near 1 follows the data closely; near 0 is very smooth.",
+ steps:["Estimate the mean and standard deviation from a baseline window.","Compute the z-score of each new point.","Flag points with |z| > threshold.","Use EWMA for a smooth running mean and EWMA variance for a running z-score."],
+ pseudo:"z-score:\n  z = (x - mean) / sd\n  flag if |z| > 3 (for roughly Normal data)\n\nEWMA of the mean:\n  m_t = lambda x_t + (1 - lambda) m_{t-1}\n\nEWMA of the variance:\n  v_t = lambda (x_t - m_{t-1})^2 + (1 - lambda) v_{t-1}\n\nEWMA z-score:\n  z_t = (x_t - m_{t-1}) / sqrt(v_{t-1})\n\nLambda in (0, 1).\n  lambda = 0.2: smooth, slow to react\n  lambda = 0.5: moderate\n  lambda = 0.9: reactive, noisy",
+ invariant:"The z-score assumes a roughly Normal baseline. For skewed data use robust versions (MAD-based).",
+ uses:"Monitoring, quality control, fraud detection, network intrusion.",
+ strength:"Simple. Fast. Online. Easy to explain.",
+ limits:"Sensitive to non-Normality and to a contaminated baseline. Does not detect sustained shifts well (use CUSUM).",
+ pitfall:"Estimating the baseline from data that already contains the anomaly inflates the standard deviation and hides the anomaly.",
+ question:"What lambda should you use for EWMA?",
+ answer:"Depends on how fast the mean changes. lambda = 0.2 to 0.3 is common for process monitoring. Choose by minimizing forecast error or by ARL considerations.",
+ demo:"zscore-ewma",sample:"0.3\n10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17 50 17 14 17 20 18",refs:[
+  ["Roberts, Control chart tests based on geometric moving averages, Technometrics 1959","https://doi.org/10.1080/00401706.1959.10489860"],
+  ["Montgomery, Introduction to Statistical Quality Control, 8th ed., Wiley 2019","https://www.wiley.com/en-us/Introduction+to+Statistical+Quality+Control%2C+8th+Edition-p-9781119399308"],
+  ["Chandola, Banerjee, Kumar, Anomaly detection: A survey, ACM Computing Surveys 2009","https://doi.org/10.1145/1541880.1541882"]]},
+{id:"cusum",title:"CUSUM and change detection",level:4,kind:"Anomaly detection",status:"Runnable teaching lab",
+ summary:"CUSUM accumulates deviations from a target and signals when the cumulative sum exceeds a threshold. It is optimal for detecting small sustained shifts.",
+ mental:"A running tally of how far the process has drifted",
+ mentalText:"CUSUM: S_t = max(0, S_{t-1} + (x_t - target) - k). Signal when S_t > h. k is the reference value (half the shift to detect); h is the decision threshold.",
+ steps:["Set the target mean and the reference value k.","Update the upper and lower CUSUM statistics.","Signal when either exceeds the threshold h.","Reset after a signal or after a known change."],
+ pseudo:"Upper CUSUM:\n  S_high_t = max(0, S_high_{t-1} + (x_t - target) - k)\n\nLower CUSUM:\n  S_low_t = max(0, S_low_{t-1} - (x_t - target) - k)\n\nSignal when S_high_t > h or S_low_t > h\n\nChoose k and h:\n  k = delta / 2, where delta is the shift to detect\n  h chosen for a target ARL (average run length)\n  h = 4 or 5 sigma is common\n\nARL:\n  ARL_0: average run length under the null (no change)\n  ARL_1: average run length under the alternative (a change)\n  larger h gives larger ARL_0 and ARL_1\n\nCUSUM is optimal for detecting a known shift size\nin a Normal process (Page 1954).",
+ invariant:"CUSUM is a sequential test. The threshold controls the trade-off between false alarms and detection delay.",
+ uses:"Quality control, medical monitoring, network intrusion, fraud detection.",
+ strength:"Optimal for small sustained shifts. Simple to implement.",
+ limits:"Needs a target and a shift size. Not great for spikes (use z-score or EWMA).",
+ pitfall:"CUSUM reacts slowly to a single spike. Combine with a spike detector (z-score) for both shift and spike detection.",
+ question:"What is ARL in control charting?",
+ answer:"Average Run Length: the expected number of samples until a signal. ARL_0 is under the null (no change), ARL_1 is after a change.",
+ demo:"cusum",sample:"0.5 5\n10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17 20 22 25 23 21 24 27",refs:[
+  ["Page, Continuous inspection schemes, Biometrika 1954","https://doi.org/10.1093/biomet/41.1-2.100"],
+  ["Montgomery, Introduction to Statistical Quality Control, 8th ed., Wiley 2019","https://www.wiley.com/en-us/Introduction+to+Statistical+Quality+Control%2C+8th+Edition-p-9781119399308"],
+  ["Basseville and Nikiforov, Detection of Abrupt Changes: Theory and Application, Prentice Hall 1993","https://www.pearson.com/en-us/subject-catalog/p/detection-of-abrupt-changes-theory-and-application/P200000003429"]]},
+{id:"control-charts",title:"Control charts and Western Electric rules",level:4,kind:"Anomaly detection",status:"Runnable teaching lab",
+ summary:"Control charts distinguish common-cause variation from special-cause variation. Shewhart charts, EWMA charts and CUSUM charts are the main types. Western Electric rules add pattern-based signals.",
+ mental:"A running chart with control limits",
+ mentalText:"Plot the statistic with center line and upper/lower control limits. Points outside the limits or patterns signal special cause.",
+ steps:["Choose the chart type (X-bar, R, EWMA, CUSUM).","Estimate the center line and control limits from a baseline.","Plot new points.","Apply Western Electric rules for additional signals."],
+ pseudo:"Shewhart X-bar chart:\n  center line = grand mean\n  UCL = mean + 3 sigma / sqrt(n)\n  LCL = mean - 3 sigma / sqrt(n)\n  signal if point outside limits\n\nEWMA chart:\n  z_t = lambda x_t + (1 - lambda) z_{t-1}\n  UCL = target + L sqrt(lambda / (2 - lambda)) sigma\n  LCL = target - L sqrt(lambda / (2 - lambda)) sigma\n\nWestern Electric rules:\n  1: one point beyond 3 sigma\n  2: two of three consecutive points beyond 2 sigma (same side)\n  3: four of five consecutive points beyond 1 sigma (same side)\n  4: eight consecutive points on the same side of the center\n  5: six points trending up or down\n  6: 14 points alternating up and down",
+ invariant:"Control limits are not specification limits. They describe the variation of the process, not the requirements.",
+ uses:"Manufacturing, healthcare, service operations, software monitoring.",
+ strength:"Simple, visual, effective for process monitoring.",
+ limits:"Shewhart charts are slow for small shifts. Western Electric rules increase false alarms.",
+ pitfall:"Using specification limits as control limits. They answer different questions.",
+ question:"What is the difference between common-cause and special-cause variation?",
+ answer:"Common cause is inherent random variation of the process. Special cause is an external, assignable cause. Control charts separate the two.",
+ demo:"control-chart",sample:"10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17 14 17 20 18 25 18 15 17 19",refs:[
+  ["Shewhart, Economic Control of Quality of Manufactured Product, Van Nostrand 1931","https://www.asq.org/quality-press/display-item?item=H1310"],
+  ["Montgomery, Introduction to Statistical Quality Control, 8th ed., Wiley 2019","https://www.wiley.com/en-us/Introduction+to+Statistical+Quality+Control%2C+8th+Edition-p-9781119399308"],
+  ["Western Electric, Statistical Quality Control Handbook, 1956","https://archive.org/details/statisticalquali00west"]]},
+{id:"robust-outliers",title:"Robust outlier detection",level:4,kind:"Anomaly detection",status:"Runnable teaching lab",
+ summary:"Robust outlier detection uses median and MAD instead of mean and standard deviation. The modified z-score and IQR rule are simple, effective and resistant to contamination.",
+ mental:"Use robust summaries so the outliers do not hide themselves",
+ mentalText:"Modified z = 0.6745 (x - median) / MAD. Flag if |modified z| > 3.5. IQR rule: flag if x < Q1 - 1.5 IQR or x > Q3 + 1.5 IQR.",
+ steps:["Compute the median and MAD.","Compute modified z-scores.","Flag points with |modified z| > 3.5.","Optionally use the IQR rule as a cross-check."],
+ pseudo:"Modified z-score:\n  median = median(x)\n  MAD = median(|x - median|)\n  modified_z = 0.6745 (x - median) / MAD\n  flag if |modified_z| > 3.5\n\nIQR rule:\n  Q1 = quantile(x, 0.25)\n  Q3 = quantile(x, 0.75)\n  IQR = Q3 - Q1\n  flag if x < Q1 - 1.5 IQR or x > Q3 + 1.5 IQR\n\nBreakdown point:\n  median, MAD, IQR have 50% breakdown\n  mean, sd have 0% breakdown\n\nWhy 0.6745:\n  makes the modified z-score comparable to the standard z-score\n  for Normal data: 0.6745 = Phi^{-1}(0.75)",
+ invariant:"The modified z-score assumes the bulk of the data is roughly Normal. For very skewed data use other methods.",
+ uses:"Data cleaning, quality control, fraud detection, sensor validation.",
+ strength:"Robust to outliers. Simple. Interpretable.",
+ limits:"Assumes a single bulk distribution. Multimodal data needs different methods.",
+ pitfall:"Applying the rule recursively without inspecting the flagged points. Always look at the flagged values.",
+ question:"Why use MAD instead of standard deviation?",
+ answer:"MAD has a 50% breakdown point. Standard deviation is inflated by outliers, which can hide the outliers you are trying to detect.",
+ demo:"robust-outliers",sample:"10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17 14 100 20 18 15 17 19",refs:[
+  ["Hampel, The influence curve and its role in robust estimation, JASA 1974","https://doi.org/10.1080/01621459.1974.10482962"],
+  ["Rousseeuw and Croux, Alternatives to the median absolute deviation, JASA 1993","https://doi.org/10.1080/01621459.1993.10476408"],
+  ["Iglewicz and Hoaglin, Volume 16: How to Detect and Handle Outliers, ASQC 1993","https://www.asq.org/quality-press/display-item?item=H1056"]]},
+/* ================= 26.10 Experiments and density ================= */
+{id:"ab-testing",title:"A/B testing and sequential tests",level:4,kind:"Experiments",status:"Runnable teaching lab",
+ summary:"A/B tests compare two variants with a hypothesis test. Sequential tests allow continuous monitoring without inflating the Type I error. Guardrails protect against harm.",
+ mental:"Randomize, compare, decide",
+ mentalText:"Two-proportion z-test: z = (p_A - p_B) / SE. Sequential tests (SPRT, always-valid CIs) allow peeking. Multi-armed bandits adapt allocation.",
+ steps:["Randomize users into A and B.","Collect the metric per arm.","Compute the test statistic and p-value.","Decide based on the pre-registered threshold.","Monitor guardrail metrics."],
+ pseudo:"Two-proportion z-test:\n  p_A = x_A / n_A,  p_B = x_B / n_B\n  p_pool = (x_A + x_B) / (n_A + n_B)\n  SE = sqrt(p_pool (1 - p_pool) (1/n_A + 1/n_B))\n  z = (p_A - p_B) / SE\n  p = 2 (1 - Phi(|z|))\n  95% CI: (p_A - p_B) +/- 1.96 SE\n\nSample size for power 1 - beta and effect delta:\n  n = (z_{1-alpha/2} + z_{1-beta})^2 * (p_A(1-p_A) + p_B(1-p_B)) / delta^2\n\nSequential testing:\n  alpha-spending: allocate alpha over looks (Pocock, O'Brien-Fleming)\n  always-valid CIs: valid at any stopping time\n  SPRT: sequential probability ratio test\n\nGuardrails:\n  latency, error rate, revenue, retention\n  stop early if a guardrail degrades",
+ invariant:"Randomization makes the two groups comparable. The test is valid only if the randomization and metric definition are correct.",
+ uses:"Product experimentation, marketing, clinical trials, policy evaluation.",
+ strength:"Causal interpretation. Simple to compute. Well-understood.",
+ limits:"Requires sufficient sample size. Novelty effects and interference break assumptions.",
+ pitfall:"Peeking at the p-value and stopping when significant inflates the Type I error. Use sequential methods for continuous monitoring.",
+ question:"Why is peeking at a standard A/B test problematic?",
+ answer:"Each peek is another test. The Type I error rate compounds. Use sequential tests or alpha-spending to control the error.",
+ demo:"ab-test",sample:"1000 120\n1000 150",refs:[
+  ["Kohavi, Tang, Xu, Trustworthy Online Controlled Experiments, Cambridge 2020","https://www.cambridge.org/core/books/trustworthy-online-controlled-experiments/"],
+  ["Wald, Sequential Analysis, Wiley 1947","https://www.wiley.com/en-us/Sequential+Analysis-p-9780486615790"],
+  ["Howard et al., Time-uniform Chernoff bounds via nonnegative supermartingales, Probability Surveys 2021","https://doi.org/10.1214/20-PS348"]]},
+{id:"power-bandits",title:"Power analysis and multi-armed bandits",level:5,kind:"Experiments",status:"Runnable teaching lab",
+ summary:"Power analysis computes the sample size needed to detect an effect. Multi-armed bandits allocate more traffic to better arms, trading statistical power for lower regret.",
+ mental:"How many samples do I need? And how should I allocate them?",
+ mentalText:"Power = 1 - beta = P(reject H0 | H1 true). Bandits: UCB and Thompson sampling balance exploration and exploitation.",
+ steps:["Choose the effect size, alpha and power.","Compute the required sample size.","For bandits, define the reward and prior.","Run UCB or Thompson sampling.","Measure regret and best-arm identification."],
+ pseudo:"Power analysis (two proportions):\n  n per arm = (z_{1-alpha/2} + z_{1-beta})^2 *\n              (p_A(1-p_A) + p_B(1-p_B)) / (p_A - p_B)^2\n\nUCB1:\n  play each arm once\n  then play arm maximizing:\n    mean_i + sqrt(2 ln n / n_i)\n\nThompson sampling:\n  prior: Beta(alpha_i, beta_i) for each arm\n  sample theta_i ~ Beta(alpha_i, beta_i)\n  play arm with max theta_i\n  update alpha_i or beta_i based on reward\n\nRegret:\n  R_T = T * mu* - sum_{t=1}^T mu_{a_t}\n  UCB and TS achieve O(log T) regret\n\nBest-arm identification:\n  allocate to find the best arm with high probability\n  successive halving, racing",
+ invariant:"Bandits trade statistical power for lower regret. Standard A/B testing is optimal for a fixed horizon.",
+ uses:"Recommendation, ad serving, clinical trial allocation, adaptive experiments.",
+ strength:"Adaptive. Lower regret. Thompson sampling is simple and effective.",
+ limits:"Best-arm identification needs more samples than a fixed-horizon test. Non-stationary rewards break the model.",
+ pitfall:"Bandits with a fixed horizon have lower power for the final comparison than a balanced A/B test.",
+ question:"What is the difference between UCB and Thompson sampling?",
+ answer:"UCB is deterministic: it picks the arm with the highest upper confidence bound. Thompson sampling is randomized: it samples from the posterior and picks the arm with the highest sample.",
+ demo:"power-bandit",sample:"0.05 0.8 0.1\n0.1 0.1\n0.2 0.05\n0.3 0.02",refs:[
+  ["Auer, Cesa-Bianchi, Fischer, Finite-time analysis of the multiarmed bandit problem, Machine Learning 2002","https://doi.org/10.1023/A:1013689704352"],
+  ["Thompson, On the likelihood that one unknown probability exceeds another in view of the evidence of two samples, Biometrika 1933","https://doi.org/10.1093/biomet/25.3-4.285"],
+  ["Lattimore and Szepesvári, Bandit Algorithms, Cambridge 2020","https://banditalgs.com/"]]},
+{id:"kde-loess",title:"Kernel density estimation and LOESS",level:5,kind:"Density estimation",status:"Runnable teaching lab",
+ summary:"KDE estimates a smooth density from data by placing a kernel at each point. LOESS fits a smooth curve by locally weighted regression.",
+ mental:"Smooth the histogram; smooth the scatterplot",
+ mentalText:"KDE: f_hat(x) = (1/(n h)) sum K((x - x_i)/h). LOESS: at each x, fit a weighted linear regression with weights that decay with distance.",
+ steps:["Choose a kernel (Gaussian, Epanechnikov) and bandwidth h.","For KDE, sum the kernels at each evaluation point.","For LOESS, choose a span and a weight function.","Fit a weighted linear regression at each point."],
+ pseudo:"Kernel density estimate:\n  f_hat(x) = (1/(n h)) sum_{i=1}^n K((x - x_i) / h)\n\nGaussian kernel:\n  K(u) = (1/sqrt(2 pi)) exp(-u^2 / 2)\n\nBandwidth selection:\n  rule of thumb: h = 1.06 sigma n^{-1/5}\n  Silverman's rule\n  cross-validation\n\nLOESS:\n  at each x_0, fit a weighted linear regression\n  weights w_i = K((x_i - x_0) / h)\n  local linear: minimize sum w_i (y_i - a - b (x_i - x_0))^2\n  the fitted value at x_0 is a\n\nSpan (fraction of points in the local window):\n  small span: wiggly, low bias, high variance\n  large span: smooth, high bias, low variance",
+ invariant:"KDE integrates to 1 if the kernel does. Bandwidth controls the bias-variance trade-off.",
+ uses:"Exploratory data analysis, density estimation, nonparametric regression, visualization.",
+ strength:"No parametric assumption. Flexible. Visual and interpretable.",
+ limits:"KDE struggles in high dimensions (curse of dimensionality). LOESS is O(n^2) naive.",
+ pitfall:"Bandwidth too small gives a spiky density; too large oversmooths and hides structure.",
+ question:"What does the bandwidth control in KDE?",
+ answer:"The smoothness. Small h gives a spiky density with low bias and high variance. Large h oversmooths with high bias and low variance.",
+ demo:"kde-loess",sample:"1.2 1.5 1.8 2.1 2.4 2.7 3.0 3.3 3.6 3.9 4.2 4.5 4.8 5.1 5.4 5.7 6.0 6.3 6.6 6.9",refs:[
+  ["Rosenblatt, Remarks on some nonparametric estimates of a density function, Annals of Math Stat 1956","https://doi.org/10.1214/aoms/1177728190"],
+  ["Parzen, On estimation of a probability density function and mode, Annals of Math Stat 1962","https://doi.org/10.1214/aoms/1177704472"],
+  ["Cleveland and Devlin, Locally weighted regression: An approach to regression analysis by local fitting, JASA 1988","https://doi.org/10.1080/01621459.1988.10478639"]]},
+{id:"kalman",title:"Kalman filter and smoothing",level:5,kind:"State-space",status:"Runnable teaching lab",
+ summary:"The Kalman filter recursively estimates the latent state of a linear Gaussian system. It alternates prediction and update. The Rauch-Tung-Striebel smoother runs backward for better estimates.",
+ mental:"Predict, then correct with the new observation",
+ mentalText:"Predict: x_pred = F x_prev, P_pred = F P F' + Q. Update: K = P_pred H' / (H P_pred H' + R), x = x_pred + K (y - H x_pred).",
+ steps:["Initialize the state mean and covariance.","Predict the next state.","Compute the Kalman gain.","Update the state with the observation.","Repeat. For smoothing, run a backward pass."],
+ pseudo:"Kalman filter:\n  predict:\n    x_pred = F x_prev + B u\n    P_pred = F P_prev F' + Q\n  update:\n    y_pred = H x_pred\n    S = H P_pred H' + R\n    K = P_pred H' S^-1\n    x_new = x_pred + K (y - y_pred)\n    P_new = (I - K H) P_pred\n\nRTS smoother (backward pass):\n  C_t = P_t F' P_{t+1|t}^-1\n  x_{t|T} = x_t + C_t (x_{t+1|T} - x_{t+1|t})\n  P_{t|T} = P_t + C_t (P_{t+1|T} - P_{t+1|t}) C_t'\n\nTuning:\n  Q: process noise (how much the state can change)\n  R: observation noise (how noisy the measurements)\n  larger Q: trust the data more\n  larger R: trust the model more",
+ invariant:"The Kalman filter is optimal for linear Gaussian systems. The smoother is optimal given all data, not just past data.",
+ uses:"Navigation, robotics, econometrics, signal processing, tracking.",
+ strength:"Optimal for linear Gaussian. Handles missing data. Online and fast.",
+ limits:"Linear Gaussian assumptions. Nonlinear systems need EKF, UKF or particle filters.",
+ pitfall:"Mis-tuning Q and R gives overconfident or underconfident intervals. Fit by maximum likelihood or check residuals.",
+ question:"What is the Kalman gain?",
+ answer:"The weight given to the new observation relative to the prediction. It is high when the observation is precise (small R) and low when it is noisy.",
+ demo:"kalman",sample:"10 12 15 13 11 14 17 15 12 15 18 16 13 16 19 17 14 17 20 18",refs:[
+  ["Kalman, A new approach to linear filtering and prediction problems, J. Basic Engineering 1960","https://doi.org/10.1115/1.3662552"],
+  ["Rauch, Tung, Striebel, Maximum likelihood estimates of linear dynamic systems, AIAA Journal 1965","https://doi.org/10.2514/3.3166"],
+  ["Durbin and Koopman, Time Series Analysis by State Space Methods, 2nd ed., Oxford 2012","https://global.oup.com/academic/product/time-series-analysis-by-state-space-methods-9780199641178"]]}
+];
+
+const LESSONS=RAW.map(mk);
+const byId=Object.fromEntries(LESSONS.map(x=>[x.id,x]));
+
+/* ============================================================
+   Code examples (Python)
+   ============================================================ */
+const CODE={
+ "distributions":{python:`import math
+from math import erf, exp, sqrt, log, factorial
+
+def normal_pdf(x, mu=0, sigma=1):
+    z = (x - mu) / sigma
+    return exp(-0.5*z*z) / (sigma * sqrt(2*math.pi))
+
+def normal_cdf(x, mu=0, sigma=1):
+    return 0.5 * (1 + erf((x - mu) / (sigma * math.sqrt(2))))
+
+def binomial_pmf(k, n, p):
+    return math.comb(n, k) * p**k * (1-p)**(n-k)
+
+def poisson_pmf(k, lam):
+    return exp(-lam) * lam**k / factorial(k)
+
+print("N(0,1) pdf at 0:", normal_pdf(0))
+print("N(0,1) cdf at 1.96:", normal_cdf(1.96))
+print("Bin(10, 0.5) pmf at 5:", binomial_pmf(5, 10, 0.5))
+print("Pois(3) pmf at 2:", poisson_pmf(2, 3))
+`},
+ "expectation-variance":{python:`import statistics
+
+x = [2, 4, 4, 4, 5, 5, 7, 9]
+y = [1, 3, 5, 4, 6, 5, 8, 9]
+
+mean_x = statistics.mean(x)
+var_x = statistics.variance(x)
+cov_xy = sum((a - mean_x)*(b - statistics.mean(y)) for a, b in zip(x, y)) / (len(x) - 1)
+sd_x = statistics.stdev(x)
+sd_y = statistics.stdev(y)
+corr = cov_xy / (sd_x * sd_y)
+
+print("mean:", mean_x)
+print("variance:", var_x)
+print("covariance:", cov_xy)
+print("correlation:", corr)
+`},
+ "bayes":{python:`def bayes(prior, sensitivity, specificity):
+    p_pos = sensitivity * prior + (1 - specificity) * (1 - prior)
+    return sensitivity * prior / p_pos
+
+print(bayes(0.01, 0.90, 0.95))   # ~0.154
+print(bayes(0.001, 0.99, 0.99))  # ~0.09
+`},
+ "descriptive":{python:`import statistics
+
+x = [2, 4, 4, 4, 5, 5, 7, 9, 100]
+
+def quantile(x, p):
+    x = sorted(x)
+    h = (len(x) - 1) * p
+    lo = int(h)
+    hi = min(lo + 1, len(x) - 1)
+    return x[lo] + (h - lo) * (x[hi] - x[lo])
+
+median = statistics.median(x)
+q1 = quantile(x, 0.25)
+q3 = quantile(x, 0.75)
+iqr = q3 - q1
+mad = statistics.median(abs(v - median) for v in x)
+
+print("mean:", statistics.mean(x))
+print("median:", median)
+print("Q1, Q3, IQR:", q1, q3, iqr)
+print("MAD:", mad)
+`},
+ "bootstrap":{python:`import random
+import statistics
+
+def bootstrap_ci(x, B=5000, alpha=0.05):
+    n = len(x)
+    means = []
+    for _ in range(B):
+        sample = [x[random.randrange(n)] for _ in range(n)]
+        means.append(statistics.mean(sample))
+    means.sort()
+    return means[int(B*alpha/2)], means[int(B*(1-alpha/2))]
+
+def permutation_test(a, b, B=5000):
+    obs = abs(statistics.mean(a) - statistics.mean(b))
+    pooled = a + b
+    n_a = len(a)
+    count = 0
+    for _ in range(B):
+        random.shuffle(pooled)
+        diff = abs(statistics.mean(pooled[:n_a]) - statistics.mean(pooled[n_a:]))
+        if diff >= obs:
+            count += 1
+    return count / B
+
+a = [5.2, 6.1, 5.8, 6.4, 5.9, 6.3, 5.5, 6.0]
+b = [6.8, 7.1, 6.5, 7.3, 6.9, 7.0, 7.2, 6.7]
+print("bootstrap CI:", bootstrap_ci(a))
+print("permutation p:", permutation_test(a, b))
+`},
+ "ttest":{python:`from math import sqrt
+import statistics
+
+def welch_ttest(a, b):
+    n1, n2 = len(a), len(b)
+    m1, m2 = statistics.mean(a), statistics.mean(b)
+    s1, s2 = statistics.stdev(a), statistics.stdev(b)
+    se = sqrt(s1**2/n1 + s2**2/n2)
+    t = (m1 - m2) / se
+    df = (s1**2/n1 + s2**2/n2)**2 / (
+         (s1**2/n1)**2/(n1-1) + (s2**2/n2)**2/(n2-1)
+    )
+    return t, df
+
+a = [5.2, 6.1, 5.8, 6.4, 5.9, 6.3, 5.5, 6.0]
+b = [6.8, 7.1, 6.5, 7.3, 6.9, 7.0, 7.2, 6.7]
+print(welch_ttest(a, b))
+`},
+ "chi-square":{python:`def chi_square(table):
+    rows = [sum(r) for r in table]
+    cols = [sum(table[i][j] for i in range(len(table))) for j in range(len(table[0]))]
+    n = sum(rows)
+    chi2 = 0
+    for i in range(len(table)):
+        for j in range(len(table[0])):
+            e = rows[i] * cols[j] / n
+            chi2 += (table[i][j] - e)**2 / e
+    return chi2, (len(table)-1)*(len(table[0])-1)
+
+table = [[30, 20], [15, 35]]
+print(chi_square(table))
+`},
+ "multiple-testing":{python:`def bh(pvals, alpha=0.05):
+    m = len(pvals)
+    order = sorted(range(m), key=lambda i: pvals[i])
+    sorted_p = [pvals[i] for i in order]
+    threshold = alpha
+    reject = [False]*m
+    for k in range(m-1, -1, -1):
+        if sorted_p[k] <= (k+1)/m * alpha:
+            for j in range(k+1):
+                reject[order[j]] = True
+            break
+    return reject
+
+p = [0.001, 0.008, 0.039, 0.041, 0.042, 0.06, 0.074, 0.205, 0.212, 0.216]
+print(bh(p))
+`},
+ "beta-binomial":{python:`# Beta-Binomial posterior
+
+def posterior(successes, trials, alpha=1, beta=1):
+    a = alpha + successes
+    b = beta + trials - successes
+    return a, b
+
+def posterior_mean(a, b):
+    return a / (a + b)
+
+a, b = posterior(30, 100)
+print("posterior alpha, beta:", a, b)
+print("posterior mean:", posterior_mean(a, b))
+`},
+ "normal-normal":{python:`def normal_normal_posterior(data, known_var, prior_mean, prior_var):
+    n = len(data)
+    x_bar = sum(data) / n
+    post_var = 1 / (1/prior_var + n/known_var)
+    post_mean = post_var * (prior_mean/prior_var + n*x_bar/known_var)
+    return post_mean, post_var
+
+data = [10, 12, 11]
+print(normal_normal_posterior(data, 5, 0, 10))
+`},
+ "metropolis":{python:`import random
+import math
+
+def metropolis(target_logpdf, init, n=10000, proposal_sd=1.0):
+    x = init
+    samples = []
+    accepted = 0
+    for _ in range(n):
+        x_prop = x + random.gauss(0, proposal_sd)
+        log_alpha = target_logpdf(x_prop) - target_logpdf(x)
+        if math.log(random.random()) < log_alpha:
+            x = x_prop
+            accepted += 1
+        samples.append(x)
+    return samples, accepted / n
+
+# Target: standard Normal
+def logpdf(x):
+    return -0.5*x*x
+
+samples, rate = metropolis(logpdf, 0.0)
+print("acceptance rate:", rate)
+print("posterior mean:", sum(samples[1000:]) / len(samples[1000:]))
+`},
+ "ols":{python:`def ols(X, y):
+    # X: list of rows (each row is a feature vector)
+    # y: list of targets
+    n = len(X)
+    p = len(X[0])
+    # XtX and Xty
+    XtX = [[sum(X[i][a]*X[i][b] for i in range(n)) for b in range(p)] for a in range(p)]
+    Xty = [sum(X[i][a]*y[i] for i in range(n)) for a in range(p)]
+    # Solve XtX * beta = Xty by Gaussian elimination
+    A = [row[:] + [Xty[i]] for i, row in enumerate(XtX)]
+    for i in range(p):
+        pivot = max(range(i, p), key=lambda r: abs(A[r][i]))
+        A[i], A[pivot] = A[pivot], A[i]
+        for r in range(i+1, p):
+            f = A[r][i] / A[i][i]
+            for c in range(i, p+1):
+                A[r][c] -= f * A[i][c]
+    beta = [0]*p
+    for i in range(p-1, -1, -1):
+        beta[i] = (A[i][p] - sum(A[i][j]*beta[j] for j in range(i+1, p))) / A[i][i]
+    return beta
+
+X = [[1, i] for i in range(1, 9)]
+y = [2.1, 3.9, 6.2, 7.8, 10.1, 12.2, 13.8, 16.1]
+print("intercept, slope:", ols(X, y))
+`},
+ "logistic":{python:`import math
+
+def sigmoid(z):
+    return 1 / (1 + math.exp(-z))
+
+def logistic_fit(X, y, lr=0.1, epochs=2000):
+    n = len(X)
+    p = len(X[0])
+    beta = [0.0]*p
+    for _ in range(epochs):
+        grad = [0.0]*p
+        for i in range(n):
+            z = sum(X[i][j]*beta[j] for j in range(p))
+            pred = sigmoid(z)
+            err = pred - y[i]
+            for j in range(p):
+                grad[j] += err * X[i][j]
+        for j in range(p):
+            beta[j] -= lr * grad[j] / n
+    return beta
+
+X = [[1, i] for i in range(1, 11)]
+y = [0, 0, 0, 1, 0, 1, 1, 1, 1, 1]
+beta = logistic_fit(X, y)
+print("intercept, slope:", beta)
+`},
+ "ridge":{python:`def ridge(X, y, lam):
+    n = len(X)
+    p = len(X[0])
+    XtX = [[sum(X[i][a]*X[i][b] for i in range(n)) + (lam if a == b and a > 0 else 0)
+            for b in range(p)] for a in range(p)]
+    Xty = [sum(X[i][a]*y[i] for i in range(n)) for a in range(p)]
+    A = [row[:] + [Xty[i]] for i, row in enumerate(XtX)]
+    for i in range(p):
+        pivot = max(range(i, p), key=lambda r: abs(A[r][i]))
+        A[i], A[pivot] = A[pivot], A[i]
+        for r in range(i+1, p):
+            f = A[r][i] / A[i][i]
+            for c in range(i, p+1):
+                A[r][c] -= f * A[i][c]
+    beta = [0]*p
+    for i in range(p-1, -1, -1):
+        beta[i] = (A[i][p] - sum(A[i][j]*beta[j] for j in range(i+1, p))) / A[i][i]
+    return beta
+
+X = [[1, i] for i in range(1, 9)]
+y = [2.1, 3.9, 6.2, 7.8, 10.1, 12.2, 13.8, 16.1]
+print("ridge beta:", ridge(X, y, 0.5))
+`},
+ "kaplan-meier":{python:`def kaplan_meier(data):
+    # data: list of (time, event) where event=1 means event, 0 means censored
+    data = sorted(data)
+    times = sorted(set(t for t, e in data))
+    n = len(data)
+    S = 1.0
+    curve = []
+    for t in times:
+        at_risk = sum(1 for tt, _ in data if tt >= t)
+        events = sum(1 for tt, e in data if tt == t and e == 1)
+        if events > 0:
+            S *= (1 - events / at_risk)
+            curve.append((t, S))
+    return curve
+
+data = [(5, 1), (6, 0), (6, 1), (7, 1), (8, 0), (9, 1), (10, 1), (12, 0)]
+for t, s in kaplan_meier(data):
+    print(f"t={t}: S={s:.4f}")
+`},
+ "competing-risks":{python:`# Competing risks: cumulative incidence function
+
+def cif(data, cause):
+    # data: list of (time, event) where event = 0 (censored), 1, 2, ...
+    times = sorted(set(t for t, _ in data))
+    n = len(data)
+    S = 1.0
+    cif_val = 0.0
+    curve = []
+    for t in times:
+        at_risk = sum(1 for tt, _ in data if tt >= t)
+        events_all = sum(1 for tt, e in data if tt == t and e > 0)
+        events_cause = sum(1 for tt, e in data if tt == t and e == cause)
+        if events_all > 0:
+            cif_val += S * events_cause / at_risk
+            S *= (1 - events_all / at_risk)
+            curve.append((t, cif_val))
+    return curve
+
+data = [(5, 1), (6, 2), (6, 1), (7, 1), (8, 2), (9, 1), (10, 1), (12, 2)]
+print("CIF cause 1:", cif(data, 1))
+print("CIF cause 2:", cif(data, 2))
+`},
+ "acf":{python:`def acf(x, max_lag=10):
+    n = len(x)
+    m = sum(x) / n
+    c0 = sum((v - m)**2 for v in x) / n
+    return [sum((x[t] - m)*(x[t+k] - m) for t in range(n-k)) / (n * c0)
+            for k in range(max_lag+1)]
+
+x = [1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4]
+print([round(a, 3) for a in acf(x, 5)])
+`},
+ "decomposition":{python:`def centered_ma(x, m):
+    if m % 2 == 0:
+        half = m // 2
+        return [None]*half + [
+            (0.5*x[t-half] + sum(x[t-half+1:t+half]) + 0.5*x[t+half]) / m
+            for t in range(half, len(x) - half)
+        ] + [None]*half
+    else:
+        half = (m - 1) // 2
+        return [None]*half + [
+            sum(x[t-half:t+half+1]) / m for t in range(half, len(x) - half)
+        ] + [None]*half
+
+x = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17]
+trend = centered_ma(x, 4)
+print("trend:", [round(v, 2) if v else None for v in trend])
+`},
+ "ses-holt":{python:`def ses(x, alpha):
+    level = x[0]
+    forecasts = [level]
+    for t in range(1, len(x)):
+        level = alpha * x[t] + (1 - alpha) * level
+        forecasts.append(level)
+    return forecasts
+
+def holt(x, alpha, beta):
+    level = x[0]
+    trend = x[1] - x[0]
+    forecasts = [level]
+    for t in range(1, len(x)):
+        prev_level = level
+        level = alpha * x[t] + (1 - alpha) * (level + trend)
+        trend = beta * (level - prev_level) + (1 - beta) * trend
+        forecasts.append(level + trend)
+    return forecasts
+
+x = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17]
+print("SES:", [round(v, 2) for v in ses(x, 0.5)])
+print("Holt:", [round(v, 2) for v in holt(x, 0.5, 0.3)])
+`},
+ "holt-winters":{python:`def holt_winters(x, m, alpha, beta, gamma):
+    # Additive Holt-Winters
+    n = len(x)
+    # Initialize
+    seasons = n // m
+    level = sum(x[:m]) / m
+    trend = (sum(x[m:2*m]) - sum(x[:m])) / (m*m)
+    seasonals = [x[i] - level for i in range(m)]
+    forecasts = []
+    for t in range(n):
+        if t >= m:
+            s = seasonals[t % m]
+            f = level + trend + s
+            forecasts.append(f)
+            prev_level = level
+            level = alpha * (x[t] - s) + (1 - alpha) * (level + trend)
+            trend = beta * (level - prev_level) + (1 - beta) * trend
+            seasonals[t % m] = gamma * (x[t] - level) + (1 - gamma) * s
+    return forecasts
+
+x = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17]
+print([round(v, 2) for v in holt_winters(x, 4, 0.3, 0.1, 0.2)])
+`},
+ "ar1":{python:`def fit_ar1(x):
+    n = len(x)
+    m = sum(x) / n
+    num = sum((x[t] - m)*(x[t-1] - m) for t in range(1, n))
+    den = sum((x[t] - m)**2 for t in range(n-1))
+    return num / den
+
+def forecast_ar1(x, phi, h=1):
+    m = sum(x) / len(x)
+    last = x[-1] - m
+    return [m + phi**k * last for k in range(1, h+1)]
+
+x = [1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9]
+phi = fit_ar1(x)
+print("phi:", phi)
+print("forecast:", forecast_ar1(x, phi, 5))
+`},
+ "arima":{python:`def difference(x, d=1):
+    for _ in range(d):
+        x = [x[i+1] - x[i] for i in range(len(x)-1)]
+    return x
+
+def fit_ar1(x):
+    n = len(x)
+    m = sum(x) / n
+    num = sum((x[t] - m)*(x[t-1] - m) for t in range(1, n))
+    den = sum((x[t] - m)**2 for t in range(n-1))
+    return num / den
+
+x = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17, 14, 17, 20, 18]
+dx = difference(x, 1)
+print("differenced:", dx)
+print("AR(1) on differenced:", fit_ar1(dx))
+`},
+ "state-space":{python:`def kalman_1d(observations, process_var=1.0, obs_var=1.0):
+    x = observations[0]
+    p = 1.0
+    filtered = []
+    for y in observations:
+        # predict
+        p_pred = p + process_var
+        # update
+        k = p_pred / (p_pred + obs_var)
+        x = x + k * (y - x)
+        p = (1 - k) * p_pred
+        filtered.append(x)
+    return filtered
+
+obs = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16]
+print([round(v, 2) for v in kalman_1d(obs)])
+`},
+ "zscore-ewma":{python:`def ewma(x, lam):
+    m = x[0]
+    v = 0.0
+    zs = []
+    for t in range(1, len(x)):
+        z = (x[t] - m) / (v**0.5 + 1e-9)
+        zs.append(z)
+        m_new = lam * x[t] + (1 - lam) * m
+        v = lam * (x[t] - m)**2 + (1 - lam) * v
+        m = m_new
+    return zs
+
+x = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17, 50, 17, 14, 17]
+zs = ewma(x, 0.3)
+print([round(z, 2) if abs(z) < 100 else round(z, 1) for z in zs[-8:]])
+`},
+ "cusum":{python:`def cusum(x, target, k, h):
+    s_high = 0
+    s_low = 0
+    signals = []
+    for i, v in enumerate(x):
+        s_high = max(0, s_high + (v - target) - k)
+        s_low = max(0, s_low - (v - target) - k)
+        if s_high > h or s_low > h:
+            signals.append(i)
+    return signals
+
+x = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17, 20, 22, 25, 23]
+print("signals:", cusum(x, 14, 1, 5))
+`},
+ "control-chart":{python:`import statistics
+
+def shewhart(x, window=10, k=3):
+    mean = statistics.mean(x[:window])
+    sd = statistics.stdev(x[:window])
+    ucl = mean + k * sd
+    lcl = mean - k * sd
+    signals = [i for i, v in enumerate(x) if v > ucl or v < lcl]
+    return mean, ucl, lcl, signals
+
+x = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17, 14, 17, 20, 18, 25, 18, 15, 17, 19]
+mean, ucl, lcl, signals = shewhart(x, 10, 3)
+print(f"center: {mean:.2f}, UCL: {ucl:.2f}, LCL: {lcl:.2f}")
+print("signals:", signals)
+`},
+ "robust-outliers":{python:`import statistics
+
+def robust_outliers(x, threshold=3.5):
+    med = statistics.median(x)
+    mad = statistics.median(abs(v - med) for v in x)
+    if mad == 0:
+        return []
+    return [i for i, v in enumerate(x) if abs(0.6745 * (v - med) / mad) > threshold]
+
+x = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17, 14, 100, 20, 18, 15, 17, 19]
+print("outliers:", robust_outliers(x))
+`},
+ "ab-test":{python:`from math import sqrt, erf
+
+def norm_cdf(x):
+    return 0.5 * (1 + erf(x / sqrt(2)))
+
+def two_prop_ztest(n_a, c_a, n_b, c_b):
+    p_a = c_a / n_a
+    p_b = c_b / n_b
+    p_pool = (c_a + c_b) / (n_a + n_b)
+    se = sqrt(p_pool * (1 - p_pool) * (1/n_a + 1/n_b))
+    z = (p_a - p_b) / se
+    p = 2 * (1 - norm_cdf(abs(z)))
+    return z, p, p_a - p_b
+
+print(two_prop_ztest(1000, 120, 1000, 150))
+`},
+ "power-bandit":{python:`import math
+
+def sample_size(p_a, p_b, alpha=0.05, power=0.8):
+    z_alpha = 1.96
+    z_beta = 0.84
+    delta = abs(p_a - p_b)
+    var = p_a*(1-p_a) + p_b*(1-p_b)
+    return math.ceil((z_alpha + z_beta)**2 * var / delta**2)
+
+print("n per arm:", sample_size(0.10, 0.12))
+
+# Thompson sampling for a 3-arm Bernoulli bandit
+import random
+
+def thompson(means, trials=1000):
+    alphas = [1.0, 1.0, 1.0]
+    betas = [1.0, 1.0, 1.0]
+    counts = [0, 0, 0]
+    for _ in range(trials):
+        samples = [random.betavariate(alphas[i], betas[i]) for i in range(3)]
+        arm = samples.index(max(samples))
+        counts[arm] += 1
+        reward = 1 if random.random() < means[arm] else 0
+        alphas[arm] += reward
+        betas[arm] += 1 - reward
+    return counts
+
+print(thompson([0.1, 0.2, 0.3]))
+`},
+ "kde-loess":{python:`import math
+
+def gaussian_kde(data, x, h):
+    n = len(data)
+    return sum(math.exp(-0.5*((x - xi)/h)**2) / (h * math.sqrt(2*math.pi))
+               for xi in data) / n
+
+def silverman_h(data):
+    n = len(data)
+    sd = (sum((v - sum(data)/n)**2 for v in data) / (n-1)) ** 0.5
+    return 1.06 * sd * n ** (-0.2)
+
+data = [1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4]
+h = silverman_h(data)
+print("bandwidth:", h)
+for x in [1, 2, 3, 4, 5]:
+    print(x, gaussian_kde(data, x, h))
+`},
+ "kalman":{python:`def kalman_1d(observations, process_var=1.0, obs_var=1.0):
+    x = observations[0]
+    p = 1.0
+    filtered = []
+    for y in observations:
+        p_pred = p + process_var
+        k = p_pred / (p_pred + obs_var)
+        x = x + k * (y - x)
+        p = (1 - k) * p_pred
+        filtered.append(x)
+    return filtered
+
+obs = [10, 12, 15, 13, 11, 14, 17, 15, 12, 15, 18, 16, 13, 16, 19, 17]
+print([round(v, 2) for v in kalman_1d(obs)])
+`},
+};
+
+/* ============================================================
+   Math utilities
+   ============================================================ */
+function erf(x){
+ const sign=x<0?-1:1;
+ x=Math.abs(x);
+ const t=1/(1+0.3275911*x);
+ const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);
+ return sign*y;
+}
+function normalCDF(x,mu=0,sigma=1){return 0.5*(1+erf((x-mu)/(sigma*Math.SQRT2)))}
+function normalPDF(x,mu=0,sigma=1){const z=(x-mu)/sigma;return Math.exp(-0.5*z*z)/(sigma*Math.sqrt(2*Math.PI))}
+function normalInv(p,mu=0,sigma=1){
+ const a=[-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
+ const b=[-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
+ const c=[-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+ const d=[7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+ const plow=0.02425,phigh=1-plow;
+ let q,r;
+ if(p<plow){q=Math.sqrt(-2*Math.log(p));return sigma*(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)+mu}
+ if(p<=phigh){q=p-0.5;r=q*q;return sigma*(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)+mu}
+ q=Math.sqrt(-2*Math.log(1-p));return sigma*-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)+mu;
+}
+function gammaFn(x){
+ const g=7;
+ const C=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+ if(x<0.5)return Math.PI/(Math.sin(Math.PI*x)*gammaFn(1-x));
+ x-=1;
+ let a=C[0];
+ const t=x+g+0.5;
+ for(let i=1;i<g+2;i++)a+=C[i]/(x+i);
+ return Math.sqrt(2*Math.PI)*Math.pow(t,x+0.5)*Math.exp(-t)*a;
+}
+function lowerGammaReg(s,x){
+ if(x<0||s<=0)return 0;
+ if(x<s+1){
+  let sum=1/s,term=sum,n=1;
+  while(n<300){
+   term*=x/(s+n);
+   sum+=term;
+   if(Math.abs(term)<Math.abs(sum)*1e-13)break;
+   n++;
+  }
+  return sum*Math.exp(-x+s*Math.log(x)-Math.log(gammaFn(s)));
+ } else {
+  let b=x+1-s,c=1e30,d=1/b,h=d;
+  for(let i=1;i<300;i++){
+   const an=-i*(i-s);
+   b+=2;
+   d=an*d+b;if(Math.abs(d)<1e-30)d=1e-30;
+   c=b+an/c;if(Math.abs(c)<1e-30)c=1e-30;
+   d=1/d;
+   const del=d*c;
+   h*=del;
+   if(Math.abs(del-1)<1e-13)break;
+  }
+  const Q=Math.exp(-x+s*Math.log(x)-Math.log(gammaFn(s)))*h;
+  return 1-Q;
+ }
+}
+function chiSquareCDF(x,k){return lowerGammaReg(k/2,x/2)}
+function betaInc(a,b,x){
+ if(x<=0)return 0;
+ if(x>=1)return 1;
+ const lbeta=Math.log(gammaFn(a))+Math.log(gammaFn(b))-Math.log(gammaFn(a+b));
+ const maxit=300,eps=1e-13,fpmin=1e-30;
+ let qab=a+b,qap=a+1,qam=a-1;
+ let c=1,d=1-qab*x/qap;
+ if(Math.abs(d)<fpmin)d=fpmin;
+ d=1/d;let h=d;
+ for(let m=1;m<=maxit;m++){
+  const m2=2*m;
+  let aa=m*(b-m)*x/((qam+m2)*(a+m2));
+  d=1+aa*d;if(Math.abs(d)<fpmin)d=fpmin;
+  c=1+aa/c;if(Math.abs(c)<fpmin)c=fpmin;
+  d=1/d;h*=d*c;
+  aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+  d=1+aa*d;if(Math.abs(d)<fpmin)d=fpmin;
+  c=1+aa/c;if(Math.abs(c)<fpmin)c=fpmin;
+  d=1/d;
+  const del=d*c;h*=del;
+  if(Math.abs(del-1)<eps)break;
+ }
+ return Math.exp(a*Math.log(x)+b*Math.log(1-x)-lbeta)*h/a;
+}
+function tCDF(x,df){const p=0.5*betaInc(df/2,0.5,df/(df+x*x));return x>=0?1-p:p}
+function fCDF(x,d1,d2){return betaInc(d1/2,d2/2,d1*x/(d1*x+d2))}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+function parseNums(s){
+ const a=s.trim().split(/[\s,]+/).filter(Boolean).map(Number);
+ if(!a.length||a.some(x=>!Number.isFinite(x)))throw Error('Enter space or comma separated numbers.');
+ return a;
+}
+function fmtNum(x,d=4){
+ if(!Number.isFinite(x))return String(x);
+ if(Math.abs(x)<1e-14)return '0';
+ if(Math.abs(x)>=1e6||(Math.abs(x)<1e-4&&x!==0))return x.toExponential(d-1);
+ return parseFloat(x.toFixed(d)).toString();
+}
+function rngFactory(seed){let s=seed>>>0;return ()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff}}
+function mean(a){return a.reduce((x,y)=>x+y,0)/a.length}
+function variance(a,ddof=1){const m=mean(a);return a.reduce((s,x)=>s+(x-m)*(x-m),0)/(a.length-ddof)}
+function stdev(a,ddof=1){return Math.sqrt(variance(a,ddof))}
+function median(a){const b=[...a].sort((x,y)=>x-y);const n=b.length;return n%2?b[(n-1)/2]:(b[n/2-1]+b[n/2])/2}
+function quantile(a,p){const b=[...a].sort((x,y)=>x-y);const h=(b.length-1)*p;const lo=Math.floor(h);const hi=Math.min(lo+1,b.length-1);return b[lo]+(h-lo)*(b[hi]-b[lo])}
+function mad(a){const m=median(a);return median(a.map(x=>Math.abs(x-m)))}
+function linspace(a,b,n){const out=[];for(let i=0;i<n;i++)out.push(a+(b-a)*i/(n-1));return out}
+
+/* ---- SVG line plot ---- */
+function linePlotSVG(series,opts={}){
+ const width=opts.width||700,height=opts.height||240;
+ const padL=opts.padL||48,padR=15,padT=15,padB=opts.padB||30;
+ let xMin=Infinity,xMax=-Infinity,yMin=Infinity,yMax=-Infinity;
+ for(const s of series)for(const [x,y] of s.points){
+  if(!Number.isFinite(x)||!Number.isFinite(y))continue;
+  if(x<xMin)xMin=x;if(x>xMax)xMax=x;
+  if(y<yMin)yMin=y;if(y>yMax)yMax=y;
+ }
+ if(!isFinite(xMin)){xMin=0;xMax=1;yMin=0;yMax=1}
+ if(xMin===xMax)xMax=xMin+1;
+ if(yMin===yMax)yMax=yMin+1;
+ const yr=yMax-yMin;yMin-=yr*0.05;yMax+=yr*0.05;
+ const px=x=>padL+(x-xMin)/(xMax-xMin)*(width-padL-padR);
+ const py=y=>height-padB-(y-yMin)/(yMax-yMin)*(height-padT-padB);
+ let out='';
+ out+=`<line x1="${padL}" y1="${height-padB}" x2="${width-padR}" y2="${height-padB}" stroke="var(--line2)"/>`;
+ out+=`<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${height-padB}" stroke="var(--line2)"/>`;
+ const colors=['var(--accent)','var(--good)','var(--warn)','var(--bad)','var(--strong)'];
+ series.forEach((s,si)=>{
+  const col=s.color||colors[si%colors.length];
+  const pts=s.points.filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));
+  if(pts.length===1){
+   out+=`<circle cx="${px(pts[0][0]).toFixed(1)}" cy="${py(pts[0][1]).toFixed(1)}" r="4" fill="${col}"/>`;
+   return;
+  }
+  let path='';
+  pts.forEach(([x,y],i)=>{path+=i===0?`M ${px(x).toFixed(1)} ${py(y).toFixed(1)}`:` L ${px(x).toFixed(1)} ${py(y).toFixed(1)}`});
+  out+=`<path d="${path}" fill="none" stroke="${col}" stroke-width="2"/>`;
+  if(s.dots)for(const [x,y] of pts)out+=`<circle cx="${px(x).toFixed(1)}" cy="${py(y).toFixed(1)}" r="2.5" fill="${col}"/>`;
+ });
+ out+=`<text x="${padL-6}" y="${py(yMax)+4}" text-anchor="end" font-size="10" fill="var(--subtle)" font-family="monospace">${fmtNum(yMax,2)}</text>`;
+ out+=`<text x="${padL-6}" y="${py(yMin)+4}" text-anchor="end" font-size="10" fill="var(--subtle)" font-family="monospace">${fmtNum(yMin,2)}</text>`;
+ out+=`<text x="${px(xMin)}" y="${height-padB+14}" text-anchor="middle" font-size="10" fill="var(--subtle)" font-family="monospace">${fmtNum(xMin,2)}</text>`;
+ out+=`<text x="${px(xMax)}" y="${height-padB+14}" text-anchor="middle" font-size="10" fill="var(--subtle)" font-family="monospace">${fmtNum(xMax,2)}</text>`;
+ if(series.length>1){
+  let lx=padL+8,ly=padT+12;
+  series.forEach((s,si)=>{
+   if(!s.label)return;
+   const col=s.color||colors[si%colors.length];
+   out+=`<rect x="${lx}" y="${ly-8}" width="10" height="10" fill="${col}"/>`;
+   out+=`<text x="${lx+14}" y="${ly}" font-size="10" fill="var(--muted)">${esc(s.label)}</text>`;
+   lx+=14+String(s.label).length*7+16;
+  });
+ }
+ return `<svg class="plot" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${out}</svg>`;
+}
+
+/* ============================================================
+   Labs
+   ============================================================ */
+
+/* 26.1 distributions */
+function demoDistributions(text){
+ const parts=text.trim().split(/\s+/);
+ const name=(parts[0]||'normal').toLowerCase();
+ const series=[];
+ let summary='';
+ if(name.startsWith('norm')){
+  const mu=parseFloat(parts[1]||0),sigma=parseFloat(parts[2]||1);
+  const xs=linspace(mu-4*sigma,mu+4*sigma,121);
+  series.push({label:`Normal(${mu}, ${sigma}^2)`,points:xs.map(x=>[x,normalPDF(x,mu,sigma)])});
+  summary=`Normal(mu=${mu}, sigma=${sigma})\n  mean = ${mu}\n  variance = ${sigma*sigma}\n  sd = ${sigma}\n  P(-1 < Z < 1) = ${(normalCDF(1)-normalCDF(-1)).toFixed(4)}\n  P(-2 < Z < 2) = ${(normalCDF(2)-normalCDF(-2)).toFixed(4)}\n  P(-3 < Z < 3) = ${(normalCDF(3)-normalCDF(-3)).toFixed(4)}`;
+ } else if(name.startsWith('binom')||name.startsWith('bin')){
+  const n=Math.max(1,parseInt(parts[1]||10)),p=Math.min(1,Math.max(0,parseFloat(parts[2]||0.5)));
+  const pts=[];
+  for(let k=0;k<=n;k++){
+   const logc=gammaFn(n+1)-gammaFn(k+1)-gammaFn(n-k+1);
+   const pmf=Math.exp(logc)*Math.pow(p,k)*Math.pow(1-p,n-k);
+   pts.push([k,pmf]);
+  }
+  series.push({label:`Binomial(${n}, ${p})`,points:pts,dots:true});
+  summary=`Binomial(n=${n}, p=${p})\n  mean = ${n*p}\n  variance = ${n*p*(1-p)}\n  sd = ${Math.sqrt(n*p*(1-p)).toFixed(4)}`;
+ } else if(name.startsWith('pois')){
+  const lam=Math.max(0.01,parseFloat(parts[1]||3));
+  const maxK=Math.max(10,Math.ceil(lam+5*Math.sqrt(lam)));
+  const pts=[];
+  for(let k=0;k<=maxK;k++){
+   const logpmf=-lam+k*Math.log(lam)-gammaFn(k+1);
+   pts.push([k,Math.exp(logpmf)]);
+  }
+  series.push({label:`Poisson(${lam})`,points:pts,dots:true});
+  summary=`Poisson(lambda=${lam})\n  mean = ${lam}\n  variance = ${lam}\n  sd = ${Math.sqrt(lam).toFixed(4)}`;
+ } else {
+  throw Error('Unknown distribution. Use "normal mu sigma", "binomial n p" or "poisson lambda".');
+ }
+ return {
+  html:linePlotSVG(series,{height:240}),
+  encoded:`Distribution: ${name}\n\n${summary}`,
+  decoded:`The plot shows the PDF (continuous) or PMF (discrete). The summary lists the mean, variance and standard deviation of the distribution.`
+ };
+}
+
+/* 26.1 expectation-variance */
+function demoExpectationVariance(text){
+ const x=parseNums(text);
+ if(x.length<2)throw Error('Enter at least 2 numbers.');
+ const m=mean(x),v=variance(x),sd=stdev(x);
+ const xs=[...x].sort((a,b)=>a-b);
+ return {
+  encoded:`Data: [${x.join(', ')}]\n\nn = ${x.length}\nmean = ${fmtNum(m,6)}\nvariance (n-1) = ${fmtNum(v,6)}\nstd dev (n-1) = ${fmtNum(sd,6)}\nvariance (n) = ${fmtNum(variance(x,0),6)}\n\nMin = ${xs[0]}, Max = ${xs[xs.length-1]}\nRange = ${xs[xs.length-1]-xs[0]}`,
+  decoded:`The sample mean is the center. The sample variance uses the n-1 denominator for unbiasedness. Use n only for the population variance.`
+ };
+}
+
+/* 26.1 bayes */
+function demoBayes(text){
+ const parts=text.trim().split(/\s+/).map(Number);
+ if(parts.length<3)throw Error('Enter: prior sensitivity specificity.');
+ const [prior,sens,spec]=parts;
+ if(prior<0||prior>1||sens<0||sens>1||spec<0||spec>1)throw Error('All values must be in [0, 1].');
+ const pPos=sens*prior+(1-spec)*(1-prior);
+ const posterior=sens*prior/pPos;
+ const pNeg=(1-sens)*prior+spec*(1-prior);
+ const posteriorNeg=(1-sens)*prior/pNeg;
+ return {
+  encoded:`Prior P(D) = ${prior}\nSensitivity P(+ | D) = ${sens}\nSpecificity P(- | ~D) = ${spec}\n\nP(+) = ${fmtNum(pPos,6)}\nP(D | +) = ${fmtNum(posterior,6)}\n\nP(-) = ${fmtNum(pNeg,6)}\nP(D | -) = ${fmtNum(posteriorNeg,6)}\n\nInterpretation:\n  Before the test: ${(prior*100).toFixed(2)}% chance of disease.\n  After a positive test: ${(posterior*100).toFixed(2)}% chance.\n  After a negative test: ${(posteriorNeg*100).toFixed(2)}% chance.`,
+  decoded:`Bayes' theorem updates the prior with the test result. A positive result on a rare disease is often a false positive because the base rate is low.`
+ };
+}
+
+/* 26.2 descriptive */
+function demoDescriptive(text){
+ const x=parseNums(text);
+ if(x.length<2)throw Error('Enter at least 2 numbers.');
+ const m=mean(x),med=median(x),sd=stdev(x);
+ const q1=quantile(x,0.25),q3=quantile(x,0.75),iqr=q3-q1;
+ const mdev=mad(x);
+ const sorted=[...x].sort((a,b)=>a-b);
+ const trimmed=(()=>{
+  const k=Math.floor(x.length*0.1);
+  const t=sorted.slice(k,x.length-k);
+  return t.length?mean(t):mean(x);
+ })();
+ const outliers=x.filter(v=>Math.abs(0.6745*(v-med)/(mdev||1))>3.5);
+ return {
+  encoded:`Data: [${x.join(', ')}]\n\nn = ${x.length}\nmean = ${fmtNum(m,4)}\nmedian = ${fmtNum(med,4)}\nstd dev = ${fmtNum(sd,4)}\nMAD = ${fmtNum(mdev,4)}\nQ1 = ${fmtNum(q1,4)}\nQ3 = ${fmtNum(q3,4)}\nIQR = ${fmtNum(iqr,4)}\n10% trimmed mean = ${fmtNum(trimmed,4)}\n\nRobust outliers (modified z > 3.5): ${outliers.length?outliers.join(', '):'(none)'}`,
+  decoded:`The median, IQR and MAD are robust to outliers. The mean and sd are not. Compare the trimmed mean to the mean to see the effect of extreme values.`
+ };
+}
+
+/* 26.2 bootstrap */
+function demoBootstrap(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(lines.length<2)throw Error('Enter two lines: group A and group B.');
+ const parse=(l)=>{const m=l.match(/:?\s*(.+)$/);return m?m[1].split(/[\s,]+/).filter(Boolean).map(Number):[]};
+ const A=parse(lines[0]);
+ const B=parse(lines[1]);
+ if(A.length<2||B.length<2)throw Error('Each group needs at least 2 numbers.');
+ const rand=rngFactory(12345);
+ const B_=3000;
+ function bootstrapCI(x,alpha=0.05){
+  const n=x.length;
+  const means=[];
+  for(let i=0;i<B_;i++){
+   let s=0;
+   for(let j=0;j<n;j++)s+=x[Math.floor(rand()*n)];
+   means.push(s/n);
+  }
+  means.sort((a,b)=>a-b);
+  return [means[Math.floor(B_*alpha/2)],means[Math.floor(B_*(1-alpha/2))]];
+ }
+ function permutationP(a,b){
+  const obs=Math.abs(mean(a)-mean(b));
+  const pooled=[...a,...b];
+  const na=a.length;
+  let count=0;
+  for(let i=0;i<B_;i++){
+   for(let j=pooled.length-1;j>0;j--){
+    const k=Math.floor(rand()*(j+1));
+    [pooled[j],pooled[k]]=[pooled[k],pooled[j]];
+   }
+   const da=Math.abs(mean(pooled.slice(0,na))-mean(pooled.slice(na)));
+   if(da>=obs)count++;
+  }
+  return count/B_;
+ }
+ const [loA,hiA]=bootstrapCI(A);
+ const [loB,hiB]=bootstrapCI(B);
+ const p=permutationP(A,B);
+ return {
+  encoded:`Group A: n=${A.length}, mean=${fmtNum(mean(A),4)}\nGroup B: n=${B.length}, mean=${fmtNum(mean(B),4)}\n\nBootstrap 95% CI for A mean: [${fmtNum(loA,4)}, ${fmtNum(hiA,4)}]\nBootstrap 95% CI for B mean: [${fmtNum(loB,4)}, ${fmtNum(hiB,4)}]\n\nPermutation test p-value: ${fmtNum(p,4)}\n${p<0.05?'Significant at alpha = 0.05':'Not significant at alpha = 0.05'}`,
+  decoded:`The bootstrap resamples with replacement to estimate the sampling distribution. The permutation test shuffles labels to build the null distribution. Both avoid parametric assumptions.`
+ };
+}
+
+/* 26.3 t-test */
+function demoTtest(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(lines.length<2)throw Error('Enter two lines: one per group.');
+ const A=parseNums(lines[0]);
+ const B=parseNums(lines[1]);
+ if(A.length<2||B.length<2)throw Error('Each group needs at least 2 numbers.');
+ const n1=A.length,n2=B.length;
+ const m1=mean(A),m2=mean(B);
+ const s1=stdev(A),s2=stdev(B);
+ const se=Math.sqrt(s1*s1/n1+s2*s2/n2);
+ const t=(m1-m2)/se;
+ const df=Math.pow(s1*s1/n1+s2*s2/n2,2)/(Math.pow(s1*s1/n1,2)/(n1-1)+Math.pow(s2*s2/n2,2)/(n2-1));
+ const p=2*(1-tCDF(Math.abs(t),df));
+ const diff=m1-m2;
+ const tcrit=normalInv(0.975); // approx
+ const ci=[diff-tcrit*se,diff+tcrit*se];
+ const pooled=Math.sqrt(((n1-1)*s1*s1+(n2-1)*s2*s2)/(n1+n2-2));
+ const cohend=diff/pooled;
+ return {
+  encoded:`Group A: n=${n1}, mean=${fmtNum(m1,4)}, sd=${fmtNum(s1,4)}\nGroup B: n=${n2}, mean=${fmtNum(m2,4)}, sd=${fmtNum(s2,4)}\n\nWelch t-test:\n  t = ${fmtNum(t,4)}\n  df = ${fmtNum(df,2)}\n  p = ${fmtNum(p,6)}\n  mean difference = ${fmtNum(diff,4)}\n  95% CI (approx): [${fmtNum(ci[0],4)}, ${fmtNum(ci[1],4)}]\n  Cohen's d = ${fmtNum(cohend,4)}\n\n${p<0.05?'Reject H0 at alpha = 0.05':'Fail to reject H0 at alpha = 0.05'}`,
+  decoded:`Welch's t-test does not assume equal variances. The p-value is the probability of a difference at least this extreme under the null. The CI gives the plausible range for the difference.`
+ };
+}
+
+/* 26.3 chi-square */
+function demoChiSquare(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const table=lines.map(l=>l.split(/[\s,]+/).filter(Boolean).map(Number));
+ if(table.length<2||table[0].length<2)throw Error('Enter a contingency table with at least 2 rows and 2 columns.');
+ const rows=table.length,cols=table[0].length;
+ const rowSums=table.map(r=>r.reduce((a,b)=>a+b,0));
+ const colSums=Array.from({length:cols},(_,j)=>table.reduce((s,r)=>s+r[j],0));
+ const n=rowSums.reduce((a,b)=>a+b,0);
+ let chi2=0;
+ const expected=table.map((r,i)=>r.map((v,j)=>rowSums[i]*colSums[j]/n));
+ for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){
+  const e=expected[i][j];
+  chi2+=(table[i][j]-e)**2/e;
+ }
+ const df=(rows-1)*(cols-1);
+ const p=1-chiSquareCDF(chi2,df);
+ return {
+  encoded:`Table:\n${table.map(r=>'  '+r.join(' ')).join('\n')}\n\nRow sums: [${rowSums.join(', ')}]\nCol sums: [${colSums.join(', ')}]\nTotal: ${n}\n\nExpected counts:\n${expected.map(r=>'  '+r.map(v=>fmtNum(v,2)).join(' ')).join('\n')}\n\nchi2 = ${fmtNum(chi2,4)}\ndf = ${df}\np = ${fmtNum(p,6)}\n\n${p<0.05?'Significant association at alpha = 0.05':'No significant association at alpha = 0.05'}`,
+  decoded:`The chi-square test compares observed counts to expected counts under independence. Large chi-square means the variables are associated.`
+ };
+}
+
+/* 26.3 multiple testing */
+function demoMultipleTesting(text){
+ const p=parseNums(text);
+ const m=p.length;
+ const alpha=0.05;
+ // Bonferroni
+ const bonf=p.map(v=>v<alpha/m);
+ // Holm
+ const order=p.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v);
+ const holm=Array(m).fill(false);
+ let holmStop=false;
+ for(let k=0;k<m;k++){
+  const threshold=alpha/(m-k);
+  if(!holmStop&&order[k].v<=threshold){holm[order[k].i]=true}
+  else{holmStop=true}
+ }
+ // BH
+ const bh=Array(m).fill(false);
+ let bhMax=-1;
+ for(let k=0;k<m;k++){
+  if(order[k].v<=(k+1)/m*alpha)bhMax=k;
+ }
+ if(bhMax>=0)for(let k=0;k<=bhMax;k++)bh[order[k].i]=true;
+ const count=(arr)=>arr.filter(Boolean).length;
+ return {
+  encoded:`p-values (${m}):\n  ${p.map(v=>fmtNum(v,4)).join(' ')}\n\nBonferroni (alpha/m = ${fmtNum(alpha/m,4)}):\n  Rejected: ${p.map((v,i)=>bonf[i]?i+1:null).filter(x=>x!==null).join(', ')||'(none)'}\n  Count: ${count(bonf)}\n\nHolm step-down:\n  Rejected: ${p.map((v,i)=>holm[i]?i+1:null).filter(x=>x!==null).join(', ')||'(none)'}\n  Count: ${count(holm)}\n\nBenjamini-Hochberg FDR:\n  Rejected: ${p.map((v,i)=>bh[i]?i+1:null).filter(x=>x!==null).join(', ')||'(none)'}\n  Count: ${count(bh)}`,
+  decoded:`Bonferroni controls the family-wise error rate. Holm is a step-down improvement. BH controls the false discovery rate and is less conservative.`
+ };
+}
+
+/* 26.4 beta-binomial */
+function demoBetaBinomial(text){
+ const parts=text.trim().split(/\s+/).map(Number);
+ if(parts.length<4)throw Error('Enter: successes trials prior_alpha prior_beta.');
+ const [k,n,a,b]=parts;
+ if(k<0||n<0||k>n)throw Error('Need 0 <= successes <= trials.');
+ const A=a+k,B=b+n-k;
+ const postMean=A/(A+B);
+ const postMode=(A>1&&B>1)?(A-1)/(A+B-2):postMean;
+ const priorMean=a/(a+b);
+ const mle=k/n;
+ const xs=linspace(0.001,0.999,200);
+ const pdf=xs.map(x=>{
+  const logp=(A-1)*Math.log(x)+(B-1)*Math.log(1-x)-(gammaFn(A)+gammaFn(B)-gammaFn(A+B))*0 + Math.log(1);
+  const logB=Math.log(gammaFn(A))+Math.log(gammaFn(B))-Math.log(gammaFn(A+B));
+  return [x,Math.exp((A-1)*Math.log(x)+(B-1)*Math.log(1-x)-logB)];
+ });
+ return {
+  html:linePlotSVG([{label:`Beta(${A}, ${B})`,points:pdf}],{height:220}),
+  encoded:`Data: ${k} successes in ${n} trials\nPrior: Beta(${a}, ${b})\n\nPrior mean: ${fmtNum(priorMean,4)}\nMLE: ${fmtNum(mle,4)}\n\nPosterior: Beta(${A}, ${B})\nPosterior mean: ${fmtNum(postMean,4)}\nPosterior mode: ${fmtNum(postMode,4)}\n\nPosterior 95% credible interval (approx):\n  [${fmtNum(quantileFromBeta(A,B,0.025),4)}, ${fmtNum(quantileFromBeta(A,B,0.975),4)}]`,
+  decoded:`The Beta-Binomial conjugate update adds successes to alpha and failures to beta. The posterior is a Beta distribution with the updated parameters.`
+ };
+}
+function quantileFromBeta(a,b,p){
+ // numeric inversion via bisection
+ let lo=0,hi=1;
+ for(let i=0;i<60;i++){
+  const mid=(lo+hi)/2;
+  if(betaInc(a,b,mid)<p)lo=mid;else hi=mid;
+ }
+ return (lo+hi)/2;
+}
+
+/* 26.4 normal-normal */
+function demoNormalNormal(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(!lines.length)throw Error('Enter lines: x known_var prior_mean prior_var.');
+ const data=[];
+ let knownVar=1,priorMean=0,priorVar=10;
+ for(const l of lines){
+  const p=l.split(/[\s,]+/).filter(Boolean).map(Number);
+  if(p.length===4){data.push(p[0]);knownVar=p[1];priorMean=p[2];priorVar=p[3]}
+  else if(p.length===1)data.push(p[0]);
+ }
+ if(!data.length)throw Error('No data found.');
+ const n=data.length;
+ const xbar=mean(data);
+ const postVar=1/(1/priorVar+n/knownVar);
+ const postMean=postVar*(priorMean/priorVar+n*xbar/knownVar);
+ return {
+  encoded:`Data: [${data.join(', ')}]\nKnown variance: ${knownVar}\nPrior: N(${priorMean}, ${priorVar})\n\nSample mean: ${fmtNum(xbar,4)}\n\nPosterior: N(${fmtNum(postMean,4)}, ${fmtNum(postVar,4)})\nPosterior sd: ${fmtNum(Math.sqrt(postVar),4)}\n\n95% credible interval:\n  [${fmtNum(postMean-1.96*Math.sqrt(postVar),4)}, ${fmtNum(postMean+1.96*Math.sqrt(postVar),4)}]`,
+  decoded:`The posterior mean is a precision-weighted average of the prior mean and the sample mean. More data or a tighter prior pulls the posterior toward it.`
+ };
+}
+
+/* 26.4 metropolis */
+function demoMetropolis(text){
+ const parts=text.trim().split(/\s+/).map(Number);
+ const mu=parts[0]||0,sd=parts[1]||1,n=Math.max(100,Math.min(parts[2]||5000,50000));
+ const rand=rngFactory(42);
+ let x=0;
+ const samples=[];
+ let accepted=0;
+ const proposalSd=1;
+ for(let i=0;i<n;i++){
+  const xProp=x+proposalSd*(Math.sqrt(-2*Math.log(rand()+1e-12))*Math.cos(2*Math.PI*rand()));
+  const logAlpha=-0.5*Math.pow((xProp-mu)/sd,2)+0.5*Math.pow((x-mu)/sd,2);
+  if(Math.log(rand()+1e-12)<logAlpha){x=xProp;accepted++}
+  samples.push(x);
+ }
+ const burn=Math.floor(n*0.1);
+ const kept=samples.slice(burn);
+ const postMean=mean(kept);
+ const postSd=stdev(kept);
+ const hist=new Array(40).fill(0);
+ const lo=Math.min(...kept),hi=Math.max(...kept);
+ for(const v of kept){
+  const idx=Math.min(39,Math.floor((v-lo)/(hi-lo+1e-9)*40));
+  hist[idx]++;
+ }
+ const histPts=hist.map((c,i)=>[lo+(i+0.5)*(hi-lo)/40,c/kept.length]);
+ return {
+  html:linePlotSVG([{label:'Metropolis samples',points:histPts}],{height:220}),
+  encoded:`Target: N(${mu}, ${sd}^2)\nIterations: ${n}\nAcceptance rate: ${fmtNum(accepted/n,4)}\n\nPosterior mean: ${fmtNum(postMean,4)}\nPosterior sd: ${fmtNum(postSd,4)}\n\nTrue mean: ${mu}\nTrue sd: ${sd}`,
+  decoded:`Metropolis-Hastings proposes a new state, accepts with probability min(1, posterior ratio). The chain converges to the target distribution.`
+ };
+}
+
+/* 26.5 OLS */
+function demoOls(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const pts=lines.map(l=>l.split(/[\s,]+/).filter(Boolean).map(Number));
+ if(pts.length<2)throw Error('Enter at least 2 (x y) pairs.');
+ const X=pts.map(p=>[1,p[0]]);
+ const y=pts.map(p=>p[1]);
+ // OLS closed form for simple regression
+ const n=X.length;
+ const xbar=mean(pts.map(p=>p[0]));
+ const ybar=mean(y);
+ let num=0,den=0;
+ for(let i=0;i<n;i++){num+=(pts[i][0]-xbar)*(y[i]-ybar);den+=(pts[i][0]-xbar)**2}
+ const slope=num/den;
+ const intercept=ybar-slope*xbar;
+ let ssr=0,sst=0;
+ for(let i=0;i<n;i++){const pred=intercept+slope*pts[i][0];ssr+=(y[i]-pred)**2;sst+=(y[i]-ybar)**2}
+ const r2=1-ssr/sst;
+ const sigma2=ssr/(n-2);
+ const seSlope=Math.sqrt(sigma2/den);
+ const tStat=slope/seSlope;
+ const p=2*(1-tCDF(Math.abs(tStat),n-2));
+ // plot
+ const xs=linspace(Math.min(...pts.map(p=>p[0])),Math.max(...pts.map(p=>p[0])),50);
+ const linePts=xs.map(x=>[x,intercept+slope*x]);
+ const dataPts=pts.map(p=>[p[0],p[1]]);
+ return {
+  html:linePlotSVG([
+   {label:'Data',points:dataPts,dots:true,color:'var(--accent)'},
+   {label:'OLS fit',points:linePts,color:'var(--good)'}
+  ],{height:240}),
+  encoded:`n = ${n}\nintercept = ${fmtNum(intercept,4)}\nslope = ${fmtNum(slope,4)}\n\nR^2 = ${fmtNum(r2,4)}\nResidual variance = ${fmtNum(sigma2,4)}\nse(slope) = ${fmtNum(seSlope,4)}\nt = ${fmtNum(tStat,4)}\np = ${fmtNum(p,6)}`,
+  decoded:`OLS minimizes the sum of squared residuals. The slope is the estimated change in y per unit change in x. R^2 is the fraction of variance explained.`
+ };
+}
+
+/* 26.5 logistic */
+function demoLogistic(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const pts=lines.map(l=>l.split(/[\s,]+/).filter(Boolean).map(Number));
+ if(pts.length<3)throw Error('Enter at least 3 (x y) pairs with y in {0,1}.');
+ const X=pts.map(p=>[1,p[0]]);
+ const y=pts.map(p=>p[1]);
+ const n=X.length;
+ const p=2;
+ const sigmoid=z=>1/(1+Math.exp(-z));
+ let beta=[0,0];
+ for(let it=0;it<3000;it++){
+  const grad=[0,0];
+  for(let i=0;i<n;i++){
+   const z=beta[0]*X[i][0]+beta[1]*X[i][1];
+   const pred=sigmoid(z);
+   const err=pred-y[i];
+   grad[0]+=err*X[i][0];
+   grad[1]+=err*X[i][1];
+  }
+  beta[0]-=0.1*grad[0]/n;
+  beta[1]-=0.1*grad[1]/n;
+ }
+ const xs=linspace(Math.min(...pts.map(p=>p[0]))-0.5,Math.max(...pts.map(p=>p[0]))+0.5,100);
+ const curve=xs.map(x=>[x,sigmoid(beta[0]+beta[1]*x)]);
+ const dataPts=pts.map(p=>[p[0],p[1]]);
+ const oddsRatio=Math.exp(beta[1]);
+ return {
+  html:linePlotSVG([
+   {label:'Data',points:dataPts,dots:true,color:'var(--accent)'},
+   {label:'Logistic fit',points:curve,color:'var(--good)'}
+  ],{height:240}),
+  encoded:`n = ${n}\nintercept = ${fmtNum(beta[0],4)}\nslope = ${fmtNum(beta[1],4)}\nodds ratio (per unit x) = ${fmtNum(oddsRatio,4)}\n\nInterpretation:\n  log-odds = ${fmtNum(beta[0],4)} + ${fmtNum(beta[1],4)} * x\n  a one-unit increase in x multiplies the odds by ${fmtNum(oddsRatio,4)}`,
+  decoded:`Logistic regression models the log-odds as a linear function. The odds ratio exp(beta) is the multiplicative change in odds per unit change in x.`
+ };
+}
+
+/* 26.5 ridge */
+function demoRidge(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(!lines.length)throw Error('Enter lambda on the first line, then x y pairs.');
+ const lambda=parseFloat(lines[0])||0;
+ const pts=lines.slice(1).map(l=>l.split(/[\s,]+/).filter(Boolean).map(Number));
+ if(pts.length<2)throw Error('Need at least 2 (x y) pairs.');
+ const n=pts.length;
+ const xbar=mean(pts.map(p=>p[0]));
+ const ybar=mean(pts.map(p=>p[1]));
+ let num=0,den=0;
+ for(const [x,y] of pts){num+=(x-xbar)*(y-ybar);den+=(x-xbar)**2}
+ const slopeOls=num/den;
+ const interceptOls=ybar-slopeOls*xbar;
+ // Ridge (only slope penalized, intercept not)
+ const slopeRidge=num/(den+lambda);
+ const interceptRidge=ybar-slopeRidge*xbar;
+ return {
+  encoded:`lambda = ${lambda}\nn = ${n}\n\nOLS:    intercept = ${fmtNum(interceptOls,4)}, slope = ${fmtNum(slopeOls,4)}\nRidge:  intercept = ${fmtNum(interceptRidge,4)}, slope = ${fmtNum(slopeRidge,4)}\n\nShrinkage of slope: ${fmtNum((slopeOls-slopeRidge),4)}`,
+  decoded:`Ridge adds a penalty lambda * beta^2 to the loss. It shrinks coefficients toward zero. The intercept is usually not penalized.`
+ };
+}
+
+/* 26.6 Kaplan-Meier */
+function demoKaplanMeier(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const data=lines.map(l=>{const p=l.split(/[\s,]+/).filter(Boolean).map(Number);return {t:p[0],e:p[1]||0}});
+ if(!data.length)throw Error('Enter lines: time event (1=event, 0=censored).');
+ const times=[...new Set(data.map(d=>d.t))].sort((a,b)=>a-b);
+ let S=1;
+ const curve=[[0,1]];
+ const table=[];
+ for(const t of times){
+  const atRisk=data.filter(d=>d.t>=t).length;
+  const events=data.filter(d=>d.t===t&&d.e===1).length;
+  if(events>0){
+   S*=(1-events/atRisk);
+   curve.push([t,S]);
+   table.push(`t=${t}: n=${atRisk}, d=${events}, S=${fmtNum(S,4)}`);
+  } else {
+   curve.push([t,S]);
+  }
+ }
+ return {
+  html:linePlotSVG([{label:'Kaplan-Meier S(t)',points:curve}],{height:240}),
+  encoded:`Data: ${data.length} observations\n\nSurvival table:\n${table.join('\n')}\n\nMedian survival: ${(()=>{
+   const idx=curve.findIndex(p=>p[1]<=0.5);
+   return idx>=0?curve[idx][0]:'not reached';
+  })()}`,
+  decoded:`Kaplan-Meier estimates the survival function step by step. At each event time, multiply by (1 - d/n). Censored observations leave the risk set without an event.`
+ };
+}
+
+/* 26.6 competing risks */
+function demoCompetingRisks(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const data=lines.map(l=>{const p=l.split(/[\s,]+/).filter(Boolean).map(Number);return {t:p[0],e:p[1]||0}});
+ if(!data.length)throw Error('Enter lines: time event (1, 2, ... or 0 for censored).');
+ const causes=[...new Set(data.filter(d=>d.e>0).map(d=>d.e))].sort();
+ const times=[...new Set(data.map(d=>d.t))].sort((a,b)=>a-b);
+ const curves={};
+ for(const c of causes){
+  let S=1,cif=0;
+  curves[c]=[[0,0]];
+  for(const t of times){
+   const atRisk=data.filter(d=>d.t>=t).length;
+   const eventsAll=data.filter(d=>d.t===t&&d.e>0).length;
+   const eventsC=data.filter(d=>d.t===t&&d.e===c).length;
+   if(eventsAll>0){
+    cif+=S*eventsC/atRisk;
+    S*=(1-eventsAll/atRisk);
+    curves[c].push([t,cif]);
+   } else {
+    curves[c].push([t,cif]);
+   }
+  }
+ }
+ const series=causes.map(c=>({label:`Cause ${c}`,points:curves[c]}));
+ let out=`Competing events: ${causes.join(', ')}\nObservations: ${data.length}\n\n`;
+ for(const c of causes){
+  const last=curves[c][curves[c].length-1];
+  out+=`CIF for cause ${c} at last time: ${fmtNum(last[1],4)}\n`;
+ }
+ return {
+  html:linePlotSVG(series,{height:240}),
+  encoded:out,
+  decoded:`The cumulative incidence function (CIF) gives the probability of each event type over time, accounting for the competing events. It is not the same as 1 - Kaplan-Meier.`
+ };
+}
+
+/* 26.7 ACF */
+function demoAcf(text){
+ const x=parseNums(text);
+ if(x.length<5)throw Error('Enter at least 5 numbers.');
+ const n=x.length;
+ const m=mean(x);
+ const c0=x.reduce((s,v)=>s+(v-m)**2,0)/n;
+ const maxLag=Math.min(15,n-1);
+ const acf=[];
+ const pacf=[];
+ for(let k=0;k<=maxLag;k++){
+  let s=0;
+  for(let t=0;t<n-k;t++)s+=(x[t]-m)*(x[t+k]-m);
+  acf.push(s/(n*c0));
+ }
+ // PACF via Durbin-Levinson
+ const pacfArr=[1];
+ for(let k=1;k<=maxLag;k++){
+  // Solve Yule-Walker for phi_kk
+  const R=acf.slice(0,k);
+  // Levinson recursion
+  let phi=[[]];
+  let v=acf[0];
+  phi[0]=[1];
+  for(let m_=1;m_<=k;m_++){
+   const num=R[m_]-sum(phi[m_-1].slice(1).map((p,i)=>p*R[m_-1-i]));
+   const kk=num/v;
+   const newPhi=[1];
+   for(let i=1;i<m_;i++)newPhi.push(phi[m_-1][i]-kk*phi[m_-1][m_-i]);
+   newPhi.push(kk);
+   phi[m_]=newPhi;
+   v*=1-kk*kk;
+  }
+  pacfArr.push(phi[k][k]);
+ }
+ function sum(a){return a.reduce((x,y)=>x+y,0)}
+ const acfPts=acf.map((v,i)=>[i,v]);
+ const pacfPts=pacfArr.map((v,i)=>[i,v]);
+ return {
+  html:linePlotSVG([
+   {label:'ACF',points:acfPts,dots:true,color:'var(--accent)'},
+   {label:'PACF',points:pacfPts,dots:true,color:'var(--good)'}
+  ],{height:240}),
+  encoded:`n = ${n}\n\nACF (lags 0..${maxLag}):\n  ${acf.map(v=>fmtNum(v,3)).join(', ')}\n\nPACF (lags 0..${maxLag}):\n  ${pacfArr.map(v=>fmtNum(v,3)).join(', ')}\n\nApproximate 95% band: ±${fmtNum(1.96/Math.sqrt(n),3)}`,
+  decoded:`The ACF measures correlation with lagged values. The PACF measures the direct correlation at each lag. Use both to identify AR and MA orders.`
+ };
+}
+
+/* 26.7 decomposition */
+function demoDecomposition(text){
+ const x=parseNums(text);
+ if(x.length<8)throw Error('Enter at least 8 numbers.');
+ const m=4;
+ // Centered moving average
+ const half=m/2;
+ const trend=new Array(x.length).fill(null);
+ for(let t=half;t<x.length-half;t++){
+  trend[t]=(0.5*x[t-half]+sum(x.slice(t-half+1,t+half))+0.5*x[t+half])/m;
+ }
+ // Detrend
+ const seasonal=new Array(m).fill(0);
+ const counts=new Array(m).fill(0);
+ for(let t=0;t<x.length;t++){
+  if(trend[t]!==null){
+   seasonal[t%m]+=x[t]-trend[t];
+   counts[t%m]++;
+  }
+ }
+ for(let i=0;i<m;i++)seasonal[i]/=counts[i]||1;
+ const smean=sum(seasonal)/m;
+ for(let i=0;i<m;i++)seasonal[i]-=smean;
+ // Residuals
+ const resid=new Array(x.length).fill(null);
+ for(let t=0;t<x.length;t++){
+  if(trend[t]!==null)resid[t]=x[t]-trend[t]-seasonal[t%m];
+ }
+ function sum(a){return a.reduce((x,y)=>x+y,0)}
+ return {
+  html:linePlotSVG([
+   {label:'Original',points:x.map((v,i)=>[i,v])},
+   {label:'Trend',points:trend.map((v,i)=>[i,v]).filter(p=>p[1]!==null),color:'var(--good)'}
+  ],{height:240}),
+  encoded:`n = ${x.length}\nSeasonal period m = ${m}\n\nTrend (centered MA):\n  ${trend.map(v=>v!==null?fmtNum(v,2):'--').join(', ')}\n\nSeasonal indices:\n  ${seasonal.map(v=>fmtNum(v,3)).join(', ')}\nSum: ${fmtNum(sum(seasonal),4)}\n\nResiduals:\n  ${resid.map(v=>v!==null?fmtNum(v,2):'--').join(', ')}`,
+  decoded:`Additive decomposition: x_t = trend_t + season_t + residual_t. The trend is a centered moving average. Seasonal indices are the average detrended value per season, normalized to sum to zero.`
+ };
+}
+
+/* 26.7 SES/Holt */
+function demoSesHolt(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(lines.length<2)throw Error('Enter: alpha beta on the first line, then the series.');
+ const params=lines[0].split(/[\s,]+/).filter(Boolean).map(Number);
+ const alpha=params[0]||0.5,beta=params[1]||0.3;
+ const x=parseNums(lines[1]);
+ if(x.length<3)throw Error('Series needs at least 3 points.');
+ // SES
+ let level=x[0];
+ const sesF=[level];
+ for(let t=1;t<x.length;t++){level=alpha*x[t]+(1-alpha)*level;sesF.push(level)}
+ // Holt
+ let l=x[0],b=x[1]-x[0];
+ const holtF=[l];
+ for(let t=1;t<x.length;t++){
+  const prev=l;
+  l=alpha*x[t]+(1-alpha)*(l+b);
+  b=beta*(l-prev)+(1-beta)*b;
+  holtF.push(l+b);
+ }
+ return {
+  html:linePlotSVG([
+   {label:'Data',points:x.map((v,i)=>[i,v]),dots:true,color:'var(--accent)'},
+   {label:'SES',points:sesF.map((v,i)=>[i,v]),color:'var(--good)'},
+   {label:'Holt',points:holtF.map((v,i)=>[i,v]),color:'var(--warn)'}
+  ],{height:240}),
+  encoded:`alpha = ${alpha}, beta = ${beta}\n\nSES final level: ${fmtNum(sesF[sesF.length-1],4)}\nHolt final level + trend: ${fmtNum(holtF[holtF.length-1],4)}\n\nForecast (next 3 periods):\n  SES (flat): ${[1,2,3].map(h=>fmtNum(sesF[sesF.length-1],3)).join(', ')}\n  Holt: ${[1,2,3].map(h=>fmtNum(l+h*b,3)).join(', ')}`,
+  decoded:`SES follows the level. Holt adds a trend. Larger alpha reacts faster to the data. Holt's forecast extrapolates the current trend.`
+ };
+}
+
+/* 26.7 Holt-Winters */
+function demoHoltWinters(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(lines.length<2)throw Error('Enter: m alpha beta gamma on the first line, then the series.');
+ const params=lines[0].split(/[\s,]+/).filter(Boolean).map(Number);
+ const m=Math.max(2,parseInt(params[0]||4));
+ const alpha=params[1]||0.3,beta=params[2]||0.1,gamma=params[3]||0.2;
+ const x=parseNums(lines[1]);
+ if(x.length<2*m)throw Error('Need at least 2 full seasons ('+(2*m)+' points).');
+ // Initialize
+ let level=mean(x.slice(0,m));
+ let trend=(mean(x.slice(m,2*m))-mean(x.slice(0,m)))/m;
+ const seasonals=[];
+ for(let i=0;i<m;i++)seasonals.push(x[i]-level);
+ const fitted=[];
+ for(let t=0;t<x.length;t++){
+  if(t>=m){
+   const s=seasonals[t%m];
+   const f=level+trend+s;
+   fitted.push({t,f:null,pred:f});
+   const prev=level;
+   level=alpha*(x[t]-s)+(1-alpha)*(level+trend);
+   trend=beta*(level-prev)+(1-beta)*trend;
+   seasonals[t%m]=gamma*(x[t]-level)+(1-gamma)*s;
+  } else {
+   fitted.push({t,f:null,pred:null});
+  }
+ }
+ // Forecast next m
+ const fc=[];
+ for(let h=1;h<=m;h++){
+  fc.push(level+h*trend+seasonals[(x.length+h-1)%m]);
+ }
+ return {
+  html:linePlotSVG([
+   {label:'Data',points:x.map((v,i)=>[i,v]),dots:true,color:'var(--accent)'},
+   {label:'Fitted',points:fitted.filter(f=>f.pred!==null).map(f=>[f.t,f.pred]),color:'var(--good)'}
+  ],{height:240}),
+  encoded:`m = ${m}, alpha = ${alpha}, beta = ${beta}, gamma = ${gamma}\nFinal level: ${fmtNum(level,4)}\nFinal trend: ${fmtNum(trend,4)}\nSeasonal indices: [${seasonals.map(v=>fmtNum(v,3)).join(', ')}]\n\nForecast next ${m} periods:\n  [${fc.map(v=>fmtNum(v,3)).join(', ')}]`,
+  decoded:`Holt-Winters adds a seasonal component. The seasonal index repeats every m periods. The forecast combines level, trend and the appropriate seasonal index.`
+ };
+}
+
+/* 26.8 AR(1) */
+function demoAr1(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(!lines.length)throw Error('Enter the series.');
+ let x;
+ if(lines.length>=2){
+  const params=lines[0].split(/[\s,]+/).filter(Boolean).map(Number);
+  x=parseNums(lines[1]);
+ } else {
+  x=parseNums(lines[0]);
+ }
+ if(x.length<5)throw Error('Need at least 5 points.');
+ // Fit AR(1)
+ const m=mean(x);
+ let num=0,den=0;
+ for(let t=1;t<x.length;t++){num+=(x[t]-m)*(x[t-1]-m);den+=(x[t-1]-m)**2}
+ const phi=num/den;
+ // Residual variance
+ let ss=0;
+ for(let t=1;t<x.length;t++){
+  const pred=m+phi*(x[t-1]-m);
+  ss+=(x[t]-pred)**2;
+ }
+ const sigma2=ss/(x.length-1);
+ // Forecast
+ const h=5;
+ const fc=[];
+ let last=x[x.length-1]-m;
+ for(let k=1;k<=h;k++)fc.push(m+Math.pow(phi,k)*last);
+ return {
+  html:linePlotSVG([
+   {label:'Data',points:x.map((v,i)=>[i,v]),dots:true,color:'var(--accent)'},
+   {label:'Forecast',points:fc.map((v,i)=>[x.length-1+i+1,v]),color:'var(--good)'}
+  ],{height:240}),
+  encoded:`n = ${x.length}\nFitted AR(1): x_t = ${fmtNum(m,4)} + ${fmtNum(phi,4)} (x_{t-1} - ${fmtNum(m,4)}) + e_t\nResidual variance: ${fmtNum(sigma2,4)}\n\n${Math.abs(phi)<1?'Stationary (|phi| < 1)':'Non-stationary (|phi| >= 1)'}\n\nForecast next 5:\n  [${fc.map(v=>fmtNum(v,4)).join(', ')}]`,
+  decoded:`AR(1) models the series as a function of its previous value. The forecast decays toward the mean at rate phi. Stationarity requires |phi| < 1.`
+ };
+}
+
+/* 26.8 ARIMA */
+function demoArima(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(lines.length<2)throw Error('Enter: p d q on the first line, then the series.');
+ const params=lines[0].split(/[\s,]+/).filter(Boolean).map(Number);
+ const p=params[0]||1,d=params[1]||1,q=params[2]||0;
+ const x=parseNums(lines[1]);
+ if(x.length<6)throw Error('Need at least 6 points.');
+ // Difference d times
+ let y=[...x];
+ for(let i=0;i<d;i++){y=y.slice(1).map((v,j)=>v-y[j])}
+ // Fit AR(p) by OLS on lagged values
+ const n=y.length;
+ const m=mean(y);
+ let num=0,den=0;
+ for(let t=1;t<n;t++){num+=(y[t]-m)*(y[t-1]-m);den+=(y[t-1]-m)**2}
+ const phi=num/den||0;
+ // Forecast on differenced series
+ const h=4;
+ const yLast=y[n-1];
+ const fcDiff=[];
+ let cur=yLast;
+ for(let k=0;k<h;k++){cur=m+phi*(cur-m);fcDiff.push(cur)}
+ // Integrate back
+ const fc=[];
+ let last=x[x.length-1];
+ if(d===1){
+  let s=last;
+  for(const dv of fcDiff){s+=dv;fc.push(s)}
+ }
+ return {
+  html:linePlotSVG([
+   {label:'Data',points:x.map((v,i)=>[i,v]),dots:true,color:'var(--accent)'},
+   {label:'Forecast',points:fc.map((v,i)=>[x.length+i,v]),color:'var(--good)'}
+  ],{height:240}),
+  encoded:`ARIMA(${p}, ${d}, ${q}) (simplified AR-only fit)\nn = ${x.length}\nDifferenced length: ${n}\nFitted AR(1) on differenced series: phi = ${fmtNum(phi,4)}, mean = ${fmtNum(m,4)}\n\nForecast next ${h}:\n  [${fc.map(v=>fmtNum(v,4)).join(', ')}]`,
+  decoded:`ARIMA differences the series d times, fits an ARMA model, then integrates the forecast back to the original scale. This simplified lab fits an AR(1) on the differenced series.`
+ };
+}
+
+/* 26.8 state-space / Kalman */
+function demoStateSpace(text){
+ const obs=parseNums(text);
+ if(obs.length<4)throw Error('Enter at least 4 numbers.');
+ const processVar=1,obsVar=1;
+ let x=obs[0],p=1;
+ const filtered=[];
+ for(const y of obs){
+  const pPred=p+processVar;
+  const k=pPred/(pPred+obsVar);
+  x=x+k*(y-x);
+  p=(1-k)*pPred;
+  filtered.push(x);
+ }
+ return {
+  html:linePlotSVG([
+   {label:'Observations',points:obs.map((v,i)=>[i,v]),dots:true,color:'var(--accent)'},
+   {label:'Kalman filter',points:filtered.map((v,i)=>[i,v]),color:'var(--good)'}
+  ],{height:240}),
+  encoded:`n = ${obs.length}\nProcess variance Q = ${processVar}\nObservation variance R = ${obsVar}\n\nFinal filtered state: ${fmtNum(filtered[filtered.length-1],4)}\n\nFiltered series:\n  ${filtered.map(v=>fmtNum(v,3)).join(', ')}`,
+  decoded:`The Kalman filter predicts the next state, then corrects with the observation. The gain K balances trust in the model vs trust in the data. Larger R means noisier observations, so the filter relies more on the model.`
+ };
+}
+
+/* 26.9 z-score/EWMA */
+function demoZscoreEwma(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(lines.length<2)throw Error('Enter: lambda on the first line, then the series.');
+ const lam=Math.max(0.01,Math.min(0.99,parseFloat(lines[0])||0.3));
+ const x=parseNums(lines[1]);
+ if(x.length<5)throw Error('Need at least 5 points.');
+ let m=x[0],v=0;
+ const zs=[];
+ const flags=[];
+ for(let t=1;t<x.length;t++){
+  const z=(x[t]-m)/(Math.sqrt(v)+1e-9);
+  zs.push({t,z});
+  if(Math.abs(z)>3)flags.push(t);
+  m=lam*x[t]+(1-lam)*m;
+  v=lam*(x[t]-m)**2+(1-lam)*v;
+ }
+ return {
+  html:linePlotSVG([
+   {label:'Series',points:x.map((v,i)=>[i,v]),dots:true,color:'var(--accent)'},
+   {label:'EWMA mean',points:zs.map((z,i)=>[i+1,m])}
+  ],{height:240}),
+  encoded:`Lambda = ${lam}\nn = ${x.length}\n\nz-scores (EWMA):\n  ${zs.map(z=>fmtNum(z.z,2)).join(', ')}\n\nFlagged points (|z| > 3): ${flags.length?flags.join(', '):'(none)'}`,
+  decoded:`The EWMA z-score compares each observation to the running mean and variance. Points beyond 3 standard deviations are flagged as anomalies.`
+ };
+}
+
+/* 26.9 CUSUM */
+function demoCusum(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(lines.length<2)throw Error('Enter: k h on the first line, then the series.');
+ const params=lines[0].split(/[\s,]+/).filter(Boolean).map(Number);
+ const k=params[0]||0.5,h=params[1]||5;
+ const x=parseNums(lines[1]);
+ if(x.length<5)throw Error('Need at least 5 points.');
+ const target=mean(x.slice(0,Math.min(10,x.length)));
+ let sHigh=0,sLow=0;
+ const high=[],low=[],flags=[];
+ for(let i=0;i<x.length;i++){
+  sHigh=Math.max(0,sHigh+(x[i]-target)-k);
+  sLow=Math.max(0,sLow-(x[i]-target)-k);
+  high.push(sHigh);low.push(sLow);
+  if(sHigh>h||sLow>h)flags.push(i);
+ }
+ return {
+  html:linePlotSVG([
+   {label:'Upper CUSUM',points:high.map((v,i)=>[i,v]),color:'var(--accent)'},
+   {label:'Lower CUSUM',points:low.map((v,i)=>[i,v]),color:'var(--good)'},
+   {label:'Threshold h',points:[[0,h],[x.length-1,h]],color:'var(--warn)'}
+  ],{height:240}),
+  encoded:`Target mean (baseline): ${fmtNum(target,4)}\nk = ${k}, h = ${h}\n\nSignals at indices: ${flags.length?flags.join(', '):'(none)'}\n\nFinal upper CUSUM: ${fmtNum(sHigh,4)}\nFinal lower CUSUM: ${fmtNum(sLow,4)}`,
+  decoded:`CUSUM accumulates deviations from the target. When the cumulative sum exceeds h, a shift is signalled. It is optimal for detecting small sustained shifts.`
+ };
+}
+
+/* 26.9 control chart */
+function demoControlChart(text){
+ const x=parseNums(text);
+ if(x.length<5)throw Error('Need at least 5 points.');
+ const window=Math.min(10,x.length);
+ const base=x.slice(0,window);
+ const m=mean(base),sd=stdev(base);
+ const ucl=m+3*sd,lcl=m-3*sd;
+ const flags=[];
+ for(let i=0;i<x.length;i++)if(x[i]>ucl||x[i]<lcl)flags.push(i);
+ // Western Electric rule 2: 2 of 3 beyond 2 sigma same side
+ const rule2=[];
+ for(let i=2;i<x.length;i++){
+  let up=0,dn=0;
+  for(let j=i-2;j<=i;j++){
+   if(x[j]>m+2*sd)up++;
+   if(x[j]<m-2*sd)dn++;
+  }
+  if(up>=2||dn>=2)rule2.push(i);
+ }
+ return {
+  html:linePlotSVG([
+   {label:'Data',points:x.map((v,i)=>[i,v]),dots:true,color:'var(--accent)'},
+   {label:'Center',points:[[0,m],[x.length-1,m]],color:'var(--subtle)'},
+   {label:'UCL',points:[[0,ucl],[x.length-1,ucl]],color:'var(--bad)'},
+   {label:'LCL',points:[[0,lcl],[x.length-1,lcl]],color:'var(--bad)'}
+  ],{height:240}),
+  encoded:`Baseline window: first ${window} points\nCenter = ${fmtNum(m,4)}\nUCL = ${fmtNum(ucl,4)}\nLCL = ${fmtNum(lcl,4)}\n\nRule 1 signals (beyond 3 sigma): ${flags.length?flags.join(', '):'(none)'}\nRule 2 signals (2 of 3 beyond 2 sigma): ${rule2.length?rule2.join(', '):'(none)'}`,
+  decoded:`Shewhart chart with 3-sigma limits. Rule 1 catches large shifts. Rule 2 catches smaller sustained shifts. Control limits describe process variation, not specification limits.`
+ };
+}
+
+/* 26.9 robust outliers */
+function demoRobustOutliers(text){
+ const x=parseNums(text);
+ if(x.length<5)throw Error('Need at least 5 points.');
+ const med=median(x);
+ const m=mad(x);
+ const q1=quantile(x,0.25),q3=quantile(x,0.75),iqr=q3-q1;
+ const modz=x.map(v=>0.6745*(v-med)/(m||1));
+ const modFlags=[];
+ for(let i=0;i<x.length;i++)if(Math.abs(modz[i])>3.5)modFlags.push(i);
+ const iqrFlags=[];
+ for(let i=0;i<x.length;i++)if(x[i]<q1-1.5*iqr||x[i]>q3+1.5*iqr)iqrFlags.push(i);
+ return {
+  encoded:`n = ${x.length}\nmedian = ${fmtNum(med,4)}\nMAD = ${fmtNum(m,4)}\nQ1 = ${fmtNum(q1,4)}\nQ3 = ${fmtNum(q3,4)}\nIQR = ${fmtNum(iqr,4)}\n\nModified z-scores:\n  ${modz.map(z=>fmtNum(z,2)).join(', ')}\n\nModified z flags (|z| > 3.5): ${modFlags.length?modFlags.map(i=>`${i}(${x[i]})`).join(', '):'(none)'}\nIQR flags: ${iqrFlags.length?iqrFlags.map(i=>`${i}(${x[i]})`).join(', '):'(none)'}`,
+  decoded:`The modified z-score uses median and MAD instead of mean and sd. The 0.6745 factor makes it comparable to the standard z-score for Normal data.`
+ };
+}
+
+/* 26.10 A/B test */
+function demoAbTest(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(lines.length<2)throw Error('Enter: n_a c_a on the first line, n_b c_b on the second.');
+ const a=lines[0].split(/[\s,]+/).filter(Boolean).map(Number);
+ const b=lines[1].split(/[\s,]+/).filter(Boolean).map(Number);
+ const [nA,cA]=a,[nB,cB]=b;
+ const pA=cA/nA,pB=cB/nB;
+ const pPool=(cA+cB)/(nA+nB);
+ const se=Math.sqrt(pPool*(1-pPool)*(1/nA+1/nB));
+ const z=(pA-pB)/se;
+ const p=2*(1-normalCDF(Math.abs(z)));
+ const diff=pA-pB;
+ const ci=[diff-1.96*se,diff+1.96*se];
+ const relLift=diff/pB;
+ // Sample size needed for future test at current observed effect
+ const zAlpha=1.96,zBeta=0.84;
+ const reqN=Math.ceil(Math.pow(zAlpha+zBeta,2)*(pA*(1-pA)+pB*(1-pB))/(diff*diff||1e-9));
+ return {
+  encoded:`Variant A: n=${nA}, conversions=${cA}, rate=${fmtNum(pA,4)}\nVariant B: n=${nB}, conversions=${cB}, rate=${fmtNum(pB,4)}\n\nDifference (A - B): ${fmtNum(diff,4)}\nRelative lift: ${fmtNum(relLift*100,2)}%\n\nPooled rate: ${fmtNum(pPool,4)}\nSE: ${fmtNum(se,6)}\nz = ${fmtNum(z,4)}\np = ${fmtNum(p,6)}\n\n95% CI for difference: [${fmtNum(ci[0],4)}, ${fmtNum(ci[1],4)}]\n\n${p<0.05?'Significant at alpha = 0.05':'Not significant at alpha = 0.05'}\nSample size needed per arm for this effect (80% power): ${fmtNum(reqN,0)}`,
+  decoded:`The two-proportion z-test compares conversion rates. The p-value is the probability of a difference at least this extreme under the null. The CI gives the plausible range for the effect.`
+ };
+}
+
+/* 26.10 power and bandits */
+function demoPowerBandit(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ if(!lines.length)throw Error('Enter: p_a p_b alpha, then bandit arm means on following lines.');
+ // Power analysis line
+ const head=lines[0].split(/[\s,]+/).filter(Boolean).map(Number);
+ const pA=head[0]||0.10,pB=head[1]||0.12,alpha=head[2]||0.05;
+ const zAlpha=normalInv(1-alpha/2);
+ const zBeta=normalInv(0.8);
+ const delta=Math.abs(pA-pB);
+ const var_=pA*(1-pA)+pB*(1-pB);
+ const reqN=Math.ceil(Math.pow(zAlpha+zBeta,2)*var_/(delta*delta||1e-9));
+ // Bandit arms
+ const arms=lines.slice(1).map(l=>l.split(/[\s,]+/).filter(Boolean).map(Number));
+ let banditOut='';
+ let banditPlot=[];
+ if(arms.length>=2){
+  const rand=rngFactory(42);
+  const alphas=arms.map(()=>1),betas=arms.map(()=>1);
+  const counts=arms.map(()=>0);
+  const trials=5000;
+  for(let t=0;t<trials;t++){
+   const samples=alphas.map((a,i)=>betaSample(a,betas[i],rand));
+   let best=0;
+   for(let i=1;i<arms.length;i++)if(samples[i]>samples[best])best=i;
+   counts[best]++;
+   const mean_i=arms[best][0];
+   const r=rand()<mean_i?1:0;
+   alphas[best]+=r;
+   betas[best]+=1-r;
+  }
+  banditOut=`Thompson sampling (${trials} trials):\n${arms.map((a,i)=>`  Arm ${i+1} (true mean ${a[0]}): ${counts[i]} pulls (${(counts[i]/trials*100).toFixed(1)}%)`).join('\n')}`;
+  banditPlot=arms.map((a,i)=>({label:`Arm ${i+1}`,points:[[i,counts[i]/trials]]}));
+ }
+ return {
+  encoded:`Power analysis:\n  p_A = ${pA}, p_B = ${pB}, alpha = ${alpha}\n  Required n per arm for 80% power: ${reqN}\n\n${banditOut}`,
+  decoded:`Power analysis gives the sample size needed to detect an effect. Thompson sampling allocates more traffic to better arms by sampling from the posterior of each arm's mean.`
+ };
+}
+function betaSample(a,b,rand){
+ // Marsaglia-Tsang method for Beta
+ const x=gammaSample(a,rand);
+ const y=gammaSample(b,rand);
+ return x/(x+y);
+}
+function gammaSample(shape,rand){
+ if(shape<1)return gammaSample(shape+1,rand)*Math.pow(rand(),1/shape);
+ const d=shape-1/3;
+ const c=1/Math.sqrt(9*d);
+ while(true){
+  let x,v;
+  do{x=normalSample(rand);v=1+c*x}while(v<=0);
+  v=v*v*v;
+  const u=rand();
+  if(u<1-0.0331*x*x*x*x)return d*v;
+  if(Math.log(u)<0.5*x*x+d*(1-v+Math.log(v)))return d*v;
+ }
+}
+function normalSample(rand){
+ const u1=rand()+1e-12,u2=rand();
+ return Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
+}
+
+/* 26.10 KDE and LOESS */
+function demoKdeLoess(text){
+ const x=parseNums(text);
+ if(x.length<4)throw Error('Need at least 4 points.');
+ const n=x.length;
+ const m=mean(x),sd=stdev(x);
+ const h=1.06*sd*Math.pow(n,-0.2);
+ const lo=Math.min(...x)-sd,hi=Math.max(...x)+sd;
+ const xs=linspace(lo,hi,120);
+ const kde=xs.map(xi=>{
+  let s=0;
+  for(const v of x)s+=Math.exp(-0.5*Math.pow((xi-v)/h,2))/(h*Math.sqrt(2*Math.PI));
+  return [xi,s/n];
+ });
+ return {
+  html:linePlotSVG([{label:'KDE',points:kde}],{height:240}),
+  encoded:`n = ${n}\nmean = ${fmtNum(m,4)}\nsd = ${fmtNum(sd,4)}\nSilverman bandwidth h = ${fmtNum(h,4)}\n\nKDE peaks near the data density.`,
+  decoded:`Kernel density estimation places a Gaussian kernel at each data point and sums them. The bandwidth h controls smoothness. Silverman's rule gives a reasonable default.`
+ };
+}
+
+/* 26.10 Kalman */
+function demoKalman(text){
+ const obs=parseNums(text);
+ if(obs.length<4)throw Error('Need at least 4 points.');
+ const processVar=1,obsVar=1;
+ let x=obs[0],p=1;
+ const filtered=[];
+ const gains=[];
+ for(const y of obs){
+  const pPred=p+processVar;
+  const k=pPred/(pPred+obsVar);
+  gains.push(k);
+  x=x+k*(y-x);
+  p=(1-k)*pPred;
+  filtered.push(x);
+ }
+ return {
+  html:linePlotSVG([
+   {label:'Observations',points:obs.map((v,i)=>[i,v]),dots:true,color:'var(--accent)'},
+   {label:'Kalman filter',points:filtered.map((v,i)=>[i,v]),color:'var(--good)'}
+  ],{height:240}),
+  encoded:`n = ${obs.length}\nQ = ${processVar}, R = ${obsVar}\n\nKalman gains:\n  ${gains.map(g=>fmtNum(g,3)).join(', ')}\n\nFinal filtered value: ${fmtNum(filtered[filtered.length-1],4)}`,
+  decoded:`The Kalman filter predicts the next state, then corrects with the observation. The gain K is the weight on the observation. Larger R means noisier observations, so the filter relies more on the model.`
+ };
+}
+
+/* ============================================================
+   Lab dispatcher
+   ============================================================ */
+function runLab(l,initial){
+ const input=$('#labInput').value;
+ let res;
+ try{
+  if(!initial){$('#labEncoded').textContent='Running…';$('#labDecoded').textContent=''}
+  switch(l.demo){
+   case'distributions':res=demoDistributions(input);break;
+   case'expectation-variance':res=demoExpectationVariance(input);break;
+   case'bayes':res=demoBayes(input);break;
+   case'descriptive':res=demoDescriptive(input);break;
+   case'bootstrap':res=demoBootstrap(input);break;
+   case'ttest':res=demoTtest(input);break;
+   case'chi-square':res=demoChiSquare(input);break;
+   case'multiple-testing':res=demoMultipleTesting(input);break;
+   case'beta-binomial':res=demoBetaBinomial(input);break;
+   case'normal-normal':res=demoNormalNormal(input);break;
+   case'metropolis':res=demoMetropolis(input);break;
+   case'ols':res=demoOls(input);break;
+   case'logistic':res=demoLogistic(input);break;
+   case'ridge':res=demoRidge(input);break;
+   case'kaplan-meier':res=demoKaplanMeier(input);break;
+   case'competing-risks':res=demoCompetingRisks(input);break;
+   case'acf':res=demoAcf(input);break;
+   case'decomposition':res=demoDecomposition(input);break;
+   case'ses-holt':res=demoSesHolt(input);break;
+   case'holt-winters':res=demoHoltWinters(input);break;
+   case'ar1':res=demoAr1(input);break;
+   case'arima':res=demoArima(input);break;
+   case'state-space':res=demoStateSpace(input);break;
+   case'zscore-ewma':res=demoZscoreEwma(input);break;
+   case'cusum':res=demoCusum(input);break;
+   case'control-chart':res=demoControlChart(input);break;
+   case'robust-outliers':res=demoRobustOutliers(input);break;
+   case'ab-test':res=demoAbTest(input);break;
+   case'power-bandit':res=demoPowerBandit(input);break;
+   case'kde-loess':res=demoKdeLoess(input);break;
+   case'kalman':res=demoKalman(input);break;
+   default:throw Error('No interactive implementation is available for this lesson.');
+  }
+ }catch(e){
+  res={encoded:'Input or runtime error',decoded:e.message};
+ }
+ const el=$('#labEncoded');
+ if(res.html){el.innerHTML=res.html+'\n\n'+res.encoded}else{el.textContent=res.encoded}
+ $('#labDecoded').textContent=res.decoded;
+ if(!initial)toast('Lab complete');
+}
+
+/* ============================================================
+   State and shell
+   ============================================================ */
+const state={page:'home',current:null,completed:new Set(),bookmarks:new Set(),theme:'system',drafts:{}};
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1900)}
+function save(){try{localStorage.setItem('az-stats-prob-ts-lab-v1',JSON.stringify({schemaVersion:1,completed:[...state.completed],bookmarks:[...state.bookmarks],theme:state.theme,current:state.current,drafts:state.drafts}))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem('az-stats-prob-ts-lab-v1')||'null');if(!d||d.schemaVersion!==1)return;
+ state.completed=new Set((d.completed||[]).filter(id=>byId[id]));
+ state.bookmarks=new Set((d.bookmarks||[]).filter(id=>byId[id]));
+ state.theme=['system','light','dark'].includes(d.theme)?d.theme:'system';
+ state.current=byId[d.current]?d.current:null;
+ state.drafts=d.drafts&&typeof d.drafts==='object'?d.drafts:{};}catch(e){}}
+function applyTheme(){let t=state.theme;if(t==='system')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t;$('#themeSelect').value=state.theme}
+function getChapter(id){return CHAPTERS.find(c=>c.ids.includes(id))||CHAPTERS[0]}
+function progress(){
+ const n=state.completed.size,t=LESSONS.length;
+ $('#progressText').textContent=`${n} / ${t}`;
+ $('#progressFill').style.width=(n/t*100)+'%';
+ $('#lessonCount').textContent=t+' lessons';
+ $('#catalogCount').textContent=`${CHAPTERS.length} chapters · ${t} lessons · ${LESSONS.filter(l=>l.demo&&l.demo!=='none').length} labs`;
+ $('#progressBar').setAttribute('aria-valuenow',String(Math.round(n/t*100)));
+}
+function renderTree(){
+ const q=$('#searchInput').value.toLowerCase().trim(),ch=$('#chapterFilter').value;
+ const root=$('#courseTree');root.textContent='';
+ for(const c of CHAPTERS){
+  if(ch!=='all'&&c.id!==ch)continue;
+  const rows=c.ids.map(id=>byId[id]).filter(x=>x&&(!q||(x.title+' '+x.summary+' '+x.kind+' '+c.title).toLowerCase().includes(q)));
+  if(!rows.length)continue;
+  const group=document.createElement('section');
+  const label=document.createElement('div');label.className='group-label';
+  label.innerHTML=`<span>${esc(c.title)}</span><span>${rows.length}</span>`;
+  group.append(label);
+  rows.forEach(l=>{
+   const b=document.createElement('button');b.type='button';
+   b.className='link'+(state.current===l.id?' active':'');
+   b.dataset.lesson=l.id;
+   b.innerHTML=`<span class="num">${String(LESSONS.indexOf(l)+1).padStart(2,'0')}</span><span class="name">${esc(l.title)}</span>${state.completed.has(l.id)?'<span class="done" aria-label="completed">✓</span>':''}`;
+   group.append(b);
+  });
+  root.append(group);
+ }
+ if(!root.children.length)root.innerHTML='<p class="muted">No matching lessons. Try another search.</p>';
+ progress();
+}
+function listToHTML(a){return `<ol class="steps">${a.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`}
+function refsHTML(r){return r&&r.length?`<div class="references">${r.map(x=>`<a target="_blank" rel="noopener noreferrer" href="${esc(x[1])}">${esc(x[0])} ↗</a>`).join('')}</div>`:'<p class="muted">See the recommended textbooks and papers for a full treatment.</p>'}
+function codeRecord(l){if(l.codeKey==='none')return null;return CODE[l.codeKey]||CODE[l.demo]||null}
+function codeText(l){
+ const c=codeRecord(l);
+ if(c&&c.python)return c.python;
+ return '# CONCEPT OUTLINE, NOT EXECUTABLE PYTHON\n# Lesson: '+l.title+'\n\n# Core idea\n# '+String(l.summary||'').replace(/\n/g,'\n# ')+'\n\n# Pseudocode from the lesson\n'+String(l.pseudo||'').split('\n').map(x=>'# '+x).join('\n')+'\n';
+}
+function statusClass(l){return /Runnable/.test(l.status)?'good':'warn'}
+
+function renderLesson(id){
+ const l=byId[id];if(!l){renderHome();return}
+ state.page='lesson';state.current=id;
+ const c=getChapter(id);const index=LESSONS.indexOf(l);const next=LESSONS[(index+1)%LESSONS.length];
+ const hasDemo=l.demo&&l.demo!=='none';
+ const demoArea=hasDemo?`<section class="panel"><div class="panel-head"><h2>${esc(l.demoTitle||'Interactive teaching lab')}</h2><p>Everything runs in your browser. This is a teaching implementation, not a production library.</p></div><div class="body"><div class="lab-top"><label for="labInput">Input</label><button class="btn" id="resetSample">Reset sample</button><button class="btn primary" id="runLab">Run lab</button></div><textarea class="lab-input" id="labInput" aria-label="Lab input">${esc(l.sample||'')}</textarea><div class="notice info"><strong>Format:</strong> see the sample for the expected format. Most labs take either a single number, a comma separated list, or lines of data.</div><div class="lab-cols"><div><div class="label">Output</div><div class="lab-output" id="labEncoded">Run the lab to see output.</div></div><div><div class="label">Explanation</div><div class="lab-output" id="labDecoded">Step notes appear here.</div></div></div></div></section>`:'';
+ const references=refsHTML(l.refs);
+ const code=state.drafts[id]??codeText(l);
+ $('#mainView').innerHTML=`<div class="breadcrumb">Statistics, Probability &amp; Time Series Lab / ${esc(c.title)}</div>
+<header class="header">
+ <div class="eyebrow">LESSON ${String(index+1).padStart(2,'0')} · ${esc(l.kind)}</div>
+ <h1>${esc(l.title)}</h1>
+ <p>${esc(l.summary)}</p>
+ <div class="tags"><span class="tag">Level ${l.level}</span><span class="tag ${statusClass(l)}">${esc(l.status)}</span><span class="tag">${esc(c.title.replace(/^\d+(\.\d+)?\s*/,''))}</span></div>
+ <div class="header-actions">
+  <button class="btn" id="bookmarkBtn">${state.bookmarks.has(id)?'★ Bookmarked':'☆ Bookmark'}</button>
+  <button class="btn primary" id="completeBtn">${state.completed.has(id)?'✓ Completed':'Mark complete'}</button>
+ </div>
+</header>
+<section class="panel"><div class="panel-head"><h2>1. Understand the idea</h2><p>Plain language and a mental picture</p></div><div class="body idea"><div><p>${esc(l.summary)}</p><p><strong>What problem it solves:</strong> ${esc(l.problem)}</p><div class="takeaway"><strong>Takeaway:</strong> ${esc(l.output)}</div></div><aside class="mental"><small>Mental picture</small><strong>${esc(l.mental)}</strong><p>${esc(l.mentalText)}</p></aside></div></section>
+<section class="panel"><div class="panel-head"><h2>2. Input and output</h2><p>Know what goes in and what comes out</p></div><div class="body two"><div class="mini"><h3>Input</h3><p>${esc(l.input)}</p></div><div class="mini"><h3>Output</h3><p>${esc(l.output)}</p></div></div></section>
+<section class="panel"><div class="panel-head"><h2>3. How it works</h2><p>Step by step, with the key rule that makes it correct</p></div><div class="body two"><div>${listToHTML(l.steps)}<div class="takeaway" style="margin-top:14px"><strong>Key rule:</strong> ${esc(l.invariant)}</div></div><pre class="pseudo">${esc(l.pseudo)}</pre></div><div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>Step</th><th>What happens</th><th>Why it matters</th></tr></thead><tbody>${l.trace.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>
+${demoArea}
+<section class="panel"><div class="panel-head"><h2>4. Cost and stability</h2><p>Costs depend on sample size, model and data structure. These are scope labels, not universal benchmarks.</p></div><div class="body"><div class="tiles">${l.complexity.map((x,i)=>`<div class="tile"><span>${['Time','Space','Interpretation'][i]}</span><strong>${esc(x.split(' ').slice(0,2).join(' '))}</strong><small>${esc(x)}</small></div>`).join('')}</div><div class="two" style="margin-top:12px"><div class="mini"><h3>Strengths</h3><p>${esc(l.strength)}</p></div><div class="mini"><h3>Limits</h3><p>${esc(l.limits)}</p></div></div></div></section>
+<section class="panel"><div class="panel-head"><h2>5. Code and usage</h2><p>Reference code is for learning. Real code should use a vetted library.</p></div><div class="code-head"><div><span class="tag">${codeRecord(l)?'Python example':'Concept outline, not executable'}</span> <span class="tag">Editable</span></div><div class="header-actions" style="margin:0"><button class="btn" id="copyCode">Copy code</button><button class="btn" id="downloadCode">Download</button></div></div><textarea id="codeEditor" class="code-editor" spellcheck="false" aria-label="Editable Python code">${esc(code)}</textarea><div class="code-foot"><span>${codeRecord(l)?'Reference example. The in-page lab runs its own JavaScript implementation.':'Lesson-specific outline, not an implementation.'}</span><span id="codeStatus">Local draft</span></div><div class="body"><div class="mini"><h3>Where it is used</h3><p>${esc(l.uses)}</p></div><div class="notice" style="margin-top:12px"><strong>Common pitfall:</strong> ${esc(l.pitfall)}</div></div></section>
+<section class="panel"><div class="panel-head"><h2>6. Choices and alternatives</h2><p>Pick based on the data, assumptions and required guarantee</p></div><div class="body two"><div class="mini"><h3>When to use this</h3><p>${esc(l.strength)}</p></div><div class="mini"><h3>When to use something else</h3><p>${esc(l.limits)}</p></div></div></section>
+<section class="panel"><div class="panel-head"><h2>7. Check yourself</h2><p>Try to answer before you open the explanation</p></div><div class="body"><details class="practice"><summary>${esc(l.question)}</summary><p>${esc(l.answer)}</p></details></div></section>
+<section class="panel"><div class="panel-head"><h2>8. References</h2><p>Standard references for this topic</p></div><div class="body">${references}<p class="muted" style="font-size:11.5px;margin-top:14px">The labs on this page are teaching implementations. For production work use NumPy, SciPy, statsmodels, scikit-learn, PyMC, Stan, Prophet, or another vetted library.</p></div></section>
+<footer class="footer"><span>Az Statistics, Probability &amp; Time Series Lab · local learning</span><span>Lesson ${index+1} of ${LESSONS.length} · Next: ${esc(next.title)}</span><button class="btn" id="nextLesson">Next →</button></footer>`;
+
+ $('#bookmarkBtn').onclick=()=>{state.bookmarks.has(id)?state.bookmarks.delete(id):state.bookmarks.add(id);save();renderLesson(id);toast(state.bookmarks.has(id)?'Bookmarked':'Bookmark removed')};
+ $('#completeBtn').onclick=()=>{state.completed.has(id)?state.completed.delete(id):state.completed.add(id);save();renderTree();renderLesson(id);toast(state.completed.has(id)?'Lesson completed':'Completion removed')};
+ $('#nextLesson').onclick=()=>openLesson(next.id);
+ $('#copyCode').onclick=async()=>{const v=$('#codeEditor').value;try{await navigator.clipboard.writeText(v);toast('Code copied')}catch{const ta=$('#codeEditor');ta.select();document.execCommand('copy');toast('Code copied')}};
+ $('#downloadCode').onclick=()=>{const r=codeRecord(l);downloadText(`${id}.${r?'py':'txt'}`,$('#codeEditor').value,r?'text/x-python':'text/plain')};
+ $('#codeEditor').addEventListener('input',()=>{state.drafts[id]=$('#codeEditor').value;save();$('#codeStatus').textContent='Draft saved locally'});
+ if(hasDemo){
+  $('#runLab').onclick=()=>runLab(l);
+  $('#resetSample').onclick=()=>{$('#labInput').value=l.sample||'';$('#labEncoded').textContent='Run the lab to see output.';$('#labDecoded').textContent='Step notes appear here.'};
+  runLab(l,true);
+ }
+ renderTree();save();
+ if(location.hash!==`#${id}`)history.replaceState(null,'',`#${id}`);
+}
+
+function renderHome(){
+ state.page='home';
+ $('#mainView').innerHTML=`<div class="home-hero"><div class="eyebrow">AZ · STATISTICS AND FORECASTING TOOLBOOK</div><h1>Understand statistics, probability and time series from distributions to ARIMA and Kalman filters.</h1><p>A single-file course covering probability foundations, descriptive statistics and resampling, hypothesis testing, Bayesian methods, regression and GLMs, survival analysis, time-series foundations, forecasting models, change and anomaly detection, and experiments with density estimation. Every lesson has a plain explanation and most have a runnable lab.</p><div class="header-actions" style="margin:0"><button class="btn primary" id="startFirst">Start at the beginning</button><button class="btn" id="resumeLesson">Continue lesson</button></div></div>
+<div class="stats"><div class="stat"><strong>${CHAPTERS.length}</strong><span>chapters</span></div><div class="stat"><strong>${LESSONS.length}</strong><span>lessons</span></div><div class="stat"><strong>${LESSONS.filter(l=>l.demo&&l.demo!=='none').length}</strong><span>runnable labs</span></div><div class="stat"><strong>1</strong><span>standalone HTML file</span></div></div>
+<section class="panel"><div class="panel-head"><h2>Honest scope</h2><p>One app covers the whole curriculum. Production statistical software is a separate engineering project.</p></div><div class="body two"><div class="mini"><h3>What runs here</h3><p>Normal/binomial/Poisson distributions, expectation and variance, Bayes' theorem, robust descriptive statistics, bootstrap and permutation tests, Welch t-test, chi-square, multiple-testing corrections (Bonferroni, Holm, BH), Beta-Binomial and Normal-Normal posteriors, Metropolis MCMC, OLS, logistic regression, ridge regression, Kaplan-Meier, competing-risks CIF, ACF/PACF, decomposition, SES/Holt, Holt-Winters, AR(1), ARIMA, Kalman filter, EWMA z-scores, CUSUM, Shewhart control charts, robust outliers, two-proportion A/B test, power analysis, Thompson sampling, KDE and Kalman smoothing.</p></div><div class="mini"><h3>What does not run here</h3><p>Full Bayesian MCMC (Stan, PyMC), variational inference, Cox proportional hazards, full SARIMA and auto-ARIMA, PELT change detection, LOESS, isolation forests, sequential tests with alpha-spending, and industrial-scale time-series pipelines. For real work use NumPy, SciPy, statsmodels, scikit-learn, PyMC, Stan, Prophet, or another vetted library.</p></div></div></section>
+<div class="panel"><div class="panel-head"><h2>Course map</h2><p>Pick a chapter. The path runs from probability foundations to experiments and density estimation.</p></div><div class="body"><div class="chapter-cards">${CHAPTERS.map((c,i)=>`<button class="chapter-card" data-chapter="${c.id}"><span class="num">CHAPTER ${String(i+1).padStart(2,'0')} · ${c.ids.length} LESSONS</span><strong>${esc(c.title.replace(/^\d+(\.\d+)?\s*/,''))}</strong><p>${esc(c.desc)}</p></button>`).join('')}</div></div></div>
+<footer class="footer"><span>Az Statistics, Probability &amp; Time Series Lab</span><span>Single file · no external runtime dependencies</span></footer>`;
+ $('#startFirst').onclick=()=>openLesson('distributions');
+ $('#resumeLesson').onclick=()=>openLesson(state.current&&byId[state.current]?state.current:'distributions');
+ $('#mainView').querySelectorAll('[data-chapter]').forEach(b=>b.onclick=()=>{const c=CHAPTERS.find(x=>x.id===b.dataset.chapter);if(c)openLesson(c.ids[0])});
+}
+
+function renderProgressPage(){
+ state.page='progress';
+ $('#mainView').innerHTML=`<div class="breadcrumb">Statistics Lab / Bookmarks & progress</div><header class="header"><div class="eyebrow">LOCAL ONLY</div><h1>Bookmarks and progress</h1><p>Your progress stays in this browser. Export the JSON to move it or keep a backup.</p></header>
+<section class="panel"><div class="panel-head"><h2>Completed lessons</h2></div><div class="body">${state.completed.size?`<div class="references">${[...state.completed].map(id=>`<a href="#${id}" data-open="${id}">${esc(byId[id].title)}</a>`).join('')}</div>`:'<p class="muted">No lessons marked complete yet.</p>'}</div></section>
+<section class="panel"><div class="panel-head"><h2>Bookmarks</h2></div><div class="body">${state.bookmarks.size?`<div class="references">${[...state.bookmarks].map(id=>`<a href="#${id}" data-open="${id}">${esc(byId[id].title)}</a>`).join('')}</div>`:'<p class="muted">No bookmarks yet.</p>'}</div></section>
+<section class="panel"><div class="panel-head"><h2>Progress data</h2></div><div class="body"><div class="header-actions" style="margin:0"><button class="btn primary" id="exportProgress">Export progress JSON</button><button class="btn" id="clearProgress">Clear completion marks</button></div><p class="muted" style="font-size:12.5px;margin-top:14px">Import accepts only known lesson IDs and a supported schema version.</p></div></section>`;
+ $('#mainView').querySelectorAll('[data-open]').forEach(a=>a.onclick=e=>{e.preventDefault();openLesson(a.dataset.open)});
+ $('#exportProgress').onclick=exportProgress;
+ $('#clearProgress').onclick=()=>{if(confirm('Clear all completion marks?')){state.completed.clear();save();renderProgressPage();renderTree();toast('Completion marks cleared')}};
+}
+
+function openLesson(id){if(!byId[id])return;renderLesson(id);renderTree();$('#mainView').focus({preventScroll:true});window.scrollTo(0,0)}
+function downloadText(name,text,type='text/plain'){const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),800)}
+function exportProgress(){downloadText('az-stats-prob-ts-lab-progress.json',JSON.stringify({schemaVersion:1,completed:[...state.completed],bookmarks:[...state.bookmarks],theme:state.theme,current:state.current,drafts:state.drafts},null,2),'application/json');toast('Progress exported')}
+function importProgressFile(file){
+ if(file.size>2_000_000){toast('Import rejected: file too large');return}
+ const r=new FileReader();
+ r.onload=()=>{try{
+  const d=JSON.parse(r.result);
+  if(!d||d.schemaVersion!==1||!Array.isArray(d.completed)||!Array.isArray(d.bookmarks)||typeof d.drafts!=='object')throw Error('bad schema');
+  if([...d.completed,...d.bookmarks].some(id=>typeof id!=='string'||!byId[id]))throw Error('unknown id');
+  state.completed=new Set(d.completed);
+  state.bookmarks=new Set(d.bookmarks);
+  state.theme=['system','light','dark'].includes(d.theme)?d.theme:'system';
+  state.current=byId[d.current]?d.current:null;
+  state.drafts=Object.fromEntries(Object.entries(d.drafts).filter(([k,v])=>byId[k]&&typeof v==='string'&&v.length<100000));
+  applyTheme();save();renderTree();
+  state.current?openLesson(state.current):renderHome();
+  toast('Progress imported');
+ }catch(e){toast('Import rejected: invalid progress data')}};
+ r.readAsText(file);
+}
+
+function bindGlobal(){
+ $('#themeSelect').onchange=()=>{state.theme=$('#themeSelect').value;applyTheme();save()};
+ $('#printBtn').onclick=()=>print();
+ $('#exportBtn').onclick=exportProgress;
+ $('#importBtn').onclick=()=>$('#importFile').click();
+ $('#importFile').onchange=e=>{if(e.target.files[0])importProgressFile(e.target.files[0]);e.target.value=''};
+ $('#searchInput').oninput=renderTree;
+ $('#chapterFilter').onchange=renderTree;
+ $('#homeLink').onclick=e=>{e.preventDefault();renderHome();history.replaceState(null,'','#home')};
+ $('#courseTree').onclick=e=>{const b=e.target.closest('[data-lesson]');if(b)openLesson(b.dataset.lesson)};
+ document.querySelectorAll('[data-page="home"]').forEach(b=>b.onclick=renderHome);
+ document.querySelectorAll('[data-page="progress"]').forEach(b=>b.onclick=renderProgressPage);
+ document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();$('#searchInput').focus()}
+  if(e.key.toLowerCase()==='t'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){
+   state.theme=state.theme==='dark'?'light':state.theme==='light'?'system':'dark';
+   applyTheme();save();
+  }
+ });
+}
+
+function init(){
+ load();
+ applyTheme();
+ CHAPTERS.forEach(c=>{const op=document.createElement('option');op.value=c.id;op.textContent=c.title;$('#chapterFilter').append(op)});
+ bindGlobal();
+ renderTree();
+ const hash=location.hash.replace(/^#/,'');
+ if(hash&&byId[hash])renderLesson(hash);
+ else if(state.current&&byId[state.current])renderLesson(state.current);
+ else renderHome();
+ progress();
+}
+init();
+</script></body></html>
